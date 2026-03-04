@@ -1,4 +1,4 @@
-name: Deploy to Bluehost # updated to retrigger workflow
+name: Deploy to Bluehost # CI deploy to production
 on:
   push:
     branches:
