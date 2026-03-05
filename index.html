@@ -16,6 +16,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       content="Catania Airport Transfer provides premium B2B chauffeur and airport transfer services for Catania and Sicily. Military-grade precision, multilingual drivers and tailored solutions for hotels, agencies, DMCs and corporate travel."
     />
     <link rel="canonical" href="https://cataniaairporttransfer.net/" />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/catania-airport-transfer-chauffeur-etna-hero.webp"
+      imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero.webp"
+      imagesizes="(min-width: 1024px) 960px, 100vw"
+      type="image/webp"
+    />
 
     <!-- Font (Montserrat) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -210,7 +218,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="rounded-3xl border border-brandNavy/60 bg-brandBlack/70 p-3 shadow-[0_28px_120px_rgba(0,0,0,0.75)]">
                   <div class="relative overflow-hidden rounded-3xl">
                     <img
-                      src="assets/catania-airport-transfer-chauffeur-etna-hero.png"
+                      src="assets/catania-airport-transfer-chauffeur-etna-hero.webp"
                       alt="Black chauffeur car at Catania Airport with Mount Etna in the background"
                       class="h-[240px] sm:h-[300px] lg:h-[420px] w-full object-cover"
                     />
@@ -520,38 +528,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </p>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 text-sm">
-              <div class="rounded-2xl border border-brandNavy/10 bg-white p-4 shadow-sm">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 mb-1">
-                  Catania Airport &gt; Taormina
-                </p>
-                <p class="text-slate-800 text-sm">
-                  Approx. 50–60 minutes via motorway. Ideal for 5* hotels, villas and events in Taormina area.
-                </p>
+            <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4 text-sm">
+              <!-- Taormina -->
+              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
+                <div
+                  class="h-28 sm:h-32 bg-cover bg-center"
+                  style="background-image: url('assets/route-taormina.webp');"
+                ></div>
+                <div class="p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy mb-1">
+                    Catania Airport &gt; Taormina
+                  </p>
+                  <p class="text-slate-800 text-sm">
+                    Approx. 50–60 minutes via motorway. Ideal for 5* hotels, villas and events in Taormina area.
+                  </p>
+                </div>
               </div>
-              <div class="rounded-2xl border border-brandNavy/10 bg-white p-4 shadow-sm">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 mb-1">
-                  Catania Airport &gt; Siracusa / Ortigia
-                </p>
-                <p class="text-slate-800 text-sm">
-                  Approx. 60 minutes. Private transfers for historic hotels and conference venues in Siracusa.
-                </p>
+
+              <!-- Siracusa / Ortigia -->
+              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
+                <div
+                  class="h-28 sm:h-32 bg-cover bg-center"
+                  style="background-image: url('assets/route-siracusa.webp');"
+                ></div>
+                <div class="p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy mb-1">
+                    Catania Airport &gt; Siracusa / Ortigia
+                  </p>
+                  <p class="text-slate-800 text-sm">
+                    Approx. 60 minutes. Private transfers for historic hotels and conference venues in Siracusa.
+                  </p>
+                </div>
               </div>
-              <div class="rounded-2xl border border-brandNavy/10 bg-white p-4 shadow-sm">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 mb-1">
-                  Catania Airport &gt; Noto / Ragusa
-                </p>
-                <p class="text-slate-800 text-sm">
-                  Approx. 75–90 minutes. Chauffeur service for luxury resorts, weddings and incentive trips.
-                </p>
+
+              <!-- Noto / Ragusa -->
+              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
+                <div
+                  class="h-28 sm:h-32 bg-cover bg-center"
+                  style="background-image: url('assets/route-noto-ragusa.webp');"
+                ></div>
+                <div class="p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy mb-1">
+                    Catania Airport &gt; Noto / Ragusa
+                  </p>
+                  <p class="text-slate-800 text-sm">
+                    Approx. 75–90 minutes. Chauffeur service for luxury resorts, weddings and incentive trips.
+                  </p>
+                </div>
               </div>
-              <div class="rounded-2xl border border-brandNavy/10 bg-white p-4 shadow-sm">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 mb-1">
-                  Catania Airport &gt; Palermo
-                </p>
-                <p class="text-slate-800 text-sm">
-                  Approx. 2.5–3 hours via motorway. Long‑distance transfers for executives and event crews.
-                </p>
+
+              <!-- Palermo -->
+              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
+                <div
+                  class="h-28 sm:h-32 bg-cover bg-center"
+                  style="background-image: url('assets/route-palermo.webp');"
+                ></div>
+                <div class="p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy mb-1">
+                    Catania Airport &gt; Palermo
+                  </p>
+                  <p class="text-slate-800 text-sm">
+                    Approx. 2.5–3 hours via motorway. Long‑distance transfers for executives and event crews.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -1093,6 +1132,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 src="image_0.png"
                 alt="Catania Airport Transfer logo"
                 class="h-8 w-auto object-contain"
+                loading="lazy"
+                decoding="async"
               />
               <div class="space-y-1">
                 <p class="text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100">
