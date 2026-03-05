@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F7QCJJL8S"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-7F7QCJJL8S');
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy | Catania Airport Transfer</title>
@@ -111,11 +103,32 @@
             <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
               © <span id="year"></span> Catania Airport Transfer. All rights reserved.
               <a href="privacy.html" class="text-slate-400 hover:text-brandOrange transition-colors">Privacy</a>
+              <a href="#" id="cookie-consent-manage" class="text-slate-400 hover:text-brandOrange transition-colors">Cookie preferences</a>
             </p>
             <p class="text-[10px] text-slate-500">Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 (CT) – P.IVA IT05924950875 – REA CT-448461</p>
           </div>
         </div>
       </footer>
+    </div>
+
+    <!-- Cookie consent banner (GDPR/ePrivacy compliant) -->
+    <div
+      id="cookie-consent-banner"
+      role="dialog"
+      aria-label="Cookie consent"
+      aria-describedby="cookie-consent-text"
+      class="hidden fixed bottom-0 inset-x-0 z-50 border-t border-brandNavy/70 bg-brandBlack/98 backdrop-blur-sm px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]"
+    >
+      <div class="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <p id="cookie-consent-text" class="text-xs text-slate-300 flex-1">
+          We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept.
+          <a href="privacy.html" class="text-brandOrange hover:underline whitespace-nowrap">Privacy policy</a>
+        </p>
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" id="cookie-consent-reject" class="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-slate-100 border border-brandNavy/50 rounded-full transition-colors">Reject non-essential</button>
+          <button type="button" id="cookie-consent-accept" class="px-4 py-2 text-xs font-semibold text-black bg-brandOrange hover:opacity-90 rounded-full transition-opacity">Accept</button>
+        </div>
+      </div>
     </div>
 
     <div class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy/70 bg-brandBlack/95 px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden">
@@ -127,5 +140,37 @@
     </div>
 
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+      (function() {
+        var CONSENT_KEY = 'cat_cookie_consent';
+        var GA_ID = 'G-7F7QCJJL8S';
+        var banner = document.getElementById('cookie-consent-banner');
+        var consent = localStorage.getItem(CONSENT_KEY);
+        function loadGA() {
+          if (window.gtag) return;
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+        }
+        function hideBanner() { if (banner) banner.classList.add('hidden'); }
+        function showBanner() { if (banner) banner.classList.remove('hidden'); }
+        function accept() { localStorage.setItem(CONSENT_KEY, 'accepted'); loadGA(); hideBanner(); }
+        function reject() { localStorage.setItem(CONSENT_KEY, 'rejected'); hideBanner(); }
+        if (consent === 'accepted') loadGA();
+        else if (consent !== 'rejected') { if (banner) banner.classList.remove('hidden'); }
+        document.getElementById('cookie-consent-accept')?.addEventListener('click', accept);
+        document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
+        document.getElementById('cookie-consent-manage')?.addEventListener('click', function(e) {
+          e.preventDefault();
+          showBanner();
+        });
+      })();
+    </script>
   </body>
 </html>
