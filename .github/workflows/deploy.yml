@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-  # Permette di avviare il deploy manualmente dalla tab Actions (Run workflow)
-  workflow_dispatch:
 
 jobs:
   web-deploy:
