@@ -14,12 +14,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="description" content="Privacy policy for Catania Airport Transfer. How we collect, use and protect your data." />
     <link rel="canonical" href="https://cataniaairporttransfer.net/privacy.html" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font (Montserrat, self-hosted) -->
+    <style>
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/montserrat-400.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/montserrat-500.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/montserrat-600.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/montserrat-700.woff2") format("woff2"); }
+    </style>
 
     <!-- Tailwind CSS (local build) -->
-    <link rel="stylesheet" href="assets/tailwind.css" />
+    <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />
   </head>
   <body class="bg-brandBlack text-slate-100 font-sans antialiased">
     <!-- Google Tag Manager (noscript) -->
