@@ -1,0 +1,24 @@
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Long cache for static assets
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png  "access plus 6 months"
+  ExpiresByType image/gif  "access plus 6 months"
+  ExpiresByType image/x-icon "access plus 6 months"
+
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpe?g|png|gif|ico|css|js)$">
+    Header set Cache-Control "public, max-age=15552000, immutable"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json
+</IfModule>
+
