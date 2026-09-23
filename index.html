@@ -1442,6 +1442,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           hideBanner();
         }
 
+        document.addEventListener('click', function(e) {
+          var a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+          if (a && window.gtag) window.gtag('event', 'contatto_email');
+        });
         if (consent === 'accepted') loadGA();
         else if (consent !== 'rejected') {
           if (banner) banner.classList.remove('hidden');
