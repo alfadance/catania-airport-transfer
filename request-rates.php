@@ -54,5 +54,6 @@ $headers = "From: $FROM\r\n"
   . "Reply-To: $email\r\n"
   . "Content-Type: text/plain; charset=UTF-8\r\n";
 
-$ok = mail($TO, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers);
+// Mittente di busta sul dominio: SPF (che autorizza l'IP del server) passa allineato al From, quindi anche DMARC.
+$ok = mail($TO, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers, '-fnoreply@cataniaairporttransfer.net');
 back($ok ? 'sent' : 'error');
