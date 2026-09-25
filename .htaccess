@@ -35,9 +35,13 @@
   <FilesMatch "\.woff2$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  # Pagine, CSS e JS hanno nomi fissi: browser e cache di Bluehost ricontrollano a ogni visita (304 se invariati).
+  # Il CSS arriva con l'impronta nell'indirizzo (tailwind.css?v=..., scritta dal deploy): si tiene un anno
+  <FilesMatch "\.css$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Le pagine hanno nomi fissi: browser, cache di Bluehost e CDN le ricontrollano a ogni visita (304 se invariate).
   # Senza, la cache del server continuava a servire ai browser la pagina di prima del deploy.
-  <FilesMatch "\.(html|php|css|js)$">
+  <FilesMatch "\.(html|php|js)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 
