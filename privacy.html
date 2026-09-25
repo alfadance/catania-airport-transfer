@@ -9,10 +9,9 @@
 
     <!-- Font (Montserrat, self-hosted) -->
     <style>
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/montserrat-400.woff2") format("woff2"); }
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/montserrat-500.woff2") format("woff2"); }
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/montserrat-600.woff2") format("woff2"); }
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/montserrat-700.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/montserrat-latin-400.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/montserrat-latin-500.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/montserrat-latin-600.woff2") format("woff2"); }
     </style>
 
     <!-- Tailwind CSS (local build) -->
@@ -23,7 +22,7 @@
       <header class="sticky top-0 z-30 border-b border-brandNavy/60 bg-brandBlack/95 backdrop-blur">
         <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <a href="index.html" class="inline-flex items-center gap-3">
-            <img src="image_0.png" alt="Catania Airport Transfer logo" class="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]" />
+            <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="(max-width: 640px) 160px, 220px" alt="Catania Airport Transfer logo" class="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]" />
             <span class="hidden sm:inline text-xs font-semibold tracking-[0.26em] uppercase text-slate-50">Catania Airport Transfer</span>
           </a>
           <nav class="hidden md:flex items-center gap-7 text-xs font-medium tracking-[0.22em] uppercase">
@@ -87,7 +86,7 @@
         <div class="max-w-6xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-400">
           <div class="flex flex-col sm:flex-row justify-between gap-6 items-start sm:items-center">
             <div class="flex items-center gap-3">
-              <img src="image_0.png" alt="Catania Airport Transfer logo" class="h-8 w-auto object-contain" />
+              <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="120px" loading="lazy" alt="Catania Airport Transfer logo" class="h-8 w-auto object-contain" />
               <div class="space-y-1">
                 <p class="text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100">Catania Airport Transfer</p>
                 <p class="text-[11px] text-slate-400">Premier chauffeur services for Catania &amp; Sicily.</p>

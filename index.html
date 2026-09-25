@@ -13,41 +13,36 @@
     <link
       rel="preload"
       as="image"
-      href="assets/catania-airport-transfer-chauffeur-etna-hero.webp"
-      imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero.webp"
-      imagesizes="(min-width: 1024px) 960px, 100vw"
+      imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w, assets/catania-airport-transfer-chauffeur-etna-hero.webp 1600w"
+      imagesizes="(min-width: 1024px) 500px, 100vw"
       type="image/webp"
+      fetchpriority="high"
     />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/montserrat-latin-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/montserrat-latin-600.woff2" crossorigin />
 
-    <!-- Font (Montserrat, self-hosted from JulietaUla/Montserrat on GitHub) -->
+    <!-- Font: Montserrat self-hosted, ridotto all'alfabeto latino (pesi 400, 500, 600; il 700 non è usato) -->
     <style>
       @font-face {
         font-family: "Montserrat";
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url("assets/fonts/montserrat-400.woff2") format("woff2");
+        src: url("assets/fonts/montserrat-latin-400.woff2") format("woff2");
       }
       @font-face {
         font-family: "Montserrat";
         font-style: normal;
         font-weight: 500;
         font-display: swap;
-        src: url("assets/fonts/montserrat-500.woff2") format("woff2");
+        src: url("assets/fonts/montserrat-latin-500.woff2") format("woff2");
       }
       @font-face {
         font-family: "Montserrat";
         font-style: normal;
         font-weight: 600;
         font-display: swap;
-        src: url("assets/fonts/montserrat-600.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url("assets/fonts/montserrat-700.woff2") format("woff2");
+        src: url("assets/fonts/montserrat-latin-600.woff2") format("woff2");
       }
     </style>
 
@@ -93,7 +88,7 @@
             <a href="#top" class="inline-flex items-center gap-3">
               <img
                 src="image_0-small.webp"
-                srcset="image_0-small.webp 250w, image_0.webp 400w"
+                srcset="image_0-small.webp 250w, image_0.webp 500w"
                 sizes="(max-width: 640px) 160px, 220px"
                 alt="Catania Airport Transfer logo"
                 width="400"
@@ -213,9 +208,12 @@
                     src="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp"
                     srcset="
                       assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w,
-                      assets/catania-airport-transfer-chauffeur-etna-hero.webp        1280w
+                      assets/catania-airport-transfer-chauffeur-etna-hero.webp        1600w
                     "
-                    sizes="(max-width: 768px) 100vw, 960px"
+                    sizes="(min-width: 1024px) 500px, 100vw"
+                    width="1600"
+                    height="893"
+                    fetchpriority="high"
                     alt="Black chauffeur car at Catania Airport with Mount Etna in the background"
                     class="h-[240px] sm:h-[300px] lg:h-[420px] w-full object-cover"
                   />
@@ -551,10 +549,7 @@
             <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4 text-sm">
               <!-- Taormina -->
               <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <div
-                  class="h-28 sm:h-32 bg-cover bg-center"
-                  style="background-image: url('assets/route-taormina.webp');"
-                ></div>
+                <img src="assets/route-taormina.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                 <div class="p-4 space-y-1.5">
                   <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                     Catania Airport &gt; Taormina
@@ -573,10 +568,7 @@
 
               <!-- Siracusa / Ortigia -->
               <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <div
-                  class="h-28 sm:h-32 bg-cover bg-center"
-                  style="background-image: url('assets/route-siracusa.webp');"
-                ></div>
+                <img src="assets/route-siracusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                 <div class="p-4 space-y-1.5">
                   <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                     Catania Airport &gt; Siracusa / Ortigia
@@ -595,10 +587,7 @@
 
               <!-- Noto / Ragusa -->
               <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <div
-                  class="h-28 sm:h-32 bg-cover bg-center"
-                  style="background-image: url('assets/route-noto-ragusa.webp');"
-                ></div>
+                <img src="assets/route-noto-ragusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                 <div class="p-4 space-y-1.5">
                   <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                     Catania Airport &gt; Noto / Ragusa
@@ -617,10 +606,7 @@
 
               <!-- Palermo -->
               <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <div
-                  class="h-28 sm:h-32 bg-cover bg-center"
-                  style="background-image: url('assets/route-palermo.webp');"
-                ></div>
+                <img src="assets/route-palermo.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                 <div class="p-4 space-y-1.5">
                   <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                     Catania Airport &gt; Palermo
@@ -776,10 +762,7 @@
                     <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-3 text-sm">
                       <!-- Scale card -->
                       <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <div
-                          class="h-28 sm:h-32 bg-cover bg-center"
-                          style="background-image: url('assets/events-scale.webp');"
-                        ></div>
+                        <img src="assets/events-scale.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                         <div class="p-4 space-y-1.5">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                             Scale
@@ -795,10 +778,7 @@
         
                       <!-- Experience card -->
                       <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <div
-                          class="h-28 sm:h-32 bg-cover bg-center"
-                          style="background-image: url('assets/events-experience.webp');"
-                        ></div>
+                        <img src="assets/events-experience.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                         <div class="p-4 space-y-1.5">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                             Experience
@@ -814,10 +794,7 @@
         
                       <!-- Coverage card -->
                       <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <div
-                          class="h-28 sm:h-32 bg-cover bg-center"
-                          style="background-image: url('assets/events-coverage.webp');"
-                        ></div>
+                        <img src="assets/events-coverage.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
                         <div class="p-4 space-y-1.5">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-brandNavy">
                             Coverage
@@ -1301,7 +1278,7 @@
             <div class="flex items-center gap-3">
               <img
                 src="image_0-small.webp"
-                srcset="image_0-small.webp 250w, image_0.webp 400w"
+                srcset="image_0-small.webp 250w, image_0.webp 500w"
                 sizes="(max-width: 640px) 120px, 180px"
                 alt="Catania Airport Transfer logo"
                 width="400"
