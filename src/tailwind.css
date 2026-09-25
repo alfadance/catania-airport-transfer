@@ -2,3 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Focus da tastiera sempre visibile: il colore del testo contrasta per costruzione con il fondo */
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  /* Sui pulsanti arancioni il testo è nero: l'anello prende l'arancione, visibile sul fondo scuro */
+  .bg-brandOrange:focus-visible {
+    outline-color: theme('colors.brandOrange');
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Bersagli di tocco: almeno 44px per pulsanti a pillola, pulsanti e tendine */
+  a[class*="rounded-full"],
+  button,
+  select {
+    min-height: 44px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Risposta al tocco sui pulsanti */
+    a[class*="rounded-full"]:active,
+    button:active {
+      transform: scale(0.97);
+    }
+  }
+}
