@@ -7,7 +7,7 @@
   RewriteRule ^ https://cataniaairporttransfer.net%{REQUEST_URI} [L,R=301]
 
   # Sorgenti e dipendenze non si servono
-  RewriteRule ^(src|node_modules)(/|$) - [R=404,L]
+  RewriteRule ^(src|scripts|node_modules)(/|$) - [R=404,L]
 </IfModule>
 
 # Configurazione e stato del deploy non si servono
