@@ -35,8 +35,9 @@
   <FilesMatch "\.woff2$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  # CSS e JS hanno nomi fissi: il browser ricontrolla a ogni visita (304 se invariati)
-  <FilesMatch "\.(css|js)$">
+  # Pagine, CSS e JS hanno nomi fissi: browser e cache di Bluehost ricontrollano a ogni visita (304 se invariati).
+  # Senza, la cache del server continuava a servire ai browser la pagina di prima del deploy.
+  <FilesMatch "\.(html|php|css|js)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 
