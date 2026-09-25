@@ -11,7 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Il CSS pubblicato è quello nel repository: se non corrisponde ai sorgenti, il deploy si ferma
+      - name: Check that assets/tailwind.css is up to date
+        run: |
+          npm ci
+          npm run build:css
+          git diff --exit-code assets/tailwind.css || { echo "::error::assets/tailwind.css non aggiornato: lancia npm run build:css e fai commit"; exit 1; }
 
       - name: Sync files to Bluehost
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -19,4 +30,13 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
           server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            src/**
+            package.json
+            package-lock.json
+            tailwind.config.cjs
