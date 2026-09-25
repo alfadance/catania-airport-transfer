@@ -21,8 +21,28 @@
     <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />
   </head>
   <body class="bg-brandBlack text-slate-100 font-sans antialiased">
+    <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-brandNavy">Skip to content</a>
+    <!-- Cookie consent banner (GDPR/ePrivacy compliant) -->
+    <div
+      id="cookie-consent-banner"
+      role="dialog"
+      aria-label="Cookie consent"
+      aria-describedby="cookie-consent-text"
+      class="hidden fixed bottom-0 inset-x-0 z-50 border-t border-brandNavy/70 bg-brandBlack on-dark px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]"
+    >
+      <div class="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <p id="cookie-consent-text" class="text-xs text-slate-300 flex-1">
+          We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept.
+          <a href="privacy.html" class="text-brandOrange hover:underline whitespace-nowrap">Privacy policy</a>
+        </p>
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" id="cookie-consent-reject" class="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-slate-100 border border-brandNavy/50 rounded-full transition-colors">Reject non-essential</button>
+          <button type="button" id="cookie-consent-accept" class="px-4 py-2 text-xs font-semibold text-black bg-brandOrange hover:bg-brandOrangeHover rounded-full transition-colors">Accept</button>
+        </div>
+      </div>
+    </div>
     <div class="min-h-screen flex flex-col">
-      <header class="sticky top-0 z-30 border-b border-brandNavy/60 bg-brandBlack/95 backdrop-blur">
+      <header class="sticky top-0 z-30 border-b border-brandNavy/60 bg-brandBlack on-dark">
         <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <a href="index.html" class="inline-flex items-center gap-3">
             <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="(max-width: 640px) 160px, 220px" alt="Catania Airport Transfer logo" class="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]" />
@@ -37,10 +57,10 @@
         </div>
       </header>
 
-      <main class="flex-1">
+      <main id="content" class="flex-1">
         <section class="max-w-3xl mx-auto px-4 py-16 md:py-24 text-sm text-slate-300 space-y-8">
           <h1 class="text-2xl sm:text-3xl font-semibold text-slate-50 tracking-tight">Privacy Policy</h1>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-brandOrange">Last updated: September 2026</p>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brandOrange">Last updated: September 2026</p>
 
           <div class="space-y-6">
             <div>
@@ -85,17 +105,17 @@
         </section>
       </main>
 
-      <footer class="bg-brandBlack border-t border-brandNavy/70 pb-20 md:pb-0">
+      <footer class="bg-brandBlack on-dark border-t border-brandNavy/70 pb-20 md:pb-0">
         <div class="max-w-6xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-400">
           <div class="flex flex-col sm:flex-row justify-between gap-6 items-start sm:items-center">
             <div class="flex items-center gap-3">
               <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="120px" loading="lazy" alt="Catania Airport Transfer logo" class="h-8 w-auto object-contain" />
               <div class="space-y-1">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100">Catania Airport Transfer</p>
-                <p class="text-[11px] text-slate-400">Premier chauffeur services for Catania &amp; Sicily.</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.26em] text-slate-100">Catania Airport Transfer</p>
+                <p class="text-xs text-slate-400">Premier chauffeur services for Catania &amp; Sicily.</p>
               </div>
             </div>
-            <div class="space-y-1 text-[11px] text-slate-400">
+            <div class="space-y-1 text-xs text-slate-400">
               <p><span class="text-slate-300">Email:</span> <a href="mailto:info@cataniaairporttransfer.net" class="hover:text-brandOrange">info@cataniaairporttransfer.net</a></p>
               <p><span class="text-slate-300">Phone:</span> <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-brandOrange"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-brandOrange" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.04 2C7.06 2 3 5.96 3 10.93c0 1.95.63 3.76 1.8 5.28L3 22l6.02-1.76a9.1 9.1 0 0 0 3.02.49c4.98 0 9.04-3.96 9.04-8.93C21.08 5.96 17.02 2 12.04 2Z"/>
@@ -106,41 +126,22 @@
             <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
               © <span id="year"></span> Catania Airport Transfer. All rights reserved.
               <a href="privacy.html" class="text-slate-400 hover:text-brandOrange transition-colors">Privacy</a>
-              <a href="#" id="cookie-consent-manage" class="text-slate-400 hover:text-brandOrange transition-colors">Cookie preferences</a>
+              <button type="button" id="cookie-consent-manage" class="min-h-0 text-slate-400 hover:text-brandOrange transition-colors">Cookie preferences</button>
             </p>
-            <p class="text-[10px] text-slate-400">Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 (CT) – P.IVA IT05924950875 – REA CT-448461</p>
+            <p class="text-xs text-slate-400">Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 (CT) – P.IVA IT05924950875 – REA CT-448461</p>
           </div>
         </div>
       </footer>
     </div>
 
-    <!-- Cookie consent banner (GDPR/ePrivacy compliant) -->
-    <div
-      id="cookie-consent-banner"
-      role="dialog"
-      aria-label="Cookie consent"
-      aria-describedby="cookie-consent-text"
-      class="hidden fixed bottom-0 inset-x-0 z-50 border-t border-brandNavy/70 bg-brandBlack/98 backdrop-blur-sm px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]"
-    >
-      <div class="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-        <p id="cookie-consent-text" class="text-xs text-slate-300 flex-1">
-          We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept.
-          <a href="privacy.html" class="text-brandOrange hover:underline whitespace-nowrap">Privacy policy</a>
-        </p>
-        <div class="flex items-center gap-2 shrink-0">
-          <button type="button" id="cookie-consent-reject" class="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-slate-100 border border-brandNavy/50 rounded-full transition-colors">Reject non-essential</button>
-          <button type="button" id="cookie-consent-accept" class="px-4 py-2 text-xs font-semibold text-black bg-brandOrange hover:opacity-90 rounded-full transition-opacity">Accept</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy/70 bg-brandBlack/95 px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden">
+    <div class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy/70 bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden">
       <p class="font-medium">Ready to talk?</p>
       <div class="flex items-center gap-2">
-        <a href="mailto:info@cataniaairporttransfer.net" class="inline-flex items-center gap-1 rounded-full border border-brandNavy/40 bg-white px-3 py-1.5 text-[11px] font-semibold text-brandNavy"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
+        <a href="mailto:info@cataniaairporttransfer.net" class="inline-flex items-center gap-1 rounded-full border border-brandNavy/40 bg-white px-3 py-1.5 text-xs font-semibold text-brandNavy"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
             <path d="M2 3h12v10H2V3Zm1.5 1.5v.3L8 8.5l4.5-3.7v-.3h-9Z"/>
           </svg> Email</a>
-        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 rounded-full bg-brandOrange px-3 py-1.5 text-[11px] font-semibold text-black"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 rounded-full bg-brandOrange px-3 py-1.5 text-xs font-semibold text-black"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.04 2C7.06 2 3 5.96 3 10.93c0 1.95.63 3.76 1.8 5.28L3 22l6.02-1.76a9.1 9.1 0 0 0 3.02.49c4.98 0 9.04-3.96 9.04-8.93C21.08 5.96 17.02 2 12.04 2Z"/>
           </svg> WhatsApp</a>
       </div>

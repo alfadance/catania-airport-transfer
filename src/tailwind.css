@@ -8,8 +8,11 @@
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
-  /* Sui pulsanti arancioni il testo è nero: l'anello prende l'arancione, visibile sul fondo scuro */
+  /* Sui pulsanti arancioni il testo è nero: anello navy sui fondi chiari (10:1), arancione sui fondi scuri */
   .bg-brandOrange:focus-visible {
+    outline-color: theme('colors.brandNavy');
+  }
+  .on-dark .bg-brandOrange:focus-visible {
     outline-color: theme('colors.brandOrange');
   }
 

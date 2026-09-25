@@ -11,6 +11,8 @@ module.exports = {
         brandBlack: '#050608',
         brandNavy: '#1B3F5D',
         brandOrange: '#EE8211',
+        brandOrangeHover: '#FF8F24',
+        mist: '#F4F6F9',
       },
     },
   },

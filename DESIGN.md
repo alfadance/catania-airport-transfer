@@ -79,8 +79,8 @@ components:
   icon-chip:
     backgroundColor: "{colors.harbour-navy}"
     textColor: "{colors.signal-orange}"
-    rounded: "{rounded.sm}"
-    size: "36px"
+    rounded: "{rounded.md}"
+    size: "40px"
 ---
 
 # Design System: Catania Airport Transfer
@@ -117,7 +117,8 @@ Two brand colours on a neutral ground: navy for everything read, orange for ever
   solid fill of icon chips and the process connectors.
 
 ### Neutral
-- **Night Black**: the hero, the header and the footer.
+- **Night Black**: the hero, the header, the footer, the cookie banner and the mobile bar, always solid (no blur,
+  no radial glow).
 - **Paper** and **Mist**: alternating section grounds on the light part of the page; Paper also for cards and inputs.
 - **Ink**, **Ink Soft**, **Ink Muted**: body text, secondary text and small print on light grounds, all above 4.5:1.
 - **On Dark** and **On Dark Muted**: text on Night Black.
@@ -169,7 +170,7 @@ neutral black. No coloured shadow or glow anywhere.
 ## Shapes
 
 Rounded, never sharp. Buttons and pills are fully round. Cards take 16px corners, panels and the form 24px, inputs
-12px, icon chips 8px. Borders are 1px navy at low strength. Photos are clipped by the card that holds them and
+and icon chips 12px. Borders are 1px navy at low strength. Photos are clipped by the card that holds them and
 carry no overlay, except the black veil on the hero photo, which is under review.
 
 ## Components
@@ -180,8 +181,9 @@ carry no overlay, except the black veil on the hero photo, which is under review
   Hover. One primary action per view: "Get the 2027 agency rates".
 - **Secondary:** Paper fill, hairline navy border, navy label; on hover the border turns orange.
 - **On dark:** outline in orange with an orange label, for the private-traveller side door.
-- **Focus / Active:** a 2px outline in the text colour, 3px offset (orange on orange buttons); a 0.97 scale on
-  press when reduced motion is not requested. Every button is at least 44px tall.
+- **Focus / Active:** a 2px outline in the text colour, 3px offset. On orange buttons the outline is navy on light
+  grounds and orange on dark ones (containers marked `on-dark`). A 0.97 scale on press when reduced motion is not
+  requested. Every button is at least 44px tall. A "Skip to content" link is the first focus stop.
 
 ### Cards / Containers
 - **Corner Style:** 16px (cards), 24px (panels, form).
@@ -201,8 +203,9 @@ carry no overlay, except the black veil on the hero photo, which is under review
   rates" pill in orange is always visible, also on phones where the links are hidden.
 
 ### Icon Chip (signature)
-A 36px Harbour Navy square with 8px corners holding a 16px Signal Orange icon (3.9:1). It is the only place orange
-and navy touch at full strength, and it replaces the old translucent orange tint.
+A 40px Harbour Navy square with 12px corners holding a 20px Signal Orange icon (3.9:1), used for the three steps of
+"How it works". It is the only place orange and navy touch at full strength, and it replaces the old translucent
+orange tint.
 
 ## Do's and Don'ts
 
