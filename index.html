@@ -497,7 +497,7 @@
                   <li>A replacement vehicle of the same class if anything goes wrong.</li>
                 </ul>
                 <a
-                  href="mailto:info@cataniaairporttransfer.net?subject=2027%20agency%20rates%20request"
+                  href="#agency-rates"
                   class="mt-auto text-sm font-semibold text-brandOrange hover:underline"
                   >Request the 2027 agency rates &rarr;</a
                 >
@@ -1092,6 +1092,83 @@
         </section>
 
         <!-- Contact / CTA -->
+        <section id="agency-rates" class="border-b border-brandNavy/10 bg-[#f4f6f9]">
+          <div class="max-w-6xl mx-auto px-4 py-20 lg:py-24">
+            <div class="grid gap-10 lg:grid-cols-[1fr,1.3fr] items-start">
+              <div class="space-y-3">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.32em] text-brandOrange">
+                  For Agencies &amp; DMCs
+                </p>
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-brandNavy">
+                  Request the 2027 agency rates
+                </h2>
+                <p class="text-sm sm:text-base text-slate-700 leading-relaxed">
+                  Tell us who you are and we will send you our net rate sheet for the whole of Sicily, with the
+                  written terms. We usually reply within the hour during office hours (Monday to Friday, 9:00&ndash;18:00).
+                </p>
+                <p class="text-[11px] text-slate-600">
+                  Prefer email? Write to
+                  <a href="mailto:info@cataniaairporttransfer.net?subject=2027%20agency%20rates%20request" class="text-brandOrange hover:underline">info@cataniaairporttransfer.net</a>.
+                </p>
+              </div>
+
+              <div class="rounded-3xl border border-brandNavy/15 bg-white p-5 sm:p-8">
+                <div id="rates-sent" class="hidden mb-5 rounded-xl border border-brandOrange/40 bg-brandOrange/10 px-4 py-3 text-sm text-brandNavy" role="status">
+                  Thank you. Your request has reached us, and we will reply by email with our 2027 agency rates.
+                </div>
+                <div id="rates-error" class="hidden mb-5 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+                  Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.
+                </div>
+                <form action="request-rates.php" method="post" class="grid gap-4 sm:grid-cols-2">
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                    <span>Your name</span>
+                    <input name="name" required maxlength="100" autocomplete="name" class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none">
+                  </label>
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                    <span>Company</span>
+                    <input name="agency" required maxlength="150" autocomplete="organization" class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none">
+                  </label>
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                    <span>Country</span>
+                    <input name="country" required maxlength="80" autocomplete="country-name" class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none">
+                  </label>
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                    <span>Work email</span>
+                    <input name="email" type="email" required maxlength="200" autocomplete="email" class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none">
+                  </label>
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy sm:col-span-2">
+                    <span>How did you hear about us?</span>
+                    <select name="how" required class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none">
+                      <option value="">Please choose</option>
+                      <option value="google">Google search</option>
+                      <option value="linkedin">LinkedIn</option>
+                      <option value="wtm">WTM London</option>
+                      <option value="email">An email from you</option>
+                      <option value="referral">Recommended by someone</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </label>
+                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy sm:col-span-2">
+                    <span>Anything we should know? <span class="font-normal text-slate-500">(optional)</span></span>
+                    <textarea name="message" rows="3" maxlength="2000" placeholder="Destinations, typical group size, season" class="w-full rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 focus:border-brandOrange focus:outline-none"></textarea>
+                  </label>
+                  <div class="hidden" aria-hidden="true">
+                    <label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+                  </div>
+                  <div class="sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-3">
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-6 py-3 text-sm font-semibold text-black hover:bg-[#ff8f24] transition-colors">
+                      Send my request
+                    </button>
+                    <p class="text-[11px] text-slate-600">
+                      We use these details only to reply to you. See our <a href="privacy.html" class="text-brandOrange hover:underline">privacy policy</a>.
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="contact" class="border-b border-brandNavy/10 bg-white">
           <div class="max-w-6xl mx-auto px-4 py-24 lg:py-32">
             <div
@@ -1437,6 +1514,13 @@
           if (a && window.gtag) window.gtag('event', 'contatto_email');
         });
         if (consent === 'accepted') loadGA();
+        // Esito del modulo tariffe: request-rates.php rimanda qui con ?rates=sent oppure ?rates=error.
+        var esito = new URLSearchParams(location.search).get('rates');
+        if (esito === 'sent' || esito === 'error') {
+          document.getElementById('rates-' + esito)?.classList.remove('hidden');
+          if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_tariffe');
+          history.replaceState(null, '', location.pathname + '#agency-rates');
+        }
         else if (consent !== 'rejected') {
           if (banner) banner.classList.remove('hidden');
         }
