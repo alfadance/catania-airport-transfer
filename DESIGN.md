@@ -171,7 +171,7 @@ neutral black. No coloured shadow or glow anywhere.
 
 Rounded, never sharp. Buttons and pills are fully round. Cards take 16px corners, panels and the form 24px, inputs
 and icon chips 12px. Borders are 1px navy at low strength. Photos are clipped by the card that holds them and
-carry no overlay, except the black veil on the hero photo, which is under review.
+carry no overlay, the hero photo included.
 
 ## Components
 

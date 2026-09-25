@@ -46,8 +46,8 @@ and a fuel adjustment tied to the official monthly diesel average that works in 
   FTPS to Bluehost. Bluehost has a proxy cache in front of the site: pages are sent with `Cache-Control: no-cache`
   so it revalidates them.
 - Analytics load only after cookie consent.
-- Undecided: a call (`tel:`) link next to WhatsApp; the Instagram profile address (the icon links to `#` today);
-  the black veil over the hero photo.
+- Decided on 2026-09-25: a call (`tel:`) link sits next to WhatsApp in the contacts and the footer (not in the mobile
+  bar); no Instagram icon until there is an active profile; no veil over the hero photo.
 
 ## Brand Commitments
 
