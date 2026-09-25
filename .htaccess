@@ -11,7 +11,7 @@
 </IfModule>
 
 # Configurazione e stato del deploy non si servono
-<FilesMatch "^(package(-lock)?\.json|tailwind\.config\.cjs|\.ftp-deploy-sync-state\.json)$">
+<FilesMatch "^(package(-lock)?\.json|tailwind\.config\.cjs|\.ftp-deploy-sync-state\.json|.*\.md)$">
   Require all denied
 </FilesMatch>
 
