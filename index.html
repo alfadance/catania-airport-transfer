@@ -1479,7 +1479,10 @@
         var CONSENT_KEY = 'cat_cookie_consent';
         var GA_ID = 'G-7F7QCJJL8S';
         var banner = document.getElementById('cookie-consent-banner');
-        var consent = localStorage.getItem(CONSENT_KEY);
+        // Storage bloccato (navigazione privata, cookie disattivati): si tratta come "nessuna scelta".
+        var consent = null;
+        try { consent = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+        function store(value) { try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {} }
 
         function loadGA() {
           if (window.gtag) return;
@@ -1500,12 +1503,12 @@
           if (banner) banner.classList.add('hidden');
         }
         function accept() {
-          localStorage.setItem(CONSENT_KEY, 'accepted');
+          store('accepted');
           loadGA();
           hideBanner();
         }
         function reject() {
-          localStorage.setItem(CONSENT_KEY, 'rejected');
+          store('rejected');
           hideBanner();
         }
 
@@ -1514,15 +1517,13 @@
           if (a && window.gtag) window.gtag('event', 'contatto_email');
         });
         if (consent === 'accepted') loadGA();
+        else if (consent !== 'rejected') showBanner();
         // Esito del modulo tariffe: request-rates.php rimanda qui con ?rates=sent oppure ?rates=error.
         var esito = new URLSearchParams(location.search).get('rates');
         if (esito === 'sent' || esito === 'error') {
           document.getElementById('rates-' + esito)?.classList.remove('hidden');
           if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_tariffe');
           history.replaceState(null, '', location.pathname + '#agency-rates');
-        }
-        else if (consent !== 'rejected') {
-          if (banner) banner.classList.remove('hidden');
         }
         document.getElementById('cookie-consent-accept')?.addEventListener('click', accept);
         document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
