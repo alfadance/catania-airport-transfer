@@ -294,6 +294,9 @@ slate rule; stars in orange, name in white, date and source in slate-300.
 ### Header, footer, cookie banner, mobile bar
 The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, four
 `nav-link`s and the orange pill; on phones a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
+Logo on black: header and footer use `image_0-dark*.webp`, the CAT mark with its navy turned to white and the
+lighter navy to slate-300 (orange unchanged), because the navy disappears on Night Black. The original `image_0*.webp`
+stays for light grounds and for the structured data.
 Footer: logo and line, page links, contacts in a rule list, then copyright, Privacy, Cookie preferences and the
 legal line. No oversized brand name as a sign-off: the name is already in the logo, the copyright and the legal line
 (removed on 2026-09-27 at the owner's request, it read as out of place).
