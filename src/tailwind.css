@@ -4,14 +4,16 @@
 @tailwind utilities;
 
 @layer base {
-  /* Archivo variabile, self-hosted, solo alfabeto latino: un file per pesi 100–900 e larghezze 62–125% */
+  /* Archivo variabile, self-hosted, solo alfabeto latino. Assi ridotti a quelli usati (passata 5): pesi 400–700,
+     larghezze 100–125%; 57 KB invece di 90. Un peso o una larghezza fuori da questi intervalli va rigenerato dal
+     file completo (fontTools, varLib.instancer), non chiesto al browser: lo sintetizzerebbe. */
   @font-face {
     font-family: "Archivo";
     font-style: normal;
-    font-weight: 100 900;
-    font-stretch: 62% 125%;
+    font-weight: 400 700;
+    font-stretch: 100% 125%;
     font-display: swap;
-    src: url("fonts/archivo-latin-wdth.woff2") format("woff2-variations"), url("fonts/archivo-latin-wdth.woff2") format("woff2");
+    src: url("fonts/archivo-latin-400-700.woff2") format("woff2");
   }
 
   /* Focus da tastiera sempre visibile: il colore del testo contrasta per costruzione con il fondo */
@@ -29,13 +31,17 @@
     outline-color: theme('colors.brandOrange');
   }
 
-  /* Le ancore non finiscono sotto l'header fisso (alto circa 70px) */
-  [id] {
-    scroll-margin-top: 5rem;
-  }
-
+  /* Né le ancore né l'elemento col focus da tastiera finiscono sotto l'header fisso (alto circa 73px) o, su
+     telefono, sotto la barra fissa in basso (WCAG 2.2, 2.4.11): scroll-padding vale per entrambi i casi */
   html {
     -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 4.5rem;
+  }
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-bottom: 0;
+    }
   }
 
   /* Superfici del browser nella palette: selezione arancione con testo nero, cursore e controlli navy */
@@ -166,7 +172,7 @@
     @apply space-y-2 text-sm font-semibold text-brandNavy;
   }
   .field {
-    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 hover:border-brandNavy/60 focus:border-brandNavy focus:outline-none focus:ring-1 focus:ring-brandNavy;
+    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/60 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 hover:border-brandNavy focus:border-brandNavy focus:outline-none focus:ring-1 focus:ring-brandNavy;
   }
   /* Tendina: Lucide "chevron-down" (ISC), la stessa della FAQ, al posto di quella del sistema */
   select.field {
@@ -218,18 +224,15 @@
     @apply stretch-semi text-lg font-bold text-brandNavy sm:text-xl;
   }
 
-  /* Footer (da 21st.dev "Footer with Suite" 29773): nome del marchio a tutta larghezza */
+  /* Footer (da 21st.dev "Footer with Suite" 29773). Il nome del marchio chiude la pagina come firma, su una riga:
+     in passata 5, su richiesta del titolare, non supera più il titolo dell'hero (prima 86 px contro 74 a 1440 e
+     tre righe da 61 px su telefono). Resta sotto t-h2: al massimo 48 px. */
   .footer-link {
     @apply inline-flex min-h-[44px] items-center text-sm text-slate-300 hover:text-white;
   }
   .footer-wordmark {
-    @apply stretch-wide select-none font-bold leading-[0.9] tracking-[-0.035em] text-slate-50;
-    font-size: clamp(2.5rem, 17vw, 7.5rem);
-  }
-  @media (min-width: 1024px) {
-    .footer-wordmark {
-      font-size: clamp(3rem, 5.9vw, 5.4rem);
-    }
+    @apply stretch-wide select-none whitespace-nowrap font-bold leading-none tracking-[-0.03em] text-slate-50;
+    font-size: clamp(1.25rem, 6.4vw, 3rem);
   }
 }
 

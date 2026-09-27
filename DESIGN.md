@@ -113,7 +113,7 @@ components:
   field:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
-    border: "1px harbour-navy at 30%, 60% on hover, full plus a 1px ring on focus"
+    border: "1px harbour-navy at 60% (3.5:1 on white, WCAG 1.4.11), full on hover, full plus a 1px ring on focus"
     rounded: "{rounded.md}"
     height: "48px"
     typography: "16px"
@@ -183,8 +183,11 @@ only transparency, and they are lines, not surfaces. Check the rendered screensh
 
 ## Typography
 
-**Font:** Archivo, variable, self-hosted (`assets/fonts/archivo-latin-wdth.woff2`, Latin set, weights 100 to
-900, widths 62% to 125%). One file, declared in `src/tailwind.css`, so both pages get it.
+**Font:** Archivo, variable, self-hosted (`assets/fonts/archivo-latin-400-700.woff2`, Latin set, 57 KB). The axes
+are cut to what the site uses: weights 400 to 700, widths 100% to 125%. A weight or width outside those ranges must
+be regenerated from the full Archivo file (fontTools `varLib.instancer`), otherwise the browser fakes it. A new
+file gets a new name: `.htaccess` caches fonts for a year as immutable. One file, declared in `src/tailwind.css`,
+so both pages get it.
 
 **Character:** the expanded cut (`stretch-wide`, 125%) in bold works like road and airport signage: place names,
 numbers, the hero. Section headings sit a notch narrower (`stretch-semi`, 112%). Body text is normal width.
@@ -224,7 +227,9 @@ name when it says what the number is ("Scale", "Catania Airport to"); it never i
 - Grids: 7+5 for text beside a panel, 5+7 for the form, 4+8 for the FAQ (on large screens the heading stays in
   view while the answers scroll), three columns for events and steps.
 - Phones: the fixed bottom bar carries WhatsApp and the rate sheet, so the footer keeps 80px of bottom padding.
-  Event photos hide below 640px. Anchors have `scroll-margin-top: 5rem` for the sticky header.
+  Event photos hide below 640px and, being `loading="lazy"`, are not downloaded there. `html` has
+  `scroll-padding-top: 5rem` (and 4.5rem at the bottom on phones), so neither an anchor nor the keyboard focus lands
+  under the sticky header or the bottom bar (WCAG 2.2, 2.4.11).
 
 ## Elevation & Depth
 
@@ -260,7 +265,7 @@ no overlay.
 ### Routes board (`route-row`, `route-img`, signature)
 The routes are a departures board, not cards: a navy rule on top, then one row per destination with a thumbnail,
 "Catania Airport to" in `t-meta`, the place in `t-route`, a one-line use case, and the drive time in navy semibold
-tabular figures aligned right. On phones the thumbnail sits left and the time drops under the text.
+tabular figures aligned right. On phones the thumbnail sits left and the time drops under the text. Thumbnails come in two files, `route-*-480.webp` (phones and 1x screens) and the 900px original, chosen by `srcset`; the hero adds a 1200px step between the 800px and 1600px files.
 
 ### Rule lists
 The agencies panel list, the FAQ, the contacts, the footer columns and the legal sections of `privacy.html` use the
@@ -271,8 +276,8 @@ Native `<details>`. Question in navy semibold, 44px or more; a stroke chevron th
 (transition only without reduced motion).
 
 ### Form (`field-label`, `field`, `form-foot`)
-White panel on the black section. Fields 48px, 16px text everywhere (no zoom on iOS), navy border at 30%, 60% on
-hover, full navy plus a 1px ring on focus. The select draws the FAQ chevron in navy instead of the system arrow.
+White panel on the black section. Fields 48px, 16px text everywhere (no zoom on iOS), navy border at 60% (3.5:1, enough to see
+the field), full navy on hover, full navy plus a 1px ring on focus. The select draws the FAQ chevron in navy instead of the system arrow.
 Under the submit button, a rule and a navy lock with the privacy line. Success is a white box with an orange
 border; error is the red box, with an email fallback. The submit button disables itself and reads "Sending…".
 
@@ -289,9 +294,9 @@ slate rule; stars in orange, name in white, date and source in slate-300.
 ### Header, footer, cookie banner, mobile bar
 The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, four
 `nav-link`s and the orange pill; on phones a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
-Footer: logo and line, page links, contacts in a rule list, then the brand name across the full width
-(`footer-wordmark`, hidden from screen readers), then copyright, Privacy, Cookie preferences and the legal line.
-Cookie banner: floating black card, navy border, 14px text, reject as outline and accept as primary.
+Footer: logo and line, page links, contacts in a rule list, then the brand name on one line as a sign-off
+(`footer-wordmark`, hidden from screen readers; 20px to 48px, never larger than `t-h2`), then copyright, Privacy, Cookie preferences and the legal line.
+Cookie banner: floating black card, navy border, 14px text, reject as outline and accept as primary. Opened from "Cookie preferences", it takes the focus and gives it back to that button after the choice. The phone bottom bar is a `<nav aria-label="Quick contact">`.
 
 ### Browser surfaces
 Text selection is orange with black text; caret and native accents are navy; focus rings as above.

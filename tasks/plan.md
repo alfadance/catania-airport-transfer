@@ -42,8 +42,8 @@ con `scripts/verifica/palette-check.py`; fa un commit sul ramo; aggiunge qui la 
 nessuno scorrimento orizzontale a 360 px; modulo ancora funzionante nel markup; commit con messaggio chiaro.
 
 ### Checkpoint finale
-- [ ] Cinque commit sul ramo, uno per skill
-- [ ] Screenshot prima/dopo a 1440 e 390 px
+- [x] Cinque commit sul ramo, uno per skill
+- [x] Screenshot prima/dopo a 1440 e 390 px
 - [ ] Il titolare guarda l'anteprima e decide se unire e pubblicare
 
 ## Rischi
@@ -258,3 +258,80 @@ libreria né CDN a runtime. Tratto 2, `currentColor`, estremità arrotondate.
 
 Restano i loghi dei marchi, che Lucide non disegna: Facebook e LinkedIn nei contatti. Il sito non ha un logo di
 WhatsApp (i pulsanti WhatsApp sono solo testo). `privacy.html` non contiene icone SVG.
+
+### Passata 5 — frontend-ui-engineering
+
+**Cosa è stato corretto.**
+- **Font.** Il file di Archivo aveva pesi 100–900 e larghezze 62–125%, ma il sito usa solo 400–700 e 100–125%. Con
+  `fontTools.varLib.instancer` gli assi sono stati ridotti a quegli intervalli: da 88 a 56 KB trasferiti, stessi 230
+  caratteri e stesse funzioni tipografiche (`tnum` compreso). Il file ha un nome nuovo,
+  `assets/fonts/archivo-latin-400-700.woff2`, perché `.htaccess` tiene i font un anno come `immutable`; il vecchio è
+  tolto. Ho scartato l'idea dei due file: un file solo da 56 KB costa meno di due richieste, e un sottoinsieme più
+  stretto dei caratteri avrebbe risparmiato altri 5 KB al prezzo delle lettere accentate che servono ai nomi.
+- **LCP dell'hero.** Su un telefono a 3x il browser sceglieva la foto da 1600 px (213 KB), perché quella da 800 px
+  non bastava. Ora c'è un gradino da 1200 px (41 KB, qualità 82, controllata a occhio sul cielo del tramonto), anche
+  nel `preload`. Su desktop resta la foto da 1600 px.
+- **Miniature delle tratte.** Quattro foto da 900 px (370 KB in tutto) mostrate a 88–200 px. Ora `srcset` con una
+  versione da 480 px (`route-*-480.webp`, 27–39 KB) e `sizes` calcolato sul ritaglio `object-cover`, non sulla sola
+  larghezza.
+- **Foto degli eventi sotto 640 px.** Misurato: non vengono scaricate, né prima né ora (`loading="lazy"` con
+  `display:none`). Nessuna modifica.
+- **Contrasto dei campi (WCAG 1.4.11).** Il bordo dei campi era navy al 30% su bianco, 1,7:1: sotto il 3:1 che serve
+  per riconoscere un campo. Ora navy al 60% (3,5:1), navy pieno al passaggio del mouse, focus invariato.
+- **Focus non coperto (WCAG 2.2, 2.4.11).** `scroll-margin-top` su `[id]` è diventato `scroll-padding` su `html`:
+  5rem in alto e, sotto 768 px, 4,5rem in basso, così né le ancore né il focus da tastiera finiscono sotto l'header o
+  sotto la barra fissa.
+- **Banner dei cookie da tastiera.** Aprendolo da "Cookie preferences" il focus restava sul pulsante nel footer, e con
+  Tab si finiva nella barra mobile: con Invio si seguiva un link invece di scegliere. Ora il banner (`tabindex="-1"`)
+  prende il focus e, dopo la scelta, lo restituisce al pulsante. Cosa si salva e quando parte GA4 non cambia.
+- **Script del consenso di `privacy.html`** allineato alla home: `localStorage` letto e scritto dentro `try`, stesse
+  funzioni `store`, `showBanner`, `hideBanner`. Comportamento invariato.
+- **Landmark e nomi.** La barra mobile ora è `<nav aria-label="Quick contact">` (prima era un `div` fuori da ogni
+  regione) e ha perso le classi senza effetto (`justify-between`, `text-xs`, `w-full`). Il logo dell'header aveva come
+  nome "Catania Airport Transfer logo Catania Airport Transfer": ora `alt="Catania Airport Transfer"` e il testo
+  accanto è `aria-hidden`. Su entrambe le pagine.
+- **Nome del marchio nel footer.** Su richiesta del titolare, arrivata durante la passata («eccessivamente grande, al
+  punto di sembrare fuori luogo»). Era più grande del titolo della pagina: 86 px contro 74 a 1440, tre righe da 61 px su
+  telefono. Ora sta su una riga, da 20 a 48 px (`clamp(1.25rem, 6.4vw, 3rem)`), mai più grande di `t-h2`. Questo
+  cambia una scelta della passata 3 ("nome del marchio a tutta larghezza"): la regola è in `.footer-wordmark`, se il
+  titolare la vuole diversa si cambia lì.
+- `DESIGN.md` aggiornato: font, bordo dei campi, `scroll-padding`, varianti delle immagini, footer, banner.
+
+**Misure.** Chrome headless via CDP, 390×844 a 3x, rete 4G lenta simulata (1,6 Mbps, 150 ms), cache disattivata;
+due giri per pagina, valori uguali entro 20 ms. "Iniziale" sono le risorse scaricate nei primi 15 secondi senza
+scorrere; "a pagina scorsa" dopo aver scorso fino in fondo. `main` è il sito online oggi (Montserrat, grafica vecchia),
+"prima" è 03c5597.
+
+| Misura (390 px, 4G) | `main` | prima (03c5597) | dopo |
+|---|---|---|---|
+| Richieste iniziali | 8 | 6 | 6 |
+| Peso iniziale | 387 KB | 416 KB | 211 KB |
+| Peso dei font | 62 KB (3 file) | 88 KB | 56 KB |
+| LCP (la foto dell'hero) | 2,12 s | 2,27 s | 1,13 s |
+| CLS | 0 | 0,001 | 0 |
+| Richieste a pagina scorsa | 12 | 10 | 10 |
+| Peso a pagina scorsa | 749 KB | 778 KB | 345 KB |
+| Foto degli eventi scaricate | 0 | 0 | 0 |
+
+**Verifiche.** `npm run build:css` pulita e `git diff --exit-code assets/tailwind.css` dopo il commit, come la
+pipeline. Screenshot `_shots/p5-*.png` (1440, 390, 360; privacy 1440 e 390; prima schermata a 1366×768 e 320×640).
+palette-check: 2 pixel a 1440, 4 a 390, 7 a 360, 0 e 7 sulla privacy, tutti sul logo dell'header fisso (artefatto
+noto). `scrollWidth` uguale alla finestra a 320 e 360 px su entrambe le pagine. A 1366×768 il pulsante "Get the 2027
+agency rates" finisce a 456 px e la foto comincia a 520; a 320 px il pulsante dell'hero è sotto la piega, ma la stessa
+azione è nella barra fissa in basso, sempre in vista. Prova da tastiera (Tab reali via CDP) a 390 e 1440: 44 e 46 fermate
+sulla home, tutte con il focus visibile e nessuna coperta; menu mobile aperto con Invio, Tab entra nelle voci, Esc lo
+chiude e riporta il focus su "Menu"; banner dei cookie come sopra. 0 contrasti sotto soglia (audit di `cdp.mjs`).
+Testo visibile di entrambe le pagine identico a 03c5597; modulo con `name`, `id`, `action` e agganci GA4 invariati.
+
+**Difetti rimasti.**
+- Il font non contiene il trattino che non va a capo (U+2011, in "fixed‑price", "large‑scale", "pick‑up") né la
+  freccia "←" della privacy: il browser li prende dal carattere di sistema. Si vede appena; si risolve solo cambiando
+  i caratteri nel testo, cosa che questa passata non poteva fare.
+- Il banner dei cookie copre la barra mobile finché non si sceglie (come dalla passata 3).
+- Header, footer, banner e barra mobile restano copiati a mano nelle due pagine: senza un passo di build per l'HTML
+  non c'è un modo più semplice. Oggi sono identici (controllato con `diff`).
+- I link di email e telefono nella sezione contatti sono alti 17 px: passano il 2.5.8 per la spaziatura fra le righe,
+  ma non i 44 px del piano.
+- Durante la passata `main` è avanzato da 1201f54 a 9b34fa3 ("Build del CSS: legge entrambe le pagine dalla
+  configurazione"), lo stesso ritocco a `package.json` della passata 4: prima di unire il ramo va controllato che non
+  ci siano conflitti.

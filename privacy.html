@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#050608" />
 
     <!-- Font: Archivo variabile self-hosted (@font-face in assets/tailwind.css) -->
-    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-wdth.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-400-700.woff2" crossorigin />
 
     <!-- Tailwind CSS (local build) -->
     <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />
@@ -22,6 +22,7 @@
     <div
       id="cookie-consent-banner"
       role="dialog"
+      tabindex="-1"
       aria-label="Cookie consent"
       aria-describedby="cookie-consent-text"
       class="hidden fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-2xl border border-brandNavy bg-brandBlack on-dark p-5 sm:inset-x-6 sm:bottom-6"
@@ -58,12 +59,12 @@
               src="image_0-small.webp"
               srcset="image_0-small.webp 250w, image_0.webp 500w"
               sizes="(max-width: 640px) 160px, 220px"
-              alt="Catania Airport Transfer logo"
+              alt="Catania Airport Transfer"
               width="400"
               height="250"
               class="h-11 sm:h-12 w-auto object-contain"
             />
-            <span class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
+            <span aria-hidden="true" class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
               Catania Airport Transfer
             </span>
           </a>
@@ -192,7 +193,7 @@
             </dl>
           </div>
 
-          <p class="footer-wordmark mt-14 lg:mt-20" aria-hidden="true"><span class="block lg:inline">Catania </span><span class="block lg:inline">Airport </span><span class="block lg:inline">Transfer</span></p>
+          <p class="footer-wordmark mt-12 lg:mt-16" aria-hidden="true">Catania Airport Transfer</p>
 
           <div class="mt-8 flex flex-col gap-3 border-t border-brandNavy pt-4 text-sm text-slate-400 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
             <p class="flex flex-wrap items-center gap-x-5">
@@ -209,11 +210,12 @@
     </div>
 
 
-    <!-- Mobile sticky contact bar -->
-    <div
-      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden"
+    <!-- Mobile sticky contact bar: un landmark, così il lettore di schermo la trova e non resta contenuto fuori dalle regioni -->
+    <nav
+      aria-label="Quick contact"
+      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 md:hidden"
     >
-      <div class="flex w-full items-center gap-2">
+      <div class="flex items-center gap-2">
         <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="shrink-0 btn btn-sm btn-outline-dark px-4">
           <span>WhatsApp</span>
         </a>
@@ -221,7 +223,7 @@
           <span>Get the 2027 agency rates</span>
         </a>
       </div>
-    </div>
+    </nav>
 
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
@@ -238,7 +240,10 @@
         var CONSENT_KEY = 'cat_cookie_consent';
         var GA_ID = 'G-7F7QCJJL8S';
         var banner = document.getElementById('cookie-consent-banner');
-        var consent = localStorage.getItem(CONSENT_KEY);
+        // Storage bloccato (navigazione privata, cookie disattivati): si tratta come "nessuna scelta", come nella home.
+        var consent = null;
+        try { consent = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+        function store(value) { try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {} }
         function loadGA() {
           if (window.gtag) return;
           window.dataLayer = window.dataLayer || [];
@@ -251,17 +256,24 @@
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
           document.head.appendChild(s);
         }
-        function hideBanner() { if (banner) banner.classList.add('hidden'); }
+        // Aperto da "Cookie preferences": il focus va al banner e, dopo la scelta, torna al pulsante
+        var opener = null;
         function showBanner() { if (banner) banner.classList.remove('hidden'); }
-        function accept() { localStorage.setItem(CONSENT_KEY, 'accepted'); loadGA(); hideBanner(); }
-        function reject() { localStorage.setItem(CONSENT_KEY, 'rejected'); hideBanner(); }
+        function hideBanner() {
+          if (banner) banner.classList.add('hidden');
+          if (opener) { opener.focus(); opener = null; }
+        }
+        function accept() { store('accepted'); loadGA(); hideBanner(); }
+        function reject() { store('rejected'); hideBanner(); }
         if (consent === 'accepted') loadGA();
-        else if (consent !== 'rejected') { if (banner) banner.classList.remove('hidden'); }
+        else if (consent !== 'rejected') showBanner();
         document.getElementById('cookie-consent-accept')?.addEventListener('click', accept);
         document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
         document.getElementById('cookie-consent-manage')?.addEventListener('click', function(e) {
           e.preventDefault();
+          opener = this;
           showBanner();
+          if (banner) banner.focus();
         });
       })();
     </script>

@@ -25,12 +25,12 @@
     <link
       rel="preload"
       as="image"
-      imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w, assets/catania-airport-transfer-chauffeur-etna-hero.webp 1600w"
+      imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w, assets/catania-airport-transfer-chauffeur-etna-hero-1200.webp 1200w, assets/catania-airport-transfer-chauffeur-etna-hero.webp 1600w"
       imagesizes="(min-width: 1280px) 1232px, 100vw"
       type="image/webp"
       fetchpriority="high"
     />
-    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-wdth.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-400-700.woff2" crossorigin />
 
     <!-- Font: Archivo variabile self-hosted (@font-face in assets/tailwind.css) -->
 
@@ -82,6 +82,7 @@
     <div
       id="cookie-consent-banner"
       role="dialog"
+      tabindex="-1"
       aria-label="Cookie consent"
       aria-describedby="cookie-consent-text"
       class="hidden fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-2xl border border-brandNavy bg-brandBlack on-dark p-5 sm:inset-x-6 sm:bottom-6"
@@ -118,12 +119,12 @@
               src="image_0-small.webp"
               srcset="image_0-small.webp 250w, image_0.webp 500w"
               sizes="(max-width: 640px) 160px, 220px"
-              alt="Catania Airport Transfer logo"
+              alt="Catania Airport Transfer"
               width="400"
               height="250"
               class="h-11 sm:h-12 w-auto object-contain"
             />
-            <span class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
+            <span aria-hidden="true" class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
               Catania Airport Transfer
             </span>
           </a>
@@ -185,6 +186,7 @@
                 src="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp"
                 srcset="
                   assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w,
+                  assets/catania-airport-transfer-chauffeur-etna-hero-1200.webp   1200w,
                   assets/catania-airport-transfer-chauffeur-etna-hero.webp        1600w
                 "
                 sizes="(min-width: 1280px) 1232px, 100vw"
@@ -269,7 +271,7 @@
             <ul class="border-t-2 border-brandNavy">
               <!-- Taormina -->
               <li class="route-row">
-                <img src="assets/route-taormina.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
+                <img src="assets/route-taormina-480.webp" srcset="assets/route-taormina-480.webp 480w, assets/route-taormina.webp 900w" sizes="(min-width: 1024px) 200px, (min-width: 640px) 172px, 144px" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
                 <div>
                   <h3 class="text-brandNavy">
                     <span class="block t-meta text-slate-600">Catania Airport to</span>
@@ -282,7 +284,7 @@
 
               <!-- Siracusa / Ortigia -->
               <li class="route-row">
-                <img src="assets/route-siracusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
+                <img src="assets/route-siracusa-480.webp" srcset="assets/route-siracusa-480.webp 480w, assets/route-siracusa.webp 900w" sizes="(min-width: 1024px) 200px, (min-width: 640px) 172px, 144px" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
                 <div>
                   <h3 class="text-brandNavy">
                     <span class="block t-meta text-slate-600">Catania Airport to</span>
@@ -295,7 +297,7 @@
 
               <!-- Noto / Ragusa -->
               <li class="route-row">
-                <img src="assets/route-noto-ragusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
+                <img src="assets/route-noto-ragusa-480.webp" srcset="assets/route-noto-ragusa-480.webp 480w, assets/route-noto-ragusa.webp 900w" sizes="(min-width: 1024px) 200px, (min-width: 640px) 172px, 144px" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
                 <div>
                   <h3 class="text-brandNavy">
                     <span class="block t-meta text-slate-600">Catania Airport to</span>
@@ -308,7 +310,7 @@
 
               <!-- Palermo -->
               <li class="route-row">
-                <img src="assets/route-palermo.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
+                <img src="assets/route-palermo-480.webp" srcset="assets/route-palermo-480.webp 480w, assets/route-palermo.webp 900w" sizes="(min-width: 1024px) 200px, (min-width: 640px) 172px, 144px" alt="" loading="lazy" decoding="async" width="900" height="502" class="route-img" />
                 <div>
                   <h3 class="text-brandNavy">
                     <span class="block t-meta text-slate-600">Catania Airport to</span>
@@ -751,7 +753,7 @@
             </dl>
           </div>
 
-          <p class="footer-wordmark mt-14 lg:mt-20" aria-hidden="true"><span class="block lg:inline">Catania </span><span class="block lg:inline">Airport </span><span class="block lg:inline">Transfer</span></p>
+          <p class="footer-wordmark mt-12 lg:mt-16" aria-hidden="true">Catania Airport Transfer</p>
 
           <div class="mt-8 flex flex-col gap-3 border-t border-brandNavy pt-4 text-sm text-slate-400 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
             <p class="flex flex-wrap items-center gap-x-5">
@@ -768,11 +770,12 @@
     </div>
 
 
-    <!-- Mobile sticky contact bar -->
-    <div
-      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden"
+    <!-- Mobile sticky contact bar: un landmark, così il lettore di schermo la trova e non resta contenuto fuori dalle regioni -->
+    <nav
+      aria-label="Quick contact"
+      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 md:hidden"
     >
-      <div class="flex w-full items-center gap-2">
+      <div class="flex items-center gap-2">
         <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="shrink-0 btn btn-sm btn-outline-dark px-4">
           <span>WhatsApp</span>
         </a>
@@ -780,7 +783,7 @@
           <span>Get the 2027 agency rates</span>
         </a>
       </div>
-    </div>
+    </nav>
 
     <script type="application/ld+json">
       {
@@ -862,11 +865,14 @@
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
           document.head.appendChild(s);
         }
+        // Aperto da "Cookie preferences": il focus va al banner e, dopo la scelta, torna al pulsante
+        var opener = null;
         function showBanner() {
           if (banner) banner.classList.remove('hidden');
         }
         function hideBanner() {
           if (banner) banner.classList.add('hidden');
+          if (opener) { opener.focus(); opener = null; }
         }
         function accept() {
           store('accepted');
@@ -905,7 +911,9 @@
         document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
         document.getElementById('cookie-consent-manage')?.addEventListener('click', function(e) {
           e.preventDefault();
+          opener = this;
           showBanner();
+          if (banner) banner.focus();
         });
       })();
     </script>
