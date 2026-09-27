@@ -24,6 +24,10 @@ jobs:
           npm run build:css
           git diff --exit-code assets/tailwind.css || { echo "::error::assets/tailwind.css non aggiornato: lancia npm run build:css e fai commit"; exit 1; }
 
+      # Un errore di sintassi in un .php manderebbe online un modulo rotto: il deploy si ferma prima
+      - name: Check PHP syntax
+        run: for f in *.php; do php -l "$f" || exit 1; done
+
       # Il CSS ha un nome fisso: l'impronta del contenuto nell'indirizzo lo rende nuovo a ogni modifica,
       # così browser e CDN possono tenerlo in cache a lungo senza servire una versione vecchia
       - name: Version the CSS URL
