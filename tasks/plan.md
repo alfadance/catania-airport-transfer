@@ -176,3 +176,67 @@ logo dell'header fisso catturato fuori dalla maschera delle immagini (artefatto 
 e 0 elementi oltre il bordo, con il banner dei cookie aperto; banner controllato a 360 e 1440 px; `git grep`
 dell'inizio della chiave di 21st.dev: nessun file tracciato la contiene; modulo con `name`, `id`, `action` e
 script GA4 invariati.
+
+### Passata 4 — impeccable
+
+**Critica** (skill `impeccable`, comandi `critique` e `polish`; eseguita in un solo contesto, senza i due sotto-agenti
+separati che la skill prevede, e senza domande al titolare perché il perimetro era già fissato). Render guardati a
+1440, 390 e 360 px più il rilevatore `impeccable detect` su entrambe le pagine. Punteggio Nielsen su 8 euristiche
+(la 7 e la 10 non si applicano a una pagina di presentazione): **23/32 prima, 24/32 dopo**. Il salto è piccolo
+perché la home era già solida: il guadagno vero è la coerenza fra le due pagine (euristica 4, da 2 a 3).
+
+Problemi trovati, in ordine:
+1. **P1, `privacy.html` rotta.** Lo script `build:css` passava `--content ./index.html ./privacy.html`: la CLI di
+   Tailwind prende solo il primo valore, quindi le classi usate solo dalla privacy (`max-w-3xl`, `space-y-*`,
+   `py-16`...) sparivano dal CSS e la pagina usciva senza margini, testo a tutta larghezza a 1440 px. In più aveva
+   ancora header, footer, banner e barra mobile delle versioni vecchie, un'etichetta arancione in maiuscolo spaziato
+   sopra il testo (il kicker vietato) e link arancioni.
+2. **P2, icone di famiglie diverse.** Passi di "How it works" con glifi pieni da 20 px poco leggibili, stelle come
+   caratteri Unicode `★`, lucchetto e frecce a tratto.
+3. **P2, recensioni.** Nella recensione lunga a 1440 px il nome dell'autore stava in fondo alla colonna (`mt-auto`),
+   staccato dal testo da un vuoto di circa 150 px. Misura fuori scala (`text-[1.7rem]`, `text-[0.95rem]`).
+4. **P3, superfici del browser non curate.** Selezione del testo, cursore e freccia della tendina erano quelli di
+   sistema; il `scale(0.97)` alla pressione dei pulsanti scattava senza transizione.
+5. **P3, `DESIGN.md` superato.** Diceva ancora Montserrat, schede per le tratte, chip da 40 px: il rilevatore
+   segnalava come fuori sistema il carattere e metà dei colori.
+
+**Cosa è cambiato.**
+- `package.json`: tolto `--content` dallo script, che ora legge i file da `tailwind.config.cjs` (lì ci sono già
+  tutte e due le pagine). Il controllo della pipeline usa lo stesso script, quindi resta coerente.
+- `privacy.html` sullo stesso sistema della home: stesso header (con menu mobile e pulsante tariffe, link verso
+  `index.html#…`), stesso footer con il nome del marchio, stesso banner dei cookie a scheda, stessa barra mobile
+  (WhatsApp più "Get the 2027 agency rates" al posto del vecchio "Ready to talk?" con Email). Apertura nera con il
+  titolo in `t-h2` e la data sotto, in `t-meta` e non più come kicker arancione; testo legale su bianco in una
+  colonna da 68 caratteri (classe `legal`), sezioni divise da filetti come FAQ e contatti, link navy sottolineati in
+  arancione. Il testo legale è identico, verificato confrontando il testo di `<main>` prima e dopo. Lo script del
+  consenso è invariato; si aggiunge solo quello del menu mobile, lo stesso della home.
+- Icone: i tre passi hanno icone a tratto da 24 px (fumetto, cartello col nome, auto), stessa famiglia di frecce e
+  lucchetto. Le stelle sono una sola stella SVG (`#star`) usata cinque volte, con `role="img"` e la stessa etichetta.
+- Recensioni: nuova classe `t-quote` per la recensione lunga (20 → 28 px); il nome segue il testo. L'elenco del
+  pannello agenzie passa da 15,2 a 16 px.
+- Nuove classi: `nav-link` (voci dell'header, usate da entrambe le pagine), `t-quote`, `legal`; `select.field` con
+  la freccia della FAQ disegnata in navy. `::selection` arancione con testo nero, `caret-color` e `accent-color`
+  navy. `.btn` anima colore e trasformazione in 150 ms.
+- FAQ: da 1024 px il titolo resta in vista mentre si scorrono le risposte (`lg:sticky`).
+- Banner dei cookie senza ombra: basta il bordo navy (il rilevatore segnalava bordo sottile più ombra larga).
+- `DESIGN.md` riscritto sul sistema attuale: Archivo e le sue due larghezze, tabella della scala `t-*`, spaziature,
+  pulsanti e link, tabellone delle tratte, liste a filetti, modulo, chip delle icone, header e footer condivisi,
+  le due pagine. Le regole della palette restano, con i neutri slate usati davvero.
+
+**Lasciato alla passata 5.** Il titolo dell'hero a 74 px per 55 caratteri, che il rilevatore segnala come troppo
+grande: è la voce del marchio e sta su due righe con la foto visibile, quindi resta, ma va guardato su schermi
+bassi (1366×768). Il banner dei cookie copre la barra mobile finché non si sceglie (come già in passata 3). Lo
+script del consenso in `privacy.html` non protegge `localStorage` con `try` come quello della home: non l'ho
+toccato per il vincolo sugli script, ma andrebbe allineato. Da misurare se le foto degli eventi, nascoste sotto 640 px,
+vengono scaricate lo stesso, insieme al peso del font. Aggiornare `caniuse-lite` (avviso della build).
+
+**Da non disfare.** Header, footer, banner e barra mobile identici sulle due pagine: una modifica si fa in tutte e
+due. Nessun kicker, nemmeno per la data della privacy. Una sola famiglia di icone a tratto; niente glifi Unicode
+come icone. Lo script `build:css` senza `--content`.
+
+Verifiche: `npm run build:css` pulita. palette-check: 0 pixel fuori palette a 1440 (home e privacy), 7 a 390 e 7 a
+360 sulla home, 7 a 390 sulla privacy, tutti sul logo dell'header fisso catturato a metà pagina (artefatto noto);
+0 sui due screenshot del banner (home 1440, privacy 360). A 360 px `scrollWidth` = 360 e 0 elementi oltre il bordo
+su tutte e due le pagine; 0 contrasti sotto soglia; unici bersagli sotto 44 px i link dentro il testo (esenti).
+Rilevatore: da 24 segnalazioni a 20, tutte `cramped-padding` sulle liste a filetti (falsi positivi: il testo sta
+in righe alte 44 px) più `oversized-h1`. Modulo con `name`, `id`, `action` e script GA4 invariati.

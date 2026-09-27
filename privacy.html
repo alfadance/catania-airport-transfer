@@ -24,127 +24,215 @@
       role="dialog"
       aria-label="Cookie consent"
       aria-describedby="cookie-consent-text"
-      class="hidden fixed bottom-0 inset-x-0 z-50 border-t border-brandNavy/70 bg-brandBlack on-dark px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]"
+      class="hidden fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-2xl border border-brandNavy bg-brandBlack on-dark p-5 sm:inset-x-6 sm:bottom-6"
     >
-      <div class="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-        <p id="cookie-consent-text" class="text-xs text-slate-300 flex-1">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <p id="cookie-consent-text" class="flex-1 text-sm leading-relaxed text-slate-300">
           We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept.
-          <a href="privacy.html" class="text-brandOrange hover:underline whitespace-nowrap">Privacy policy</a>
+          <a href="privacy.html" class="link whitespace-nowrap text-white">Privacy policy</a>
         </p>
-        <div class="flex items-center gap-2 shrink-0">
-          <button type="button" id="cookie-consent-reject" class="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-slate-100 border border-brandNavy/50 rounded-full transition-colors">Reject non-essential</button>
-          <button type="button" id="cookie-consent-accept" class="px-4 py-2 text-xs font-semibold text-black bg-brandOrange hover:bg-brandOrangeHover rounded-full transition-colors">Accept</button>
+        <div class="grid shrink-0 grid-cols-[1fr,auto] gap-2 sm:flex">
+          <button
+            type="button"
+            id="cookie-consent-reject"
+            class="btn btn-sm btn-outline-dark whitespace-nowrap px-4"
+          >
+            Reject non-essential
+          </button>
+          <button
+            type="button"
+            id="cookie-consent-accept"
+            class="btn btn-sm btn-primary px-6"
+          >
+            Accept
+          </button>
         </div>
       </div>
     </div>
     <div class="min-h-screen flex flex-col">
-      <header class="sticky top-0 z-30 border-b border-brandNavy/60 bg-brandBlack on-dark">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <!-- Header -->
+      <header class="sticky top-0 z-30 border-b border-brandNavy bg-brandBlack on-dark">
+        <div class="wrap py-3 flex items-center justify-between gap-4">
           <a href="index.html" class="inline-flex items-center gap-3">
-            <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="(max-width: 640px) 160px, 220px" alt="Catania Airport Transfer logo" class="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]" />
-            <span class="hidden sm:inline text-xs font-semibold tracking-[0.26em] uppercase text-slate-50">Catania Airport Transfer</span>
+            <img
+              src="image_0-small.webp"
+              srcset="image_0-small.webp 250w, image_0.webp 500w"
+              sizes="(max-width: 640px) 160px, 220px"
+              alt="Catania Airport Transfer logo"
+              width="400"
+              height="250"
+              class="h-11 sm:h-12 w-auto object-contain"
+            />
+            <span class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
+              Catania Airport Transfer
+            </span>
           </a>
-          <nav class="hidden md:flex items-center gap-7 text-xs font-medium tracking-[0.22em] uppercase">
-            <a href="index.html#about" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Why us</a>
-            <a href="index.html#routes" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Routes</a>
-            <a href="index.html#reviews" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Reviews</a>
-            <a href="index.html#faq" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">FAQ</a>
+
+          <nav class="flex items-center gap-8 text-sm font-medium" aria-label="Main">
+            <div class="hidden md:flex items-center gap-8">
+            <a href="index.html#about" class="nav-link">Why us</a>
+            <a href="index.html#routes" class="nav-link">Routes</a>
+            <a href="index.html#reviews" class="nav-link">Reviews</a>
+            <a href="index.html#faq" class="nav-link">FAQ</a>
+            </div>
+            <a href="index.html#agency-rates" class="hidden md:inline-flex btn btn-sm btn-primary">Agency rates</a>
+            <!-- Menu su telefono: details nativo, funziona anche senza JavaScript; la chiamata all'azione sta nella barra in basso -->
+            <details id="mobile-menu" class="group md:hidden">
+              <summary class="btn btn-sm btn-outline-dark cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span class="group-open:hidden">Menu</span>
+                <span class="hidden group-open:inline">Close</span>
+              </summary>
+              <div class="absolute inset-x-0 top-full border-b border-brandNavy bg-brandBlack">
+                <ul class="wrap divide-y divide-brandNavy py-2">
+                  <li><a href="index.html#about" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Why us</a></li>
+                  <li><a href="index.html#routes" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Routes</a></li>
+                  <li><a href="index.html#reviews" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Reviews</a></li>
+                  <li><a href="index.html#faq" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">FAQ</a></li>
+                  <li><a href="index.html#contact" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Contact</a></li>
+                </ul>
+              </div>
+            </details>
           </nav>
         </div>
       </header>
 
       <main id="content" class="flex-1">
-        <section class="max-w-3xl mx-auto px-4 py-16 md:py-24 text-sm text-slate-300 space-y-8">
-          <h1 class="text-2xl sm:text-3xl font-semibold text-slate-50 tracking-tight">Privacy Policy</h1>
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brandOrange">Last updated: September 2026</p>
+        <!-- Apertura nera come nella home: titolo, poi la data -->
+        <section class="on-dark">
+          <div class="wrap pt-14 pb-12 sm:pt-20 lg:pt-24 lg:pb-16">
+            <h1 class="t-h2 text-slate-50">Privacy Policy</h1>
+            <p class="mt-4 t-meta text-slate-300">Last updated: September 2026</p>
+          </div>
+        </section>
 
-          <div class="space-y-6">
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">Who we are</h2>
-              <p>This website is operated by Catania Airport Transfer (Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 Catania (CT), Italy – VAT IT05924950875, REA: CT-448461). We provide B2B chauffeur and airport transfer services in Sicily.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">Data we collect</h2>
-              <p>When you contact us via email, phone, WhatsApp or any form on this site, we may collect your name, email address, phone number, company name and the content of your message. We use this information only to respond to your enquiries, provide quotes and manage bookings.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">How we use your data</h2>
-              <p>We do not sell or share your data with third parties for marketing. We may retain contact details and correspondence for the time necessary to fulfil contracts, handle disputes and comply with legal obligations.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">If we wrote to your company first</h2>
-              <p>We sometimes introduce our services to travel agencies, tour operators and DMCs that sell Sicily. We only write to business email addresses that the company publishes on its own website, and we note where we found them. We do this on the basis of our legitimate interest in offering our services to businesses (Article 6(1)(f) GDPR). If a named person replies, we keep their name, business email and our correspondence only to continue the conversation. If you reply "no thanks", or ask us by email, we stop writing and keep only your company name and address on a do-not-contact list, so that we do not write again. Companies that do not reply are removed from our list after 24 months.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">Cookies and tracking</h2>
-              <p>This site uses technical cookies, and Google Analytics 4 cookies only if you accept them in the cookie banner, to understand how the site is used. You can change your choice at any time with "Cookie preferences" at the bottom of the home page. No sensitive personal data is stored in cookies.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">Your rights</h2>
-              <p>You may request access to, correction or deletion of your personal data, or object to its processing, by contacting us at <a href="mailto:info@cataniaairporttransfer.net" class="text-brandOrange hover:underline">info@cataniaairporttransfer.net</a>. We will respond within a reasonable time. If you are in the EU, you also have the right to lodge a complaint with a supervisory authority.</p>
-            </div>
-
-            <div>
-              <h2 class="text-slate-100 font-semibold mb-2">Changes</h2>
-              <p>We may update this privacy policy from time to time. The “Last updated” date at the top will be revised when changes are made. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+        <section class="bg-white">
+          <div class="wrap section-pad">
+            <div class="legal">
+              <section>
+                <h2>Who we are</h2>
+                <p>This website is operated by Catania Airport Transfer (Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 Catania (CT), Italy – VAT IT05924950875, REA: CT-448461). We provide B2B chauffeur and airport transfer services in Sicily.</p>
+              </section>
+              <section>
+                <h2>Data we collect</h2>
+                <p>When you contact us via email, phone, WhatsApp or any form on this site, we may collect your name, email address, phone number, company name and the content of your message. We use this information only to respond to your enquiries, provide quotes and manage bookings.</p>
+              </section>
+              <section>
+                <h2>How we use your data</h2>
+                <p>We do not sell or share your data with third parties for marketing. We may retain contact details and correspondence for the time necessary to fulfil contracts, handle disputes and comply with legal obligations.</p>
+              </section>
+              <section>
+                <h2>If we wrote to your company first</h2>
+                <p>We sometimes introduce our services to travel agencies, tour operators and DMCs that sell Sicily. We only write to business email addresses that the company publishes on its own website, and we note where we found them. We do this on the basis of our legitimate interest in offering our services to businesses (Article 6(1)(f) GDPR). If a named person replies, we keep their name, business email and our correspondence only to continue the conversation. If you reply "no thanks", or ask us by email, we stop writing and keep only your company name and address on a do-not-contact list, so that we do not write again. Companies that do not reply are removed from our list after 24 months.</p>
+              </section>
+              <section>
+                <h2>Cookies and tracking</h2>
+                <p>This site uses technical cookies, and Google Analytics 4 cookies only if you accept them in the cookie banner, to understand how the site is used. You can change your choice at any time with "Cookie preferences" at the bottom of the home page. No sensitive personal data is stored in cookies.</p>
+              </section>
+              <section>
+                <h2>Your rights</h2>
+                <p>You may request access to, correction or deletion of your personal data, or object to its processing, by contacting us at <a href="mailto:info@cataniaairporttransfer.net" class="link text-brandNavy">info@cataniaairporttransfer.net</a>. We will respond within a reasonable time. If you are in the EU, you also have the right to lodge a complaint with a supervisory authority.</p>
+              </section>
+              <section>
+                <h2>Changes</h2>
+                <p>We may update this privacy policy from time to time. The “Last updated” date at the top will be revised when changes are made. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+              </section>
+              <p class="border-t border-brandNavy/20 pt-8">
+                <a href="index.html" class="inline-flex min-h-[44px] items-center link text-brandNavy">← Back to home</a>
+              </p>
             </div>
           </div>
-
-          <p class="pt-4">
-            <a href="index.html" class="text-brandOrange hover:underline text-xs font-semibold uppercase tracking-wider">← Back to home</a>
-          </p>
         </section>
       </main>
 
-      <footer class="bg-brandBlack on-dark border-t border-brandNavy/70 pb-20 md:pb-0">
-        <div class="max-w-6xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-400">
-          <div class="flex flex-col sm:flex-row justify-between gap-6 items-start sm:items-center">
-            <div class="flex items-center gap-3">
-              <img src="image_0-small.webp" srcset="image_0-small.webp 250w, image_0.webp 500w" width="500" height="308" sizes="120px" loading="lazy" alt="Catania Airport Transfer logo" class="h-8 w-auto object-contain" />
-              <div class="space-y-1">
-                <p class="text-xs font-semibold uppercase tracking-[0.26em] text-slate-100">Catania Airport Transfer</p>
-                <p class="text-xs text-slate-400">Private chauffeur services for Catania &amp; Sicily.</p>
+      <!-- Footer (riferimento 21st.dev "Footer with Suite" 29773): colonne a filetti, poi il nome del marchio a tutta larghezza.
+           Padding in basso su telefono, così la barra fissa dei contatti non lo copre -->
+      <footer class="bg-brandBlack on-dark border-t border-brandNavy pb-20 md:pb-0">
+        <div class="wrap pt-14 pb-8 lg:pt-20">
+          <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+            <div class="flex items-start gap-4 sm:col-span-2 lg:col-span-5">
+              <img
+                src="image_0-small.webp"
+                srcset="image_0-small.webp 250w, image_0.webp 500w"
+                sizes="(max-width: 640px) 120px, 180px"
+                alt="Catania Airport Transfer logo"
+                width="400"
+                height="250"
+                class="h-10 w-auto object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+              <p class="pt-2 text-sm text-slate-300">
+                Private chauffeur services for Catania &amp; Sicily.
+              </p>
+            </div>
+
+            <nav aria-label="Footer" class="lg:col-span-3">
+              <ul class="border-t border-brandNavy">
+                <li class="border-b border-brandNavy"><a href="index.html#about" class="footer-link w-full">Why us</a></li>
+                <li class="border-b border-brandNavy"><a href="index.html#routes" class="footer-link w-full">Routes</a></li>
+                <li class="border-b border-brandNavy"><a href="index.html#reviews" class="footer-link w-full">Reviews</a></li>
+                <li class="border-b border-brandNavy"><a href="index.html#faq" class="footer-link w-full">FAQ</a></li>
+                <li class="border-b border-brandNavy"><a href="index.html#agency-rates" class="footer-link w-full">Agency rates</a></li>
+              </ul>
+            </nav>
+
+            <dl class="border-t border-brandNavy text-sm lg:col-span-4">
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy">
+                <dt class="text-slate-400">Email</dt>
+                <dd><a href="mailto:info@cataniaairporttransfer.net" class="footer-link break-all">info@cataniaairporttransfer.net</a></dd>
               </div>
-            </div>
-            <div class="space-y-1 text-xs text-slate-400">
-              <p><span class="text-slate-300">Email:</span> <a href="mailto:info@cataniaairporttransfer.net" class="hover:text-brandOrange">info@cataniaairporttransfer.net</a></p>
-              <p><span class="text-slate-300">Phone:</span> <a href="tel:+393200528300" class="hover:text-brandOrange">+39 320 052 8300</a></p>
-              <p><span class="text-slate-300">WhatsApp:</span> <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-brandOrange"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-brandOrange" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.04 2C7.06 2 3 5.96 3 10.93c0 1.95.63 3.76 1.8 5.28L3 22l6.02-1.76a9.1 9.1 0 0 0 3.02.49c4.98 0 9.04-3.96 9.04-8.93C21.08 5.96 17.02 2 12.04 2Z"/>
-          </svg> +39 320 052 8300</a></p>
-            </div>
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy">
+                <dt class="text-slate-400">Phone</dt>
+                <dd><a href="tel:+393200528300" class="footer-link tabular-nums">+39 320 052 8300</a></dd>
+              </div>
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy">
+                <dt class="text-slate-400">WhatsApp</dt>
+                <dd><a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="footer-link tabular-nums">+39 320 052 8300</a></dd>
+              </div>
+            </dl>
           </div>
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-brandNavy/70">
-            <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
-              © <span id="year"></span> Catania Airport Transfer. All rights reserved.
-              <a href="privacy.html" class="text-slate-400 hover:text-brandOrange transition-colors">Privacy</a>
-              <button type="button" id="cookie-consent-manage" class="min-h-0 text-slate-400 hover:text-brandOrange transition-colors">Cookie preferences</button>
+
+          <p class="footer-wordmark mt-14 lg:mt-20" aria-hidden="true"><span class="block lg:inline">Catania </span><span class="block lg:inline">Airport </span><span class="block lg:inline">Transfer</span></p>
+
+          <div class="mt-8 flex flex-col gap-3 border-t border-brandNavy pt-4 text-sm text-slate-400 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+            <p class="flex flex-wrap items-center gap-x-5">
+              <span>© <span id="year"></span> Catania Airport Transfer. All rights reserved.</span>
+              <a href="privacy.html" aria-current="page" class="footer-link text-slate-400">Privacy</a>
+              <button type="button" id="cookie-consent-manage" class="footer-link text-slate-400">Cookie preferences</button>
             </p>
-            <p class="text-xs text-slate-400">Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 Catania (CT), Italy – VAT IT05924950875 – REA CT-448461 – NCC licences no. 10 and 43, Comune di Scordia</p>
+            <p class="max-w-xl text-xs leading-relaxed text-slate-400 lg:py-3 lg:text-right">
+              Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 Catania (CT), Italy – VAT IT05924950875 – REA CT-448461 – NCC licences no. 10 and 43, Comune di Scordia
+            </p>
           </div>
         </div>
       </footer>
     </div>
 
 
-    <div class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy/70 bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden">
-      <p class="font-medium">Ready to talk?</p>
-      <div class="flex items-center gap-2">
-        <a href="mailto:info@cataniaairporttransfer.net" class="inline-flex items-center gap-1 rounded-full border border-brandNavy/40 bg-white px-3 py-1.5 text-xs font-semibold text-brandNavy"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M2 3h12v10H2V3Zm1.5 1.5v.3L8 8.5l4.5-3.7v-.3h-9Z"/>
-          </svg> Email</a>
-        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 rounded-full bg-brandOrange px-3 py-1.5 text-xs font-semibold text-black"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.04 2C7.06 2 3 5.96 3 10.93c0 1.95.63 3.76 1.8 5.28L3 22l6.02-1.76a9.1 9.1 0 0 0 3.02.49c4.98 0 9.04-3.96 9.04-8.93C21.08 5.96 17.02 2 12.04 2Z"/>
-          </svg> WhatsApp</a>
+    <!-- Mobile sticky contact bar -->
+    <div
+      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden"
+    >
+      <div class="flex w-full items-center gap-2">
+        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="shrink-0 btn btn-sm btn-outline-dark px-4">
+          <span>WhatsApp</span>
+        </a>
+        <a href="index.html#agency-rates" class="flex-1 btn btn-sm btn-primary whitespace-nowrap px-3">
+          <span>Get the 2027 agency rates</span>
+        </a>
       </div>
     </div>
 
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      // Il menu su telefono si chiude dopo la scelta o con Esc
+      (function() {
+        var m = document.getElementById('mobile-menu');
+        if (!m) return;
+        m.addEventListener('click', function(e) { if (e.target.closest('a')) m.open = false; });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+      })();
+    </script>
     <script>
       (function() {
         var CONSENT_KEY = 'cat_cookie_consent';
