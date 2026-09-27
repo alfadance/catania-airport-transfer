@@ -20,11 +20,18 @@
     outline-offset: 3px;
   }
   /* Sui pulsanti arancioni il testo è nero: anello navy sui fondi chiari (10:1), arancione sui fondi scuri */
-  .bg-brandOrange:focus-visible {
+  .bg-brandOrange:focus-visible,
+  .btn-primary:focus-visible {
     outline-color: theme('colors.brandNavy');
   }
-  .on-dark .bg-brandOrange:focus-visible {
+  .on-dark .bg-brandOrange:focus-visible,
+  .on-dark .btn-primary:focus-visible {
     outline-color: theme('colors.brandOrange');
+  }
+
+  /* Le ancore non finiscono sotto l'header fisso (alto circa 70px) */
+  [id] {
+    scroll-margin-top: 5rem;
   }
 
   html {
@@ -33,6 +40,7 @@
 
   /* Bersagli di tocco: almeno 44px per pulsanti a pillola, pulsanti e tendine */
   a[class*="rounded-full"],
+  .btn,
   button,
   select {
     min-height: 44px;
@@ -44,9 +52,121 @@
     }
     /* Risposta al tocco sui pulsanti */
     a[class*="rounded-full"]:active,
+    .btn:active,
     button:active {
       transform: scale(0.97);
     }
+  }
+}
+
+/*
+  Sistema (passata 2). Le dimensioni stanno qui, i colori restano nell'HTML perché dipendono dal fondo
+  (navy su chiaro, bianco su scuro). Scala dei titoli, dal più grande:
+    t-hero    titolo della pagina, uno solo
+    t-cta     titolo del modulo tariffe, il secondo momento nero
+    t-h2      titolo di ogni sezione
+    t-stat-lg numeri degli eventi
+    t-route   destinazione nel tabellone
+    t-stat    numeri dell'hero
+    t-h3      titolo di un passo o di un pannello
+  Testo: t-lead (apertura di sezione), t-body, t-meta (etichette piccole).
+*/
+@layer components {
+  .wrap {
+    @apply mx-auto max-w-7xl px-4 sm:px-6;
+  }
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+  /* Testa di sezione: titolo a sinistra, eventuale apertura a destra, stessa distanza dal contenuto */
+  .section-head {
+    @apply mb-10 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end;
+  }
+
+  .t-hero {
+    @apply stretch-wide text-[2.5rem] font-bold leading-[0.98] tracking-[-0.03em] sm:text-5xl md:text-[3.4rem] lg:text-6xl xl:text-[4.6rem];
+    text-wrap: balance;
+  }
+  .t-cta {
+    @apply stretch-wide text-4xl font-bold leading-[0.98] tracking-[-0.03em] sm:text-5xl lg:text-6xl;
+    text-wrap: balance;
+  }
+  .t-h2 {
+    @apply stretch-semi text-3xl font-bold leading-[1.04] tracking-[-0.025em] sm:text-4xl lg:text-5xl;
+    text-wrap: balance;
+  }
+  .t-stat-lg {
+    @apply stretch-wide text-5xl font-bold tracking-tight lg:text-6xl;
+  }
+  .t-route {
+    @apply stretch-wide text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl;
+  }
+  .t-stat {
+    @apply stretch-wide text-3xl font-bold tracking-tight lg:text-4xl;
+  }
+  .t-h3 {
+    @apply stretch-wide text-xl font-bold sm:text-2xl;
+  }
+  .t-lead {
+    @apply text-base leading-relaxed sm:text-lg;
+  }
+  .t-body {
+    @apply text-base leading-relaxed;
+  }
+  .t-meta {
+    @apply text-sm font-medium;
+  }
+
+  /* Pulsanti: una sola misura per le azioni nel contenuto, una piccola per header e barra mobile */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 text-center text-base font-semibold transition-colors sm:whitespace-nowrap;
+  }
+  .btn-sm {
+    @apply min-h-[44px] px-5 py-2 text-sm;
+  }
+  .btn-primary {
+    @apply bg-brandOrange text-black hover:bg-brandOrangeHover;
+  }
+  .btn-outline-dark {
+    @apply border border-slate-500 bg-brandBlack text-slate-100 hover:border-brandOrange;
+  }
+  .btn-outline-light {
+    @apply border border-brandNavy bg-white text-brandNavy hover:border-brandOrange;
+  }
+
+  /* Link nel testo: sottolineatura arancione, il colore del testo lo decide il fondo */
+  .link {
+    @apply font-semibold underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-current;
+  }
+
+  /* Modulo */
+  .field-label {
+    @apply space-y-2 text-sm font-semibold text-brandNavy;
+  }
+  .field {
+    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 focus:border-brandNavy;
+  }
+
+  /* Tabellone delle tratte */
+  .route-row {
+    @apply grid grid-cols-[88px,1fr] items-center gap-x-4 gap-y-3 border-b border-brandNavy/20 py-5 sm:grid-cols-[168px,1fr] sm:gap-x-8 sm:py-6 lg:grid-cols-[200px,1fr,260px];
+  }
+  .route-img {
+    @apply row-span-2 h-20 w-full rounded-lg object-cover sm:h-24 lg:row-span-1 lg:h-28;
+  }
+
+  /* FAQ */
+  .faq-item {
+    @apply border-b border-brandNavy/20;
+  }
+  .faq-q {
+    @apply flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base font-semibold text-brandNavy sm:text-lg;
+  }
+  .faq-q::-webkit-details-marker {
+    display: none;
+  }
+  .faq-a {
+    @apply max-w-2xl pb-6 text-base leading-relaxed text-slate-700;
   }
 }
 

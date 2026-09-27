@@ -94,3 +94,39 @@ scheda dove bastano filetti; nessuna numerazione decorativa.
 
 Verifiche: build pulita; palette-check 0 pixel fuori palette a 1440 e 360, 7 a 390 (il logo nell'header fisso
 catturato fuori dalla maschera delle immagini); a 360 px `scrollWidth` = 360, nessun elemento oltre il bordo.
+
+### Passata 2 — ui-ux-pro-max
+
+**Cosa è cambiato.**
+- Le classi ripetute a mano sono diventate un sistema in `@layer components` di `src/tailwind.css`, con la scala
+  scritta in testa al blocco. Titoli dal più grande: `t-hero` (uno solo), `t-cta` (modulo tariffe), `t-h2` (ogni
+  sezione), `t-stat-lg`, `t-route`, `t-stat`, `t-h3`. Testo: `t-lead`, `t-body`, `t-meta`. Le classi fissano solo
+  le misure: il colore resta nell'HTML perché dipende dal fondo.
+- Spaziature: `wrap` (contenitore `max-w-7xl` con i margini laterali), `section-pad` (16/20/28), `section-head`
+  (titolo più apertura, stessa distanza dal contenuto). La sezione contatti prima aveva `lg:py-24`, ora è allineata.
+- Componenti: `btn` + `btn-primary` / `btn-outline-dark` / `btn-outline-light`, variante `btn-sm` per header e barra
+  mobile; `link` (sottolineatura arancione, colore dal fondo); `field` e `field-label` per il modulo; `route-row` e
+  `route-img` per il tabellone; `faq-item`, `faq-q`, `faq-a`. I pulsanti hanno tutti la stessa misura (48 px,
+  testo 16 px); il focus e i 44 px valgono anche per `.btn`, non solo per le classi `rounded-full`.
+- Percorso verso il modulo: l'azione primaria ha lo stesso testo ovunque, "Get the 2027 agency rates" (anche il link
+  sotto le tratte e la barra mobile, prima "Get the rate sheet" e "Get agency rates"). Nell'hero il pulsante
+  WhatsApp per i privati è più piccolo (14 px), così il peso visivo va alle agenzie; testo e pulsanti ora in 5+7
+  colonne e senza andare a capo da 640 px in su.
+- Navigazione su telefono: prima non c'era (solo il pulsante tariffe). Ora un menu `<details>` nativo ("Menu" /
+  "Close") con le quattro sezioni più Contact, voci alte 48 px; si chiude dopo la scelta o con Esc (poche righe di
+  script inline). Su telefono il pulsante tariffe dell'header è tolto perché c'è già nella barra in basso, dove ora è
+  il pulsante più largo.
+- `scroll-margin-top` sulle ancore, così i titoli non finiscono sotto l'header fisso.
+
+**Lasciato alle passate successive.** `privacy.html` non usa ancora il sistema (header e impaginazione vecchi);
+`DESIGN.md` da riscrivere con la scala qui sopra (passata 4); banner dei cookie e footer non convertiti ai
+componenti (testi 12 px, da valutare); la barra mobile potrebbe nascondersi quando il modulo è a schermo; il peso
+del font resta per la passata 5.
+
+**Da non disfare.** Le classi `t-*`, `btn*`, `wrap`/`section-pad`/`section-head`: una modifica di misura si fa lì,
+non sull'HTML. Una sola etichetta per l'azione primaria. Menu mobile senza librerie e funzionante senza JS.
+
+Verifiche: `npm run build:css` pulita; palette-check 0 pixel fuori palette a 1440, 7 a 390 e 4 a 360 (tutti sul
+logo dell'header fisso catturato a metà pagina, artefatto noto); a 360 px `scrollWidth` = 360 e nessun elemento
+oltre il bordo, anche con il menu aperto; modulo con `name`, `id`, `action` e script GA4 invariati (cambiano solo le
+classi).
