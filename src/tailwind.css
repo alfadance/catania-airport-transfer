@@ -144,7 +144,7 @@
     @apply space-y-2 text-sm font-semibold text-brandNavy;
   }
   .field {
-    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 focus:border-brandNavy;
+    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 hover:border-brandNavy/60 focus:border-brandNavy focus:outline-none focus:ring-1 focus:ring-brandNavy;
   }
 
   /* Tabellone delle tratte */
@@ -166,7 +166,30 @@
     display: none;
   }
   .faq-a {
-    @apply max-w-2xl pb-6 text-base leading-relaxed text-slate-700;
+    @apply max-w-2xl pb-6 pr-10 text-base leading-relaxed text-slate-700;
+  }
+  /* Freccia della FAQ (da 21st.dev "Accordion" 31351): gira quando la risposta è aperta */
+  .faq-chevron {
+    @apply h-5 w-5 shrink-0 text-brandNavy group-open:rotate-180 motion-safe:transition-transform motion-safe:duration-200;
+  }
+
+  /* Riga di garanzia sotto l'invio (da 21st.dev "Centered Contact Form" 27904) */
+  .form-foot {
+    @apply mt-2 flex items-start gap-2 border-t border-brandNavy/20 pt-4 text-sm text-slate-600;
+  }
+
+  /* Footer (da 21st.dev "Footer with Suite" 29773): nome del marchio a tutta larghezza */
+  .footer-link {
+    @apply inline-flex min-h-[44px] items-center text-sm text-slate-300 hover:text-white;
+  }
+  .footer-wordmark {
+    @apply stretch-wide select-none font-bold leading-[0.9] tracking-[-0.035em] text-slate-50;
+    font-size: clamp(2.5rem, 17vw, 7.5rem);
+  }
+  @media (min-width: 1024px) {
+    .footer-wordmark {
+      font-size: clamp(3rem, 5.9vw, 5.4rem);
+    }
   }
 }
 

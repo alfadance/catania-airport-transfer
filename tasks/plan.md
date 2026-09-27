@@ -130,3 +130,49 @@ Verifiche: `npm run build:css` pulita; palette-check 0 pixel fuori palette a 144
 logo dell'header fisso catturato a metà pagina, artefatto noto); a 360 px `scrollWidth` = 360 e nessun elemento
 oltre il bordo, anche con il menu aperto; modulo con `name`, `id`, `action` e script GA4 invariati (cambiano solo le
 classi).
+
+### Passata 3 — 21st
+
+**Catalogo consultato** (piano gratuito, solo strumenti in lettura; risposte e anteprime in `_shots/21st/`, fuori da
+git). Ricerche: testimonials, faq accordion, timeline steps, contact form, footer, cookie banner, più un
+`get_inspiration` con il nostro sistema come contesto. Anteprime guardate: Testimonial (6286), Accordion di wensity
+(31351), Process Timeline (28374), Cookie Banner (5194), Centered Contact Form (27904), Footer with Suite (29773).
+Codice scaricato con i due `get_component` del giorno: **Footer with Suite (29773)** e **Centered Contact Form
+(27904)**. Il resto è stato portato dalle anteprime.
+
+**Cosa è entrato e come.** Niente React né shadcn: la struttura è tradotta in HTML e in classi di
+`@layer components`, ricolorate con la palette.
+- Footer (29773): colonne a filetti navy (descrizione e logo, cinque ancore della pagina, recapiti in `<dl>` con
+  etichetta a sinistra e valore a destra), poi il nome del marchio in Archivo espanso a tutta larghezza (classe
+  `footer-wordmark`, `aria-hidden` perché il nome c'è già nel logo e nel copyright): su una riga da 1024 px, su tre
+  righe sotto. Riga finale con copyright, Privacy e Cookie preferences, ora alti 44 px (prima `min-h-0`); il testo
+  legale resta invariato. Classe nuova `footer-link`.
+- Modulo tariffe (27904): la frase sulla privacy passa sotto l'invio, in una riga separata da un filetto, con un
+  lucchetto navy (classe `form-foot`); il pulsante d'invio è a tutta larghezza su telefono. Campi: bordo più scuro
+  al passaggio del mouse e al focus bordo più anello navy da 1 px, cioè 2 px navy pieni. Il badge "risposta entro
+  24 ore" dell'originale non è entrato: sarebbe un'affermazione nuova.
+- FAQ (31351): il +/− diventa una freccia che gira di 180° all'apertura (`faq-chevron`, transizione solo con
+  `motion-safe`); resta `<details>` nativo.
+- How it works (28374): su telefono i passi sono in colonna con l'icona a sinistra e un tratto navy verticale che
+  unisce un'icona alla successiva (un `::after` per passo, tolto sull'ultimo). Da tablet in su resta la linea
+  orizzontale. Nessun numero: le icone restano.
+- Banner dei cookie (5194): da barra a tutta larghezza a scheda flottante nera con bordo navy, testo da 12 a 14 px,
+  pulsanti `btn btn-sm` (rifiuto a contorno, accettazione arancione), link alla privacy come `.link` bianco. Gli
+  `id` e lo script del consenso non cambiano.
+
+**Lasciato alle successive.** Recensioni: nessun riferimento del catalogo rispetta i vincoli (loghi di clienti,
+avatar, marquee), quindi la fascia navy resta com'è. Barra mobile: invariata; resta aperta l'idea di nasconderla
+quando il modulo è a schermo. `privacy.html` non ha ancora footer e banner nuovi. Il blocco Social della sezione
+contatti non ha una sua riga nel footer (le icone restano nei contatti). L'apertura animata dei `<details>`
+(`::details-content`) è stata scartata perché la supportano solo i browser più recenti: da rivalutare in passata 4.
+
+**Da non disfare.** Il nome del marchio a tutta larghezza come chiusura della pagina; nel footer filetti e non
+schede; la riga di garanzia sotto l'invio del modulo, senza affermazioni che non siano nella lista dei fatti; le
+frecce della FAQ; il tratto verticale dei passi su telefono; il banner dei cookie come scheda con i pulsanti del
+sistema.
+
+Verifiche: `npm run build:css` pulita; palette-check 1 pixel fuori palette a 1440, 7 a 390 e 7 a 360, tutti sul
+logo dell'header fisso catturato fuori dalla maschera delle immagini (artefatto noto); a 360 px `scrollWidth` = 360
+e 0 elementi oltre il bordo, con il banner dei cookie aperto; banner controllato a 360 e 1440 px; `git grep`
+dell'inizio della chiave di 21st.dev: nessun file tracciato la contiene; modulo con `name`, `id`, `action` e
+script GA4 invariati.
