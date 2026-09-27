@@ -335,3 +335,11 @@ Testo visibile di entrambe le pagine identico a 03c5597; modulo con `name`, `id`
 - Durante la passata `main` è avanzato da 1201f54 a 9b34fa3 ("Build del CSS: legge entrambe le pagine dalla
   configurazione"), lo stesso ritocco a `package.json` della passata 4: prima di unire il ramo va controllato che non
   ci siano conflitti.
+
+### Tratta Agrigento (richiesta del titolare, 2026-09-27)
+
+Riga nuova nel tabellone, fra Noto / Ragusa e Palermo (ordine per durata). Durata "About 2 hours" dal listino 2027
+(Aeroporto di Catania → Agrigento 1h 42′–2h 00′); niente "via motorway", la strada è la SS640. Foto: Tempio della
+Concordia, Wikimedia Commons, `File:Agrigento-Tempio_della_Concordia01.JPG`, di Evan Erickson (2004), **pubblico
+dominio**: nessun credito richiesto. Tagliata a 900×502 e 480×268 come le altre (78 e 21 KB). Aggiunta anche in
+`areaServed` dei dati strutturati. Verifiche: palette 2/7/7 pixel a 1440/390/360, tutti sul logo dell'header fisso.
