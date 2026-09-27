@@ -240,3 +240,21 @@ Verifiche: `npm run build:css` pulita. palette-check: 0 pixel fuori palette a 14
 su tutte e due le pagine; 0 contrasti sotto soglia; unici bersagli sotto 44 px i link dentro il testo (esenti).
 Rilevatore: da 24 segnalazioni a 20, tutte `cramped-padding` sulle liste a filetti (falsi positivi: il testo sta
 in righe alte 44 px) più `oversized-h1`. Modulo con `name`, `id`, `action` e script GA4 invariati.
+
+### Icone Lucide
+
+Set di icone dei componenti di 21st.dev, Lucide (licenza ISC, `lucide-static` 1.48.0), copiato inline: nessuna
+libreria né CDN a runtime. Tratto 2, `currentColor`, estremità arrotondate.
+
+| Icona | Dove | Nome Lucide |
+|---|---|---|
+| Stella delle recensioni (`#star`, riempita, 15 usi) | fascia recensioni | `star` |
+| Passo 1 "Connect" | How it works | `message-square-text` |
+| Passo 2 "Confirm & Meet" | How it works | `id-card` |
+| Passo 3 "Relax & Travel" | How it works | `car` |
+| Lucchetto sotto l'invio | modulo | `lock` |
+| Freccia della FAQ (5) | FAQ | `chevron-down` |
+| Freccia della tendina `select.field` (data-URI in `src/tailwind.css`) | modulo | `chevron-down` |
+
+Restano i loghi dei marchi, che Lucide non disegna: Facebook e LinkedIn nei contatti. Il sito non ha un logo di
+WhatsApp (i pulsanti WhatsApp sono solo testo). `privacy.html` non contiene icone SVG.

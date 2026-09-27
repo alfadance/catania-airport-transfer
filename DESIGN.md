@@ -277,10 +277,10 @@ Under the submit button, a rule and a navy lock with the privacy line. Success i
 border; error is the red box, with an email fallback. The submit button disables itself and reads "Sending…".
 
 ### Icon chip (signature)
-A 48px Harbour Navy square with 12px corners holding a 24px Signal Orange stroke icon (1.75 stroke, round caps),
+A 48px Harbour Navy square with 12px corners holding a 24px Signal Orange stroke icon (2 stroke, round caps),
 used for the three steps of "How it works" and joined by a navy line (horizontal from 768px, vertical on phones).
 Every drawn icon on the site belongs to this stroke family: step icons, chevrons, the lock. The two social marks
-(Facebook, LinkedIn) are the brands' own filled logos. Rating stars are one drawn SVG star (`#star`) used five times.
+(Facebook, LinkedIn) are the brands' own filled logos. Rating stars are one Lucide star (`#star`, filled) used five times.
 
 ### Reviews band
 Solid navy. The long review in `t-quote` on the left (7 columns), the two shorter ones on the right, each under a
@@ -295,6 +295,9 @@ Cookie banner: floating black card, navy border, 14px text, reject as outline an
 
 ### Browser surfaces
 Text selection is orange with black text; caret and native accents are navy; focus rings as above.
+
+### Icons
+Icons are Lucide (ISC licence), copied as inline SVG: 24 viewBox, stroke 2, `currentColor`, round caps and joins; no icon library or CDN at runtime. The only exceptions are brand marks, which Lucide does not draw: the Facebook and LinkedIn logos in the contacts, and WhatsApp if its logo is ever added.
 
 ## Pages
 
