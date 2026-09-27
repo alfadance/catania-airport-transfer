@@ -10,12 +10,8 @@
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <meta name="theme-color" content="#050608" />
 
-    <!-- Font (Montserrat, self-hosted) -->
-    <style>
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/montserrat-latin-400.woff2") format("woff2"); }
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/montserrat-latin-500.woff2") format("woff2"); }
-      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/montserrat-latin-600.woff2") format("woff2"); }
-    </style>
+    <!-- Font: Archivo variabile self-hosted (@font-face in assets/tailwind.css) -->
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-wdth.woff2" crossorigin />
 
     <!-- Tailwind CSS (local build) -->
     <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />

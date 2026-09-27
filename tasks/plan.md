@@ -57,3 +57,40 @@ nessuno scorrimento orizzontale a 360 px; modulo ancora funzionante nel markup; 
 
 ## Note delle passate
 
+
+### Passata 1 — frontend-design
+
+**Direzione scelta.** La segnaletica dei trasporti: un solo carattere, Archivo variabile (self-hosted,
+`assets/fonts/archivo-latin-wdth.woff2`, set latino, pesi 100–900 e larghezze 62–125%), usato espanso e in
+grassetto per titoli e numeri (classi `stretch-wide` 125% e `stretch-semi` 112% in `src/tailwind.css`) e a
+larghezza normale per il testo. La cosa memorabile è la tipografia del titolo e il tabellone delle tratte; il resto
+resta quieto. Allineamento sempre a sinistra, griglia a 12 colonne su `max-w-7xl`.
+
+**Cosa è cambiato.**
+- Montserrat tolto (tre file eliminati); `@font-face` spostato nel CSS compilato, così vale anche per `privacy.html`.
+- Hero: titolo a tutta larghezza in bianco (l'arancione resta solo sulle azioni), sotto il testo a sinistra e i
+  due pulsanti a destra, poi la foto in una fascia larga senza cornice né velo, poi i tre fatti in una riga con
+  filetti navy (niente schede).
+- Why us: il riquadro "For agencies and DMCs" diventa un pannello navy pieno con elenco a filetti.
+- Routes: da quattro schede a un tabellone delle partenze (miniatura, "Catania Airport to" piccolo, destinazione
+  grande espansa, durata a destra). Su telefono miniatura a sinistra e testo a destra.
+- Reviews: fascia navy piena, recensione lunga in grande a sinistra, le altre due a destra, divise da filetti.
+- Events: niente schede; foto, filetto navy, numero grande espanso.
+- How it works: passi senza schede su una linea navy continua (è una sequenza vera, quindi `<ol>`).
+- Modulo tariffe: secondo momento nero della pagina, pannello bianco; campi a 16px ovunque e alti 48px.
+- FAQ a due colonne con elenco a filetti; contatti in `<dl>` a filetti; navigazione e nomi del marchio in
+  maiuscolo/minuscolo normale (tolto il maiuscolo spaziato).
+- Tolte le frecce nei pulsanti e l'ombra colorata sul logo.
+
+**Lasciato alle passate successive.** Scala tipografica e spaziature da sistematizzare (le classi dei titoli sono
+ripetute a mano in ogni sezione: candidate a un componente); `DESIGN.md` non è ancora aggiornato (dice ancora
+Montserrat, schede per le tratte, prima riga del titolo in arancione); `privacy.html` ha solo il nuovo carattere,
+header e impaginazione vecchi; peso del font (90 KB, un file solo) da valutare in passata 5; nella cattura a pagina
+intera header e barra mobile fissi compaiono a metà pagina (artefatto della cattura, già presente prima).
+
+**Da non disfare.** Archivo espanso come voce del marchio; tabellone delle tratte a righe; titolo dell'hero in
+bianco e arancione solo per le azioni; fasce nere in apertura e sul modulo, fascia navy per le recensioni; nessuna
+scheda dove bastano filetti; nessuna numerazione decorativa.
+
+Verifiche: build pulita; palette-check 0 pixel fuori palette a 1440 e 360, 7 a 390 (il logo nell'header fisso
+catturato fuori dalla maschera delle immagini); a 360 px `scrollWidth` = 360, nessun elemento oltre il bordo.

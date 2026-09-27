@@ -1,8 +1,19 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Archivo variabile, self-hosted, solo alfabeto latino: un file per pesi 100–900 e larghezze 62–125% */
+  @font-face {
+    font-family: "Archivo";
+    font-style: normal;
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
+    src: url("fonts/archivo-latin-wdth.woff2") format("woff2-variations"), url("fonts/archivo-latin-wdth.woff2") format("woff2");
+  }
+
   /* Focus da tastiera sempre visibile: il colore del testo contrasta per costruzione con il fondo */
   :focus-visible {
     outline: 2px solid currentColor;
@@ -36,5 +47,15 @@
     button:active {
       transform: scale(0.97);
     }
+  }
+}
+
+@layer utilities {
+  /* Larghezze di Archivo: la voce del marchio è il taglio espanso, come la segnaletica stradale */
+  .stretch-wide {
+    font-stretch: 125%;
+  }
+  .stretch-semi {
+    font-stretch: 112%;
   }
 }

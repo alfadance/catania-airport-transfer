@@ -26,37 +26,13 @@
       rel="preload"
       as="image"
       imagesrcset="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w, assets/catania-airport-transfer-chauffeur-etna-hero.webp 1600w"
-      imagesizes="(min-width: 1024px) 500px, 100vw"
+      imagesizes="(min-width: 1280px) 1232px, 100vw"
       type="image/webp"
       fetchpriority="high"
     />
-    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/montserrat-latin-400.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/montserrat-latin-600.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-wdth.woff2" crossorigin />
 
-    <!-- Font: Montserrat self-hosted, ridotto all'alfabeto latino (pesi 400, 500, 600; il 700 non è usato) -->
-    <style>
-      @font-face {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("assets/fonts/montserrat-latin-400.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: url("assets/fonts/montserrat-latin-500.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 600;
-        font-display: swap;
-        src: url("assets/fonts/montserrat-latin-600.woff2") format("woff2");
-      }
-    </style>
+    <!-- Font: Archivo variabile self-hosted (@font-face in assets/tailwind.css) -->
 
     <!-- Tailwind CSS (local build) -->
     <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />
@@ -135,502 +111,422 @@
     </div>
     <div class="min-h-screen flex flex-col">
       <!-- Header -->
-      <header class="sticky top-0 z-30 border-b border-brandNavy/60 bg-brandBlack on-dark">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <!-- Logo: ensure 'image_0.webp' (logo) is placed next to this HTML or update the path accordingly -->
-            <a href="#top" class="inline-flex items-center gap-3">
-              <img
-                src="image_0-small.webp"
-                srcset="image_0-small.webp 250w, image_0.webp 500w"
-                sizes="(max-width: 640px) 160px, 220px"
-                alt="Catania Airport Transfer logo"
-                width="400"
-                height="250"
-                class="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.55)]"
-              />
-              <span class="hidden sm:inline text-xs font-semibold tracking-[0.26em] uppercase text-slate-50">
-                Catania Airport Transfer
-              </span>
-            </a>
-          </div>
+      <header class="sticky top-0 z-30 border-b border-brandNavy bg-brandBlack on-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+          <a href="#top" class="inline-flex items-center gap-3">
+            <img
+              src="image_0-small.webp"
+              srcset="image_0-small.webp 250w, image_0.webp 500w"
+              sizes="(max-width: 640px) 160px, 220px"
+              alt="Catania Airport Transfer logo"
+              width="400"
+              height="250"
+              class="h-11 sm:h-12 w-auto object-contain"
+            />
+            <span class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">
+              Catania Airport Transfer
+            </span>
+          </a>
 
-          <nav class="flex items-center gap-7 text-xs font-medium tracking-[0.22em] uppercase">
-            <div class="hidden md:flex items-center gap-7">
-            <a href="#about" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Why us</a>
-            <a href="#routes" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Routes</a>
-            <a href="#reviews" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">Reviews</a>
-            <a href="#faq" class="text-slate-200 hover:text-brandOrange transition-colors border-b-2 border-transparent hover:border-brandOrange pb-1">FAQ</a>
+          <nav class="flex items-center gap-8 text-sm font-medium">
+            <div class="hidden md:flex items-center gap-8">
+            <a href="#about" class="text-slate-200 hover:text-white transition-colors border-b-2 border-transparent hover:border-brandOrange py-1">Why us</a>
+            <a href="#routes" class="text-slate-200 hover:text-white transition-colors border-b-2 border-transparent hover:border-brandOrange py-1">Routes</a>
+            <a href="#reviews" class="text-slate-200 hover:text-white transition-colors border-b-2 border-transparent hover:border-brandOrange py-1">Reviews</a>
+            <a href="#faq" class="text-slate-200 hover:text-white transition-colors border-b-2 border-transparent hover:border-brandOrange py-1">FAQ</a>
             </div>
-            <a href="#agency-rates" class="inline-flex items-center rounded-full bg-brandOrange px-4 py-2 text-xs font-semibold normal-case tracking-normal text-black hover:bg-brandOrangeHover transition-colors">Agency rates</a>
+            <a href="#agency-rates" class="inline-flex items-center rounded-full bg-brandOrange px-5 py-2 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors">Agency rates</a>
           </nav>
         </div>
       </header>
 
       <main id="top" class="flex-1">
-        <!-- Hero -->
-        <section class="relative overflow-hidden border-b border-brandNavy/70 on-dark">
+        <!-- Hero: headline a tutta larghezza, foto in una fascia larga, fatti in riga -->
+        <section class="on-dark">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-14 sm:pt-20 lg:pt-24 pb-14 lg:pb-20">
+            <h1 class="stretch-wide font-bold text-slate-50 text-[2.5rem] leading-[0.98] sm:text-5xl md:text-[3.4rem] lg:text-6xl xl:text-[4.6rem] tracking-[-0.03em] [text-wrap:balance]">
+              <span class="block">Your ground partner in Sicily,</span>
+              <span class="block">based at Catania Airport</span>
+            </h1>
 
-          <div class="relative max-w-6xl mx-auto px-4 py-16 sm:py-20 lg:py-24">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              <div class="space-y-8">
-                <div class="space-y-4">
-                  <h1
-                    class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.05]"
-                  >
-                    <span class="block text-brandOrange">Your ground partner in Sicily,</span>
-                    <span class="block text-slate-50">based at Catania Airport</span>
-                  </h1>
-                  <p class="text-sm sm:text-base text-slate-200 max-w-xl leading-relaxed">
-                    Airport transfers across the whole island for travel agencies and DMCs: one annual net rate
-                    sheet, written terms, and a driver at the pickup point 15 minutes early.
-                  </p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4">
-                  <a href="#agency-rates" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-6 py-3 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors shadow-lg shadow-black/40">
-                    <span>Get the 2027 agency rates</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2.3 13.7 14 8 2.3 2.3 3.6 7h5l-5 2.5z" /></svg>
-                  </a>
-                  <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center text-center gap-2 rounded-full border border-brandOrange bg-brandBlack px-6 py-3 text-sm font-semibold text-brandOrange hover:bg-brandOrange hover:text-black transition-colors">
-                    <span>Travelling privately? Book on WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Visual: hero photography in framed container -->
-              <div class="relative">
-                <div class="rounded-3xl border border-brandNavy/60 bg-brandBlack/70 p-3 shadow-[0_28px_120px_rgba(0,0,0,0.75)]">
-                  <div class="relative overflow-hidden rounded-3xl">
-                    <img
-                    src="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp"
-                    srcset="
-                      assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w,
-                      assets/catania-airport-transfer-chauffeur-etna-hero.webp        1600w
-                    "
-                    sizes="(min-width: 1024px) 500px, 100vw"
-                    width="1600"
-                    height="893"
-                    fetchpriority="high"
-                    alt="Black chauffeur car at Catania Airport with Mount Etna in the background"
-                    class="h-[240px] sm:h-[300px] lg:h-[420px] w-full object-cover"
-                  />
-                  </div>
-                </div>
+            <div class="mt-10 lg:mt-14 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <p class="lg:col-span-6 text-base sm:text-lg text-slate-200 max-w-xl leading-relaxed">
+                Airport transfers across the whole island for travel agencies and DMCs: one annual net rate
+                sheet, written terms, and a driver at the pickup point 15 minutes early.
+              </p>
+              <div class="lg:col-span-6 flex flex-col sm:flex-row lg:justify-end gap-3">
+                <a href="#agency-rates" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-7 py-3.5 text-base font-semibold text-black hover:bg-brandOrangeHover transition-colors">
+                  <span>Get the 2027 agency rates</span>
+                </a>
+                <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center text-center gap-2 rounded-full border border-slate-500 bg-brandBlack px-6 py-3.5 text-sm font-semibold text-slate-100 hover:border-brandOrange transition-colors">
+                  <span>Travelling privately? Book on WhatsApp</span>
+                </a>
               </div>
             </div>
 
-
-            <div class="mt-10 grid gap-4 sm:grid-cols-3">
-              <div class="rounded-xl border border-brandNavy/70 bg-brandBlack/70 px-4 py-3">
-                <p class="text-sm font-semibold text-slate-50">20+ years</p>
-                <p class="text-sm text-slate-300">In the trade, across Sicily.</p>
-              </div>
-              <div class="rounded-xl border border-brandNavy/70 bg-brandBlack/70 px-4 py-3">
-                <p class="text-sm font-semibold text-slate-50">5,000+ transfers</p>
-                <p class="text-sm text-slate-300">Since 2022, across Sicily.</p>
-              </div>
-              <div class="rounded-xl border border-brandNavy/70 bg-brandBlack/70 px-4 py-3">
-                <p class="text-sm font-semibold text-slate-50">Around 97%</p>
-                <p class="text-sm text-slate-300">Of our work every year comes from partners who come back.</p>
-              </div>
+            <div class="mt-12 lg:mt-16 overflow-hidden rounded-2xl bg-brandNavy">
+              <img
+                src="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp"
+                srcset="
+                  assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w,
+                  assets/catania-airport-transfer-chauffeur-etna-hero.webp        1600w
+                "
+                sizes="(min-width: 1280px) 1232px, 100vw"
+                width="1600"
+                height="893"
+                fetchpriority="high"
+                alt="Black chauffeur car at Catania Airport with Mount Etna in the background"
+                class="h-[260px] sm:h-[380px] lg:h-[520px] w-full object-cover object-[50%_60%]"
+              />
             </div>
+
+            <dl class="mt-10 grid sm:grid-cols-3 border-t border-brandNavy">
+              <div class="pt-6 pb-2 sm:pr-8 border-b sm:border-b-0 border-brandNavy">
+                <dt class="sr-only">Experience</dt>
+                <dd class="stretch-wide text-3xl lg:text-4xl font-bold text-slate-50 tracking-tight">20+ years</dd>
+                <dd class="mt-2 text-sm text-slate-300">In the trade, across Sicily.</dd>
+              </div>
+              <div class="pt-6 pb-2 sm:px-8 border-b sm:border-b-0 sm:border-l border-brandNavy">
+                <dt class="sr-only">Transfers</dt>
+                <dd class="stretch-wide text-3xl lg:text-4xl font-bold text-slate-50 tracking-tight">5,000+ transfers</dd>
+                <dd class="mt-2 text-sm text-slate-300">Since 2022, across Sicily.</dd>
+              </div>
+              <div class="pt-6 pb-2 sm:pl-8 sm:border-l border-brandNavy">
+                <dt class="sr-only">Returning partners</dt>
+                <dd class="stretch-wide text-3xl lg:text-4xl font-bold text-slate-50 tracking-tight">Around 97%</dd>
+                <dd class="mt-2 text-sm text-slate-300">Of our work every year comes from partners who come back.</dd>
+              </div>
+            </dl>
           </div>
         </section>
 
         <!-- Why us -->
-        <section id="about" class="border-b border-brandNavy/10 bg-mist">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-20">
-            <div class="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] items-start">
-              <div class="max-w-2xl space-y-5">
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
+        <section id="about" class="bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="grid gap-12 lg:grid-cols-12 items-start">
+              <div class="lg:col-span-7 space-y-6">
+                <h2 class="stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy max-w-2xl">
                   One partner for airport transfers across Sicily
                 </h2>
-                <p class="text-base text-slate-800 leading-relaxed">
+                <p class="text-base sm:text-lg text-slate-800 leading-relaxed max-w-2xl">
                   We are based at Catania Airport and work across the whole of Sicily, with more than 5,000
                   transfers since 2022. Flights are tracked in real time, and your driver is at the pickup point 15 minutes before
                   the agreed time. The office is open Monday to Friday, 9:00 to 18:00, and the emergency line
                   stays open from pickup to drop-off on every service.
                 </p>
-                <p class="text-base text-slate-700 leading-relaxed">
+                <p class="text-base text-slate-700 leading-relaxed max-w-2xl">
                   For groups and busy days we can provide up to 9 vehicles on the same day: 3 executive sedans
                   and 6 minivans.
                   We are a licensed NCC operator, and drivers and office speak English and Italian.
                 </p>
               </div>
 
-              <aside class="rounded-3xl border border-brandNavy/15 bg-white p-6 sm:p-8 shadow-sm">
-                <h3 class="text-lg font-semibold text-brandNavy">For agencies and DMCs</h3>
-                <ul class="mt-4 space-y-2.5 text-sm text-slate-700 leading-relaxed list-disc pl-5 marker:text-brandOrange">
-                  <li>One annual net rate sheet for the whole of Sicily, with written terms.</li>
-                  <li>Flights tracked, 60 minutes free waiting, delays of up to 2 hours absorbed.</li>
-                  <li>Monthly invoicing, payment by bank transfer within 30 days.</li>
-                  <li>A replacement vehicle of the same class if anything goes wrong.</li>
+              <aside class="lg:col-span-5 on-dark rounded-2xl bg-brandNavy p-7 sm:p-9 text-slate-100">
+                <h3 class="stretch-wide text-xl font-bold text-white">For agencies and DMCs</h3>
+                <ul class="mt-6 divide-y divide-slate-500 border-y border-slate-500 text-[0.95rem] text-slate-100 leading-relaxed">
+                  <li class="flex gap-3 py-3.5"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-brandOrange" aria-hidden="true"></span><span>One annual net rate sheet for the whole of Sicily, with written terms.</span></li>
+                  <li class="flex gap-3 py-3.5"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-brandOrange" aria-hidden="true"></span><span>Flights tracked, 60 minutes free waiting, delays of up to 2 hours absorbed.</span></li>
+                  <li class="flex gap-3 py-3.5"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-brandOrange" aria-hidden="true"></span><span>Monthly invoicing, payment by bank transfer within 30 days.</span></li>
+                  <li class="flex gap-3 py-3.5"><span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-brandOrange" aria-hidden="true"></span><span>A replacement vehicle of the same class if anything goes wrong.</span></li>
                 </ul>
-                <a href="#agency-rates" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-6 py-3 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors">
+                <a href="#agency-rates" class="mt-8 inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-brandOrange px-7 py-3.5 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors">
                   <span>Get the 2027 agency rates</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2.3 13.7 14 8 2.3 2.3 3.6 7h5l-5 2.5z" /></svg>
                 </a>
               </aside>
             </div>
           </div>
         </section>
 
-        <!-- Key routes from Catania Airport -->
-        <section id="routes" class="border-b border-brandNavy/10 bg-white">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-20">
-            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <div>
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
-                  Private transfers from Catania Airport to Sicily’s key destinations
-                </h2>
-              </div>
-              <p class="text-sm text-slate-700 max-w-sm">
+        <!-- Key routes: tabellone delle partenze da Catania Airport -->
+        <section id="routes" class="bg-mist">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="grid gap-6 lg:grid-cols-12 lg:items-end mb-10 lg:mb-14">
+              <h2 class="lg:col-span-8 stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy">
+                Private transfers from Catania Airport to Sicily’s key destinations
+              </h2>
+              <p class="lg:col-span-4 text-base text-slate-700 leading-relaxed">
                 We provide fixed‑price, pre‑booked airport transfers for the main routes requested by hotels,
                 agencies and corporate clients across Sicily.
               </p>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4 text-sm">
+            <ul class="border-t-2 border-brandNavy">
               <!-- Taormina -->
-              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <img src="assets/route-taormina.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
-                <div class="p-4 space-y-1.5">
-                  <p class="text-sm font-semibold text-brandNavy">Catania Airport to Taormina</p>
-                  <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-brandOrange" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5A5.506 5.506 0 0 0 8 2.5Zm0 1a4.5 4.5 0 1 1-4.5 4.5A4.505 4.505 0 0 1 8 3.5Zm-.5 1v3.2l2 1.2.5-.8-1.5-.9V4.5Z"/>
-                    </svg>
-                    <span>About 1 hour via motorway</span>
-                  </div>
-                  <p class="text-slate-800 text-sm">
-                    Ideal for 5* hotels, villas and events in the Taormina area.
-                  </p>
+              <li class="grid grid-cols-[88px,1fr] sm:grid-cols-[168px,1fr] lg:grid-cols-[200px,1fr,260px] gap-x-4 sm:gap-x-8 gap-y-3 items-center py-5 sm:py-6 border-b border-brandNavy/20">
+                <img src="assets/route-taormina.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="row-span-2 lg:row-span-1 h-20 sm:h-24 lg:h-28 w-full rounded-lg object-cover" />
+                <div>
+                  <h3 class="text-brandNavy">
+                    <span class="block text-sm font-medium text-slate-600">Catania Airport to</span>
+                    <span class="block stretch-wide text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Taormina</span>
+                  </h3>
+                  <p class="mt-1.5 text-sm sm:text-base text-slate-700">Ideal for 5* hotels, villas and events in the Taormina area.</p>
                 </div>
-              </div>
+                <p class="col-start-2 lg:col-start-3 text-sm sm:text-base font-semibold text-brandNavy tabular-nums lg:text-right">About 1 hour via motorway</p>
+              </li>
 
               <!-- Siracusa / Ortigia -->
-              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <img src="assets/route-siracusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
-                <div class="p-4 space-y-1.5">
-                  <p class="text-sm font-semibold text-brandNavy">Catania Airport to Siracusa / Ortigia</p>
-                  <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-brandOrange" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5A5.506 5.506 0 0 0 8 2.5Zm0 1a4.5 4.5 0 1 1-4.5 4.5A4.505 4.505 0 0 1 8 3.5Zm-.5 1v3.2l2 1.2.5-.8-1.5-.9V4.5Z"/>
-                    </svg>
-                    <span>About 1 hour</span>
-                  </div>
-                  <p class="text-slate-800 text-sm">
-                    Private transfers for historic hotels and conference venues in Siracusa.
-                  </p>
+              <li class="grid grid-cols-[88px,1fr] sm:grid-cols-[168px,1fr] lg:grid-cols-[200px,1fr,260px] gap-x-4 sm:gap-x-8 gap-y-3 items-center py-5 sm:py-6 border-b border-brandNavy/20">
+                <img src="assets/route-siracusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="row-span-2 lg:row-span-1 h-20 sm:h-24 lg:h-28 w-full rounded-lg object-cover" />
+                <div>
+                  <h3 class="text-brandNavy">
+                    <span class="block text-sm font-medium text-slate-600">Catania Airport to</span>
+                    <span class="block stretch-wide text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Siracusa / Ortigia</span>
+                  </h3>
+                  <p class="mt-1.5 text-sm sm:text-base text-slate-700">Private transfers for historic hotels and conference venues in Siracusa.</p>
                 </div>
-              </div>
+                <p class="col-start-2 lg:col-start-3 text-sm sm:text-base font-semibold text-brandNavy tabular-nums lg:text-right">About 1 hour</p>
+              </li>
 
               <!-- Noto / Ragusa -->
-              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <img src="assets/route-noto-ragusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
-                <div class="p-4 space-y-1.5">
-                  <p class="text-sm font-semibold text-brandNavy">Catania Airport to Noto / Ragusa</p>
-                  <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-brandOrange" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5A5.506 5.506 0 0 0 8 2.5Zm0 1a4.5 4.5 0 1 1-4.5 4.5A4.505 4.505 0 0 1 8 3.5Zm-.5 1v3.2l2 1.2.5-.8-1.5-.9V4.5Z"/>
-                    </svg>
-                    <span>1 to 2 hours</span>
-                  </div>
-                  <p class="text-slate-800 text-sm">
-                    Chauffeur service for luxury resorts, weddings and incentive trips.
-                  </p>
+              <li class="grid grid-cols-[88px,1fr] sm:grid-cols-[168px,1fr] lg:grid-cols-[200px,1fr,260px] gap-x-4 sm:gap-x-8 gap-y-3 items-center py-5 sm:py-6 border-b border-brandNavy/20">
+                <img src="assets/route-noto-ragusa.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="row-span-2 lg:row-span-1 h-20 sm:h-24 lg:h-28 w-full rounded-lg object-cover" />
+                <div>
+                  <h3 class="text-brandNavy">
+                    <span class="block text-sm font-medium text-slate-600">Catania Airport to</span>
+                    <span class="block stretch-wide text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Noto / Ragusa</span>
+                  </h3>
+                  <p class="mt-1.5 text-sm sm:text-base text-slate-700">Chauffeur service for luxury resorts, weddings and incentive trips.</p>
                 </div>
-              </div>
+                <p class="col-start-2 lg:col-start-3 text-sm sm:text-base font-semibold text-brandNavy tabular-nums lg:text-right">1 to 2 hours</p>
+              </li>
 
               <!-- Palermo -->
-              <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                <img src="assets/route-palermo.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="h-28 sm:h-32 w-full object-cover" />
-                <div class="p-4 space-y-1.5">
-                  <p class="text-sm font-semibold text-brandNavy">Catania Airport to Palermo</p>
-                  <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-brandOrange" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5A5.506 5.506 0 0 0 8 2.5Zm0 1a4.5 4.5 0 1 1-4.5 4.5A4.505 4.505 0 0 1 8 3.5Zm-.5 1v3.2l2 1.2.5-.8-1.5-.9V4.5Z"/>
-                    </svg>
-                    <span>2h15 to 2h40 via motorway</span>
-                  </div>
-                  <p class="text-slate-800 text-sm">
-                    Long‑distance transfers for executives and event crews.
-                  </p>
+              <li class="grid grid-cols-[88px,1fr] sm:grid-cols-[168px,1fr] lg:grid-cols-[200px,1fr,260px] gap-x-4 sm:gap-x-8 gap-y-3 items-center py-5 sm:py-6 border-b border-brandNavy/20">
+                <img src="assets/route-palermo.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="row-span-2 lg:row-span-1 h-20 sm:h-24 lg:h-28 w-full rounded-lg object-cover" />
+                <div>
+                  <h3 class="text-brandNavy">
+                    <span class="block text-sm font-medium text-slate-600">Catania Airport to</span>
+                    <span class="block stretch-wide text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Palermo</span>
+                  </h3>
+                  <p class="mt-1.5 text-sm sm:text-base text-slate-700">Long‑distance transfers for executives and event crews.</p>
                 </div>
-              </div>
-            </div>
-            <p class="mt-8 text-sm text-slate-700">
+                <p class="col-start-2 lg:col-start-3 text-sm sm:text-base font-semibold text-brandNavy tabular-nums lg:text-right">2h15 to 2h40 via motorway</p>
+              </li>
+            </ul>
+            <p class="mt-8 text-base text-slate-700">
               Travelling somewhere else in Sicily? Ask us for the 2027 rate sheet.
-              <a href="#agency-rates" class="font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">Get the rate sheet</a>
+              <a href="#agency-rates" class="inline-block py-2 font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">Get the rate sheet</a>
             </p>
           </div>
         </section>
 
-        <!-- Google Reviews / Social Proof -->
-        <section id="reviews" class="border-b border-brandNavy/10 bg-mist">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-24">
-            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <div>
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
-                  What our guests say
-                </h2>
-              </div>
+        <!-- Google Reviews / Social Proof: fascia navy -->
+        <section id="reviews" class="on-dark bg-brandNavy">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-10 lg:mb-14">
+              <h2 class="stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-white">
+                What our guests say
+              </h2>
               <a
                 href="https://maps.app.goo.gl/RMHPuBjHArE2JyCa7"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy"
+                class="inline-block py-2 text-sm font-semibold text-white underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-white"
                 id="google-reviews-link"
               >
                 Rated 5.0 on Google: see all reviews
               </a>
             </div>
 
-            <div class="grid gap-6 md:grid-cols-3">
+            <div class="grid gap-10 lg:gap-14 lg:grid-cols-12">
               <!-- Review 1: Thomas Degen -->
-              <article class="rounded-2xl border border-brandNavy/10 bg-white p-6 shadow-sm flex flex-col gap-3">
-                <div class="flex items-center justify-between text-xs text-slate-600">
-                  <span class="font-semibold text-brandNavy">Thomas D.</span>
-                  <span class="flex items-center gap-1 text-brandNavy">
-                    <span role="img" aria-label="5 out of 5 stars">★★★★★</span>
-                    <span class="text-xs">Google</span>
-                  </span>
-                </div>
-                <p class="text-sm text-slate-700 leading-relaxed">
+              <article class="lg:col-span-7 flex flex-col gap-6 border-t border-slate-400 pt-8">
+                <span role="img" aria-label="5 out of 5 stars" class="text-lg tracking-[0.2em] text-brandOrange">★★★★★</span>
+                <p class="text-xl sm:text-2xl lg:text-[1.7rem] text-white leading-snug tracking-[-0.01em]">
                   “From the very first booking — and there have been many visits now — one constant has been Sebastiano: 100% reliable and the most professional, friendly chauffeur you could wish for. Always there promptly at arrivals with a friendly meet &amp; greet; he even takes my largest case upstairs. Perfect service every time, at a very reasonable rate. Car always immaculate.”
                 </p>
-                <p class="text-xs text-slate-600 mt-auto">
-                  June 2025 · Google review
+                <p class="mt-auto text-sm text-slate-300">
+                  <span class="font-semibold text-white">Thomas D.</span> · June 2025 · Google review
                 </p>
               </article>
 
-              <!-- Review 2: Dennis C -->
-              <article class="rounded-2xl border border-brandNavy/10 bg-white p-6 shadow-sm flex flex-col gap-3">
-                <div class="flex items-center justify-between text-xs text-slate-600">
-                  <span class="font-semibold text-brandNavy">Dennis C.</span>
-                  <span class="flex items-center gap-1 text-brandNavy">
-                    <span role="img" aria-label="5 out of 5 stars">★★★★★</span>
-                    <span class="text-xs">Google</span>
-                  </span>
-                </div>
-                <p class="text-sm text-slate-700 leading-relaxed">
-                  “Sebastiano was absolutely wonderful. He picked up my father and me from Catania airport and drove us to Ragusa. When the airport lost my luggage, he was incredibly patient and supportive and even guided me to places to buy clothes. Warm, professional, friendly — we felt completely comfortable. His car was spotless, upscale and comfortable, at the best price I could find. I highly recommend his service to anyone traveling in Sicily.”
-                </p>
-                <p class="text-xs text-slate-600 mt-auto">
-                  September 2025 · Google review
-                </p>
-              </article>
+              <div class="lg:col-span-5 grid gap-10">
+                <!-- Review 2: Dennis C -->
+                <article class="flex flex-col gap-4 border-t border-slate-400 pt-8">
+                  <span role="img" aria-label="5 out of 5 stars" class="text-sm tracking-[0.2em] text-brandOrange">★★★★★</span>
+                  <p class="text-base text-slate-100 leading-relaxed">
+                    “Sebastiano was absolutely wonderful. He picked up my father and me from Catania airport and drove us to Ragusa. When the airport lost my luggage, he was incredibly patient and supportive and even guided me to places to buy clothes. Warm, professional, friendly — we felt completely comfortable. His car was spotless, upscale and comfortable, at the best price I could find. I highly recommend his service to anyone traveling in Sicily.”
+                  </p>
+                  <p class="text-sm text-slate-300">
+                    <span class="font-semibold text-white">Dennis C.</span> · September 2025 · Google review
+                  </p>
+                </article>
 
-              <!-- Review 3: Amina Benkessirat -->
-              <article class="rounded-2xl border border-brandNavy/10 bg-white p-6 shadow-sm flex flex-col gap-3">
-                <div class="flex items-center justify-between text-xs text-slate-600">
-                  <span class="font-semibold text-brandNavy">Amina B.</span>
-                  <span class="flex items-center gap-1 text-brandNavy">
-                    <span role="img" aria-label="5 out of 5 stars">★★★★★</span>
-                    <span class="text-xs">Google</span>
-                  </span>
-                </div>
-                <p class="text-sm text-slate-700 leading-relaxed">
-                  “Very professional! He arrived early, which reassured us. Comfortable, clean car and smooth ride. Highly recommended!”
-                </p>
-                <p class="text-xs text-slate-600 mt-auto">
-                  September 2025 · Google review
-                </p>
-              </article>
+                <!-- Review 3: Amina Benkessirat -->
+                <article class="flex flex-col gap-4 border-t border-slate-400 pt-8">
+                  <span role="img" aria-label="5 out of 5 stars" class="text-sm tracking-[0.2em] text-brandOrange">★★★★★</span>
+                  <p class="text-base text-slate-100 leading-relaxed">
+                    “Very professional! He arrived early, which reassured us. Comfortable, clean car and smooth ride. Highly recommended!”
+                  </p>
+                  <p class="text-sm text-slate-300">
+                    <span class="font-semibold text-white">Amina B.</span> · September 2025 · Google review
+                  </p>
+                </article>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- Events -->
-        <section id="events" class="border-b border-brandNavy/10 bg-white">
-                  <div class="max-w-6xl mx-auto px-4 py-16 lg:py-20">
-                    <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-                      <div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
-                          From intimate meetings to large‑scale productions
-                        </h2>
-                      </div>
-                      <p class="text-sm text-slate-700 max-w-sm">
-                        Over 20 years of experience coordinating fleets for events in Sicily and across Italy,
-                        working alongside hotels, DMCs and corporate event teams.
-                      </p>
-                    </div>
-        
-                    <div class="grid gap-6 md:grid-cols-3 text-sm">
-                      <!-- Scale card -->
-                      <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <img src="assets/events-scale.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-32 w-full object-cover" />
-                        <div class="p-4 space-y-1.5">
-                          <p class="text-sm font-semibold text-brandNavy">Scale</p>
-                          <p class="text-3xl font-semibold text-brandNavy mb-0.5">
-                            120+
-                          </p>
-                          <p class="text-sm text-slate-700">
-                            Vehicles and chauffeurs coordinated in a single day across multiple venues during peak events.
-                          </p>
-                        </div>
-                      </div>
-        
-                      <!-- Experience card -->
-                      <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <img src="assets/events-experience.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-32 w-full object-cover" />
-                        <div class="p-4 space-y-1.5">
-                          <p class="text-sm font-semibold text-brandNavy">Experience</p>
-                          <p class="text-3xl font-semibold text-brandNavy mb-0.5">
-                            20+
-                          </p>
-                          <p class="text-sm text-slate-700">
-                            Years of operational experience in airport transfers and event logistics in Sicily.
-                          </p>
-                        </div>
-                      </div>
-        
-                      <!-- Coverage card -->
-                      <div class="rounded-2xl border border-brandNavy/15 bg-white shadow-sm overflow-hidden">
-                        <img src="assets/events-coverage.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-32 w-full object-cover" />
-                        <div class="p-4 space-y-1.5">
-                          <p class="text-sm font-semibold text-brandNavy">Coverage</p>
-                          <p class="text-3xl font-semibold text-brandNavy mb-0.5">
-                            10+
-                          </p>
-                          <p class="text-sm text-slate-700">
-                            Italian cities where we have supported touring events.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-        
-        <!-- Our Effortless Process / How it Works -->
-        <section
-          id="process"
-          class="border-b border-brandNavy/10 bg-mist"
-        >
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-24">
-            <div class="flex flex-wrap items-end justify-between gap-4 mb-10">
-              <div>
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
-                  How it works
-                </h2>
-              </div>
+        <section id="events" class="bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="grid gap-6 lg:grid-cols-12 lg:items-end mb-10 lg:mb-14">
+              <h2 class="lg:col-span-8 stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy">
+                From intimate meetings to large‑scale productions
+              </h2>
+              <p class="lg:col-span-4 text-base text-slate-700 leading-relaxed">
+                Over 20 years of experience coordinating fleets for events in Sicily and across Italy,
+                working alongside hotels, DMCs and corporate event teams.
+              </p>
             </div>
 
-            <div class="relative">
-              <!-- Fiber-like timeline connectors (desktop only) -->
-              <div class="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 transform px-6 lg:px-10 md:flex">
-                <div class="flex w-full justify-between">
-                  <!-- Connector between step 1 and 2 -->
-                  <div class="w-1/3 h-[2px] rounded-full bg-brandNavy"></div>
-                  <!-- Spacer under step 2 (no line across the card itself) -->
-                  <div class="w-[4%] h-[2px]"></div>
-                  <!-- Connector between step 2 and 3 -->
-                  <div class="w-1/3 h-[2px] rounded-full bg-brandNavy"></div>
+            <div class="grid gap-10 md:gap-8 md:grid-cols-3">
+              <!-- Scale -->
+              <div>
+                <img src="assets/events-scale.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-44 lg:h-52 w-full rounded-xl object-cover" />
+                <div class="sm:mt-6 border-t-2 border-brandNavy pt-4">
+                  <h3 class="text-sm font-semibold text-slate-600">Scale</h3>
+                  <p class="mt-1 stretch-wide text-5xl lg:text-6xl font-bold tracking-tight text-brandNavy">120+</p>
+                  <p class="mt-3 text-base text-slate-700 leading-relaxed">
+                    Vehicles and chauffeurs coordinated in a single day across multiple venues during peak events.
+                  </p>
                 </div>
               </div>
 
-              <div class="grid gap-6 md:grid-cols-3 relative z-10">
-              <!-- Step 01 -->
-              <div class="relative overflow-hidden rounded-2xl border border-brandNavy/15 bg-white p-7 shadow-sm">
-                <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brandNavy text-brandOrange">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor">
+              <!-- Experience -->
+              <div>
+                <img src="assets/events-experience.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-44 lg:h-52 w-full rounded-xl object-cover" />
+                <div class="sm:mt-6 border-t-2 border-brandNavy pt-4">
+                  <h3 class="text-sm font-semibold text-slate-600">Experience</h3>
+                  <p class="mt-1 stretch-wide text-5xl lg:text-6xl font-bold tracking-tight text-brandNavy">20+</p>
+                  <p class="mt-3 text-base text-slate-700 leading-relaxed">
+                    Years of operational experience in airport transfers and event logistics in Sicily.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Coverage -->
+              <div>
+                <img src="assets/events-coverage.webp" alt="" loading="lazy" decoding="async" width="900" height="502" class="hidden sm:block h-44 lg:h-52 w-full rounded-xl object-cover" />
+                <div class="sm:mt-6 border-t-2 border-brandNavy pt-4">
+                  <h3 class="text-sm font-semibold text-slate-600">Coverage</h3>
+                  <p class="mt-1 stretch-wide text-5xl lg:text-6xl font-bold tracking-tight text-brandNavy">10+</p>
+                  <p class="mt-3 text-base text-slate-700 leading-relaxed">
+                    Italian cities where we have supported touring events.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- How it works: tre passi in sequenza su una linea -->
+        <section id="process" class="bg-mist">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <h2 class="stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy mb-10 lg:mb-14">
+              How it works
+            </h2>
+
+            <!-- La linea che unisce i tre passi (da tablet in su) è il ::before della lista -->
+            <ol class="relative grid gap-10 md:grid-cols-3 md:gap-8 md:before:absolute md:before:inset-x-0 md:before:top-6 md:before:h-0.5 md:before:bg-brandNavy md:before:content-['']">
+              <!-- Step 1 -->
+              <li class="relative">
+                <div class="relative inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brandNavy text-brandOrange ring-8 ring-mist">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                     <path d="M4 5.5 2 7.5l1.5 1.5 2-2L4 5.5Zm8-1-1.5 1.5-2-2L9.5 2.5 12 4.5ZM6.5 4l3 3-2 2-1-1-2 2 1.5 1.5a1.5 1.5 0 0 0 2.1 0L10 11l1 1 1.5-1.5a1.5 1.5 0 0 0 0-2.1L9 4.5 7.5 3 6.5 4Z"/>
                   </svg>
                 </div>
-                <h3 class="mt-4 text-lg font-semibold text-brandNavy">
+                <h3 class="mt-6 stretch-wide text-2xl font-bold text-brandNavy">
                   Connect
                 </h3>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="mt-3 text-base text-slate-700 leading-relaxed max-w-sm">
                   Tell us your routes and volumes, and we send you our rate sheet with the written terms.
                 </p>
-              </div>
+              </li>
 
-              <!-- Step 02 -->
-              <div class="relative overflow-hidden rounded-2xl border border-brandNavy/15 bg-white p-7 shadow-sm">
-                <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brandNavy text-brandOrange">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor">
+              <!-- Step 2 -->
+              <li class="relative">
+                <div class="relative inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brandNavy text-brandOrange ring-8 ring-mist">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                     <path d="M5 2.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h2v9H3V3h2v-.5Zm1.5-.5a.5.5 0 0 0-.5.5V3h3v-.5a.5.5 0 0 0-.5-.5h-2Z"/>
                   </svg>
                 </div>
-                <h3 class="mt-4 text-lg font-semibold text-brandNavy">
+                <h3 class="mt-6 stretch-wide text-2xl font-bold text-brandNavy">
                   Confirm &amp; Meet
                 </h3>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="mt-3 text-base text-slate-700 leading-relaxed max-w-sm">
                   Your driver is at the pickup point 15 minutes before the agreed time, with a name sign for your guests.
                 </p>
-              </div>
+              </li>
 
-              <!-- Step 03 -->
-              <div class="relative overflow-hidden rounded-2xl border border-brandNavy/15 bg-white p-7 shadow-sm">
-                <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brandNavy text-brandOrange">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor">
+              <!-- Step 3 -->
+              <li class="relative">
+                <div class="relative inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brandNavy text-brandOrange ring-8 ring-mist">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                     <path d="M3 7 4.5 4.5h5L12 7h1a1 1 0 0 1 1 1v3H13a1.5 1.5 0 0 1-3 0H6a1.5 1.5 0 0 1-3 0H2V8a1 1 0 0 1 1-1Zm1.5 3A1 1 0 1 0 5.5 11 1 1 0 0 0 4.5 10Zm7 0a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z"/>
                   </svg>
                 </div>
-                <h3 class="mt-4 text-lg font-semibold text-brandNavy">
+                <h3 class="mt-6 stretch-wide text-2xl font-bold text-brandNavy">
                   Relax &amp; Travel
                 </h3>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="mt-3 text-base text-slate-700 leading-relaxed max-w-sm">
                   We handle timing and routing, and your guests travel in comfort.
                 </p>
-              </div>
-              </div>
-            </div>
-            <div class="mt-10">
-              <a href="#agency-rates" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-6 py-3 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors">
+              </li>
+            </ol>
+            <div class="mt-12">
+              <a href="#agency-rates" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-7 py-3.5 text-sm font-semibold text-black hover:bg-brandOrangeHover transition-colors">
                 <span>Get the 2027 agency rates</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2.3 13.7 14 8 2.3 2.3 3.6 7h5l-5 2.5z" /></svg>
               </a>
             </div>
           </div>
         </section>
 
-        <!-- Contact / CTA -->
-        <section id="agency-rates" class="border-b border-brandNavy/10 bg-white">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-20">
-            <div class="grid gap-10 lg:grid-cols-[1fr,1.3fr] items-start">
-              <div class="space-y-3">
-                <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-brandNavy">
+        <!-- Contact / CTA: il secondo momento nero della pagina -->
+        <section id="agency-rates" class="bg-brandBlack">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="grid gap-10 lg:gap-16 lg:grid-cols-12 items-start">
+              <div class="on-dark lg:col-span-5 space-y-5">
+                <h2 class="stretch-wide text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[0.98] text-white">
                   Request the 2027 agency rates
                 </h2>
-                <p class="text-sm sm:text-base text-slate-700 leading-relaxed">
+                <p class="text-base sm:text-lg text-slate-200 leading-relaxed">
                   Tell us who you are and we will send you our net rate sheet for the whole of Sicily, with the
                   written terms. We usually reply within the hour during office hours (Monday to Friday, 9:00 to 18:00 Italian time).
                 </p>
-                <p class="text-xs text-slate-600">
+                <p class="text-sm text-slate-300">
                   Prefer email? Write to
-                  <a href="mailto:info@cataniaairporttransfer.net?subject=2027%20agency%20rates%20request" class="text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">info@cataniaairporttransfer.net</a>.
+                  <a href="mailto:info@cataniaairporttransfer.net?subject=2027%20agency%20rates%20request" class="break-all text-white underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-white">info@cataniaairporttransfer.net</a>.
                 </p>
               </div>
 
-              <div class="rounded-3xl border border-brandNavy/15 bg-white p-5 sm:p-8">
+              <div class="lg:col-span-7 rounded-2xl bg-white p-5 sm:p-9">
                 <div id="rates-sent" class="hidden mb-5 rounded-xl border border-brandOrange bg-white px-4 py-3 text-sm text-brandNavy" role="status">
                   Thank you. Your request has reached us, and we will reply by email with our 2027 agency rates.
                 </div>
                 <div id="rates-error" class="hidden mb-5 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
                   Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.
                 </div>
-                <form action="request-rates.php" method="post" class="grid gap-4 sm:grid-cols-2">
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                <form action="request-rates.php" method="post" class="grid gap-5 sm:grid-cols-2">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy">
                     <span>Your name</span>
-                    <input name="name" required maxlength="100" autocomplete="name" class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 focus:border-brandNavy">
+                    <input name="name" required maxlength="100" autocomplete="name" class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 focus:border-brandNavy">
                   </label>
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy">
                     <span>Company</span>
-                    <input name="agency" required maxlength="150" autocomplete="organization" class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 focus:border-brandNavy">
+                    <input name="agency" required maxlength="150" autocomplete="organization" class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 focus:border-brandNavy">
                   </label>
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy">
                     <span>Country</span>
-                    <input name="country" required maxlength="80" autocomplete="country-name" class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 focus:border-brandNavy">
+                    <input name="country" required maxlength="80" autocomplete="country-name" class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 focus:border-brandNavy">
                   </label>
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy">
                     <span>Work email</span>
-                    <input name="email" type="email" required maxlength="200" autocomplete="email" class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 focus:border-brandNavy">
+                    <input name="email" type="email" required maxlength="200" autocomplete="email" class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 focus:border-brandNavy">
                   </label>
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy sm:col-span-2">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy sm:col-span-2">
                     <span>How did you hear about us?</span>
-                    <select name="how" required class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 focus:border-brandNavy">
+                    <select name="how" required class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 focus:border-brandNavy">
                       <option value="">Please choose</option>
                       <option value="google">Google search</option>
                       <option value="linkedin">LinkedIn</option>
@@ -640,15 +536,15 @@
                       <option value="other">Other</option>
                     </select>
                   </label>
-                  <label class="space-y-1.5 text-xs font-semibold text-brandNavy sm:col-span-2">
+                  <label class="space-y-2 text-sm font-semibold text-brandNavy sm:col-span-2">
                     <span>Anything we should know? <span class="font-normal text-slate-600">(optional)</span></span>
-                    <textarea name="message" rows="3" maxlength="2000" placeholder="Destinations, typical group size, season" class="w-full min-h-[44px] rounded-xl border border-brandNavy/20 bg-white px-4 py-2.5 text-base sm:text-sm font-normal text-slate-800 placeholder:text-slate-500 focus:border-brandNavy"></textarea>
+                    <textarea name="message" rows="3" maxlength="2000" placeholder="Destinations, typical group size, season" class="w-full min-h-[48px] rounded-lg border border-brandNavy/30 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 focus:border-brandNavy"></textarea>
                   </label>
                   <div class="hidden" aria-hidden="true">
                     <label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
                   </div>
-                  <div class="sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-3">
-                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-6 py-3 text-sm font-semibold text-black whitespace-nowrap hover:bg-brandOrangeHover transition-colors">
+                  <div class="sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-4 pt-1">
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-brandOrange px-8 py-3.5 text-base font-semibold text-black whitespace-nowrap hover:bg-brandOrangeHover transition-colors">
                       Send my request
                     </button>
                     <p class="text-xs text-slate-600">
@@ -662,150 +558,148 @@
         </section>
 
         <!-- FAQ -->
-        <section id="faq" class="border-b border-brandNavy/10 bg-mist">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-24">
-            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <div>
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
-                  Frequently asked questions
-                </h2>
-              </div>
-            </div>
+        <section id="faq" class="bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+            <div class="grid gap-10 lg:grid-cols-12">
+              <h2 class="lg:col-span-4 stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy">
+                Frequently asked questions
+              </h2>
 
-            <div class="space-y-4">
-              <details class="group rounded-2xl border border-brandNavy/10 bg-white px-4 py-3">
-                <summary class="flex min-h-[44px] cursor-pointer items-center justify-between text-sm font-semibold text-brandNavy">
+              <div class="lg:col-span-8 border-t-2 border-brandNavy">
+              <details class="group border-b border-brandNavy/20">
+                <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base sm:text-lg font-semibold text-brandNavy [&::-webkit-details-marker]:hidden">
                   <span>Do you offer fixed prices for Catania Airport transfers?</span>
-                  <span class="ml-3 text-xs text-slate-600 group-open:hidden">+</span>
-                  <span class="ml-3 text-xs text-slate-600 hidden group-open:inline">−</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy group-open:hidden" aria-hidden="true">+</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy hidden group-open:inline" aria-hidden="true">−</span>
                 </summary>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="pb-6 max-w-2xl text-base text-slate-700 leading-relaxed">
                   Yes. All our Catania Airport transfers are quoted in advance with fixed prices, including
                   tolls and standard waiting time (VAT included for private clients; agency rates are net of VAT). Night and holiday supplements, where they apply, are shown in the quote, so nothing is added after the ride. For agencies, an optional fuel adjustment tied to the official monthly diesel average works in both directions.
                 </p>
               </details>
 
-              <details class="group rounded-2xl border border-brandNavy/10 bg-white px-4 py-3">
-                <summary class="flex min-h-[44px] cursor-pointer items-center justify-between text-sm font-semibold text-brandNavy">
+              <details class="group border-b border-brandNavy/20">
+                <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base sm:text-lg font-semibold text-brandNavy [&::-webkit-details-marker]:hidden">
                   <span>How do you handle delayed or early flights?</span>
-                  <span class="ml-3 text-xs text-slate-600 group-open:hidden">+</span>
-                  <span class="ml-3 text-xs text-slate-600 hidden group-open:inline">−</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy group-open:hidden" aria-hidden="true">+</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy hidden group-open:inline" aria-hidden="true">−</span>
                 </summary>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="pb-6 max-w-2xl text-base text-slate-700 leading-relaxed">
                   We monitor flight status in real time. Your chauffeur adjusts the pick‑up time accordingly
                   and waits inside the arrivals hall within the agreed waiting window, so your guests are
                   always met even when the schedule changes.
                 </p>
               </details>
 
-              <details class="group rounded-2xl border border-brandNavy/10 bg-white px-4 py-3">
-                <summary class="flex min-h-[44px] cursor-pointer items-center justify-between text-sm font-semibold text-brandNavy">
+              <details class="group border-b border-brandNavy/20">
+                <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base sm:text-lg font-semibold text-brandNavy [&::-webkit-details-marker]:hidden">
                   <span>Can you support groups and events of different sizes?</span>
-                  <span class="ml-3 text-xs text-slate-600 group-open:hidden">+</span>
-                  <span class="ml-3 text-xs text-slate-600 hidden group-open:inline">−</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy group-open:hidden" aria-hidden="true">+</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy hidden group-open:inline" aria-hidden="true">−</span>
                 </summary>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="pb-6 max-w-2xl text-base text-slate-700 leading-relaxed">
                   Yes. We arrange sedans, vans and buses for anything from a small executive meeting to a large event. For large events, one or more coordinators follow the operations on the day and do nothing else.
                 </p>
               </details>
 
-              <details class="group rounded-2xl border border-brandNavy/10 bg-white px-4 py-3">
-                <summary class="flex min-h-[44px] cursor-pointer items-center justify-between text-sm font-semibold text-brandNavy">
+              <details class="group border-b border-brandNavy/20">
+                <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base sm:text-lg font-semibold text-brandNavy [&::-webkit-details-marker]:hidden">
                   <span>Do you provide child seats if required?</span>
-                  <span class="ml-3 text-xs text-slate-600 group-open:hidden">+</span>
-                  <span class="ml-3 text-xs text-slate-600 hidden group-open:inline">−</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy group-open:hidden" aria-hidden="true">+</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy hidden group-open:inline" aria-hidden="true">−</span>
                 </summary>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="pb-6 max-w-2xl text-base text-slate-700 leading-relaxed">
                   Child and infant seats are provided free of charge on request at the time of booking. Let us know the age
                   and number of children so we can assign the correct equipment and vehicle type.
                 </p>
               </details>
 
-              <details class="group rounded-2xl border border-brandNavy/10 bg-white px-4 py-3">
-                <summary class="flex min-h-[44px] cursor-pointer items-center justify-between text-sm font-semibold text-brandNavy">
+              <details class="group border-b border-brandNavy/20">
+                <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base sm:text-lg font-semibold text-brandNavy [&::-webkit-details-marker]:hidden">
                   <span>Are you available 24/7?</span>
-                  <span class="ml-3 text-xs text-slate-600 group-open:hidden">+</span>
-                  <span class="ml-3 text-xs text-slate-600 hidden group-open:inline">−</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy group-open:hidden" aria-hidden="true">+</span>
+                  <span class="text-2xl font-normal leading-none text-brandNavy hidden group-open:inline" aria-hidden="true">−</span>
                 </summary>
-                <p class="mt-2 text-sm text-slate-700 leading-relaxed">
+                <p class="pb-6 max-w-2xl text-base text-slate-700 leading-relaxed">
                   During every service, yes: our emergency line (phone and WhatsApp) stays open from pickup to drop-off.
                   The office is open Monday to Friday, 9:00 to 18:00, and we can run services at any hour, day or
                   night, with advance booking and subject to availability.
                 </p>
               </details>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="contact" class="border-b border-brandNavy/10 bg-white">
-          <div class="max-w-6xl mx-auto px-4 py-16 lg:py-20">
-            <div class="grid gap-10 lg:grid-cols-[1.3fr,1fr] items-start">
-              <div class="space-y-4">
-                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-brandNavy">
+        <section id="contact" class="bg-mist">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24">
+            <div class="grid gap-10 lg:grid-cols-12 items-start">
+              <div class="lg:col-span-7 space-y-5">
+                <h2 class="stretch-semi text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.04] text-brandNavy">
                   Prefer to talk first?
                 </h2>
-                <p class="text-base text-slate-700 max-w-xl leading-relaxed">
+                <p class="text-base sm:text-lg text-slate-700 max-w-xl leading-relaxed">
                   Call us, or write on WhatsApp or by email. We usually reply to messages within the hour during office
                   hours, Monday to Friday, 9:00 to 18:00 Italian time.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3 pt-1">
-                  <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy/20 bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
+                  <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
                     <span>Chat on WhatsApp</span>
                   </a>
-                  <a href="mailto:info@cataniaairporttransfer.net" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy/20 bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
+                  <a href="mailto:info@cataniaairporttransfer.net" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
                     <span>Email us</span>
                   </a>
-                  <a href="tel:+393200528300" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy/20 bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
+                  <a href="tel:+393200528300" class="inline-flex items-center justify-center gap-2 rounded-full border border-brandNavy bg-white px-6 py-3 text-sm font-semibold text-brandNavy hover:border-brandOrange transition-colors">
                     <span>Call us</span>
                   </a>
                 </div>
-                <p class="text-sm text-slate-700 pt-2">
+                <p class="text-base text-slate-700 pt-2">
                   Travelling privately?
-                  <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">Book your transfer on WhatsApp</a>
+                  <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="inline-block py-2 font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">Book your transfer on WhatsApp</a>
                 </p>
               </div>
 
-              <div class="space-y-4 text-sm text-slate-700">
-                <div class="space-y-1">
-                  <p>
-                    <span class="text-slate-700">Email:</span>
-                    <a href="mailto:info@cataniaairporttransfer.net" class="text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">info@cataniaairporttransfer.net</a>
-                  </p>
-                  <p>
-                    <span class="text-slate-700">Phone:</span>
-                    <a href="tel:+393200528300" class="text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">+39 320 052 8300</a>
-                  </p>
-                  <p>
-                    <span class="text-slate-700">WhatsApp:</span>
-                    <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">+39 320 052 8300</a>
-                  </p>
-                </div>
-                <div>
-                    <p class="text-slate-700 mb-1">Social:</p>
-                    <div class="flex gap-3 text-base">
-                      <a href="https://www.facebook.com/cataniaairporttransfers" target="_blank" rel="noopener noreferrer" class="inline-flex p-3.5 -m-3.5 text-slate-600 hover:text-brandNavy" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <div class="lg:col-span-5 text-base text-slate-700">
+                <dl class="border-t-2 border-brandNavy divide-y divide-brandNavy/20">
+                  <div class="py-4">
+                    <dt class="text-sm text-slate-600">Email</dt>
+                    <dd><a href="mailto:info@cataniaairporttransfer.net" class="break-all font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy">info@cataniaairporttransfer.net</a></dd>
+                  </div>
+                  <div class="py-4">
+                    <dt class="text-sm text-slate-600">Phone</dt>
+                    <dd><a href="tel:+393200528300" class="font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy tabular-nums">+39 320 052 8300</a></dd>
+                  </div>
+                  <div class="py-4">
+                    <dt class="text-sm text-slate-600">WhatsApp</dt>
+                    <dd><a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="font-semibold text-brandNavy underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-brandNavy tabular-nums">+39 320 052 8300</a></dd>
+                  </div>
+                  <div class="py-4">
+                    <dt class="text-sm text-slate-600 mb-1">Social</dt>
+                    <dd class="flex gap-6">
+                      <a href="https://www.facebook.com/cataniaairporttransfers" target="_blank" rel="noopener noreferrer" class="inline-flex p-3.5 -m-3.5 text-brandNavy hover:text-slate-700" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M24 12.073C24 5.445 18.627 0 12 0S0 5.445 0 12.073C0 18.1 4.388 23.064 10.125 24v-8.385H7.078v-3.542h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.515c-1.494 0-1.956.93-1.956 1.883v2.257h3.328l-.532 3.542h-2.796V24C19.612 23.064 24 18.1 24 12.073z"/>
                         </svg>
                       </a>
-                      <a href="https://www.linkedin.com/showcase/cataniaairporttransfer" target="_blank" rel="noopener noreferrer" class="inline-flex p-3.5 -m-3.5 text-slate-600 hover:text-brandNavy" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                      <a href="https://www.linkedin.com/showcase/cataniaairporttransfer" target="_blank" rel="noopener noreferrer" class="inline-flex p-3.5 -m-3.5 text-brandNavy hover:text-slate-700" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0zM7.059 20.452H3.577V9h3.482zM5.318 7.433a2.02 2.02 0 1 1 0-4.04 2.02 2.02 0 0 1 0 4.04zM20.447 20.452h-3.482v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.495V9h3.346v1.561h.047c.466-.882 1.605-1.812 3.299-1.812 3.53 0 4.26 2.323 4.26 5.341z"/>
                         </svg>
                       </a>
-                    </div>
+                    </dd>
                   </div>
-</div>
+                </dl>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
       <!-- Footer: extra bottom padding on mobile so sticky contact bar does not cover it -->
-      <footer class="bg-brandBlack on-dark border-t border-brandNavy/70 pb-20 md:pb-0">
-        <div class="max-w-6xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-400">
-          <div class="flex flex-col sm:flex-row justify-between gap-6 items-start sm:items-center">
-            <div class="flex items-center gap-3">
+      <footer class="bg-brandBlack on-dark border-t border-brandNavy pb-20 md:pb-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8 text-sm text-slate-400">
+          <div class="flex flex-col sm:flex-row justify-between gap-6 items-start">
+            <div class="flex items-center gap-4">
               <img
                 src="image_0-small.webp"
                 srcset="image_0-small.webp 250w, image_0.webp 500w"
@@ -813,24 +707,24 @@
                 alt="Catania Airport Transfer logo"
                 width="400"
                 height="250"
-                class="h-8 w-auto object-contain"
+                class="h-10 w-auto object-contain"
                 loading="lazy"
                 decoding="async"
               />
               <div class="space-y-1">
-                <p class="text-xs font-semibold uppercase tracking-[0.26em] text-slate-100">
+                <p class="stretch-wide text-base font-bold text-slate-100">
                   Catania Airport Transfer
                 </p>
-                <p class="text-xs text-slate-400">
+                <p class="text-sm text-slate-400">
                   Private chauffeur services for Catania &amp; Sicily.
                 </p>
               </div>
             </div>
 
-            <div class="space-y-1 text-xs text-slate-400">
+            <div class="space-y-1 text-sm text-slate-400">
               <p>
                 <span class="text-slate-300">Email:</span>
-                <a href="mailto:info@cataniaairporttransfer.net" class="hover:text-brandOrange">
+                <a href="mailto:info@cataniaairporttransfer.net" class="break-all hover:text-brandOrange">
                   info@cataniaairporttransfer.net
                 </a>
               </p>
@@ -845,7 +739,7 @@
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-1 hover:text-brandOrange"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-brandOrange" viewBox="0 0 24 24" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-brandOrange" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12.04 2C7.06 2 3 5.96 3 10.93c0 1.95.63 3.76 1.8 5.28L3 22l6.02-1.76a9.1 9.1 0 0 0 3.02.49c4.98 0 9.04-3.96 9.04-8.93C21.08 5.96 17.02 2 12.04 2Z"/>
                   </svg>
                   <span>+39 320 052 8300</span>
@@ -854,8 +748,8 @@
             </div>
           </div>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-brandNavy/70">
-            <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-6 border-t border-brandNavy text-xs">
+            <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
               © <span id="year"></span> Catania Airport Transfer. All rights reserved.
               <a href="privacy.html" class="text-slate-400 hover:text-brandOrange transition-colors">Privacy</a>
               <button type="button" id="cookie-consent-manage" class="min-h-0 text-slate-400 hover:text-brandOrange transition-colors">Cookie preferences</button>
@@ -873,10 +767,10 @@
 
     <!-- Mobile sticky contact bar -->
     <div
-      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy/70 bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden"
+      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 flex items-center justify-between text-xs text-slate-100 md:hidden"
     >
       <div class="flex w-full items-center gap-2">
-        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-1 min-h-[44px] rounded-full border border-brandNavy/40 bg-white px-4 py-2.5 text-sm font-semibold text-brandNavy">
+        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-1 min-h-[44px] rounded-full border border-slate-500 bg-brandBlack px-4 py-2.5 text-sm font-semibold text-slate-100">
           <span>WhatsApp</span>
         </a>
         <a href="#agency-rates" class="flex-1 inline-flex items-center justify-center gap-1 min-h-[44px] rounded-full bg-brandOrange px-4 py-2.5 text-sm font-semibold text-black">
