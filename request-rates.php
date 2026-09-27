@@ -85,21 +85,51 @@ $ok = invia($TO, $subject, $body, $headers);
 invia($BACKUP, '[copia] ' . $subject, $body, $headers);
 
 if ($ok && sotto_limite($LIMITE)) {
-  $conferma = "Thank you for your request.\n\n"
-    . "We have received it and will reply by email with our 2027 agency rates. We usually reply within the hour,\n"
-    . "Monday to Friday, 9:00 to 18:00 Italian time. If you write outside office hours, we reply when the office\n"
-    . "reopens.\n\n"
-    . "If you need us sooner, call or WhatsApp +39 320 052 8300.\n\n"
-    . "Sebastiano Valenti, Founder\n"
-    . "Catania Airport Transfer\n"
-    . "https://cataniaairporttransfer.net\n\n"
-    . "You are receiving this message because this address was entered in the rates request form on our website.\n"
-    . "If you did not send the request, you can ignore this email: we will not contact you again.\n";
+  $paragrafi = [
+    'Thank you for your request.',
+    'We have received it and will reply by email with our 2027 agency rates. We usually reply within the hour, Monday to Friday, 9:00 to 18:00 Italian time. If you write outside office hours, we reply when the office reopens.',
+    'If you need us sooner, call or WhatsApp +39 320 052 8300.',
+  ];
+  $nota = 'You are receiving this message because this address was entered in the rates request form on our website. If you did not send the request, you can ignore this email: we will not contact you again.';
+
+  $testo = implode("\n\n", $paragrafi) . "\n\n"
+    . "Sebastiano Valenti, Founder · Catania Airport Transfer\n"
+    . "+39 320 052 8300 (WhatsApp) · https://cataniaairporttransfer.net\n"
+    . "Catania Airport Transfer di Valenti Sebastiano · Via Badia 3, 95123 Catania (CT), Italy · VAT IT05924950875\n\n"
+    . $nota . "\n";
+
+  // Firma grafica: copia di analisi/brand-b2b-2027/firma-email.html del vault (fonte unica). Se cambia la', va
+  // aggiornata anche qui. Il link al sito porta utm_source=conferma-modulo.
+  $firma = <<<'HTML'
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:4px 0 18px 0">
+<tr><td style="padding:0 16px 0 0;vertical-align:middle;border-right:3px solid #ee8211">
+<img src="https://cataniaairporttransfer.net/assets/email-logo-cat.png" width="104" height="64" alt="Catania Airport Transfer" style="display:block;border:0;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#1b3f5d"></td>
+<td style="padding:0 0 0 16px;vertical-align:middle;font-family:Arial, Helvetica, sans-serif;font-size:13px;line-height:1.55;color:#1f2937">
+<span style="font-size:15px;font-weight:bold;color:#1b3f5d">Sebastiano Valenti</span><br>
+<span style="color:#64748b">Founder &middot; Catania Airport Transfer</span><br>
+<a href="tel:+393200528300" style="color:#1f2937;text-decoration:none">+39 320 052 8300</a> &middot; <a href="https://wa.me/393200528300" style="color:#1f2937;text-decoration:none">WhatsApp</a><br>
+<a href="https://cataniaairporttransfer.net/?utm_source=conferma-modulo" style="color:#ee8211;text-decoration:none">cataniaairporttransfer.net</a><br>
+<span style="font-size:11px;color:#64748b">Catania Airport Transfer di Valenti Sebastiano<br>Via Badia 3, 95123 Catania, Italy &middot; VAT IT05924950875</span></td></tr></table>
+HTML;
+  $p = 'margin:0 0 14px 0;font-family:Arial, Helvetica, sans-serif;font-size:14px;line-height:1.5;color:#1f2937';
+  $html = '<div style="max-width:600px">';
+  foreach ($paragrafi as $x) $html .= '<p style="' . $p . '">' . htmlspecialchars($x, ENT_QUOTES, 'UTF-8') . '</p>';
+  $html .= "\n" . $firma . "\n"
+    . '<p style="margin:0;font-family:Arial, Helvetica, sans-serif;font-size:11px;line-height:1.5;color:#64748b">'
+    . htmlspecialchars($nota, ENT_QUOTES, 'UTF-8') . '</p></div>';
+
+  $confine = 'cat-' . bin2hex(random_bytes(12));
+  $corpo = "--$confine\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
+    . chunk_split(base64_encode($testo))
+    . "--$confine\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n"
+    . chunk_split(base64_encode($html))
+    . "--$confine--\r\n";
   $h = "From: $FROM\r\n"
     . "Reply-To: $TO\r\n"
     . "Auto-Submitted: auto-replied\r\n"
-    . "Content-Type: text/plain; charset=UTF-8\r\n";
-  invia($email, 'We have your request for our 2027 agency rates', $conferma, $h);
+    . "MIME-Version: 1.0\r\n"
+    . "Content-Type: multipart/alternative; boundary=\"$confine\"\r\n";
+  invia($email, 'We have your request for our 2027 agency rates', $corpo, $h);
 }
 
 back($ok ? 'sent' : 'error');
