@@ -1,27 +1,65 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Archivo variabile, self-hosted, solo alfabeto latino. Assi ridotti a quelli usati (passata 5): pesi 400–700,
+     larghezze 100–125%; 57 KB invece di 90. Un peso o una larghezza fuori da questi intervalli va rigenerato dal
+     file completo (fontTools, varLib.instancer), non chiesto al browser: lo sintetizzerebbe. */
+  @font-face {
+    font-family: "Archivo";
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 100% 125%;
+    font-display: swap;
+    src: url("fonts/archivo-latin-400-700.woff2") format("woff2");
+  }
+
   /* Focus da tastiera sempre visibile: il colore del testo contrasta per costruzione con il fondo */
   :focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
   /* Sui pulsanti arancioni il testo è nero: anello navy sui fondi chiari (10:1), arancione sui fondi scuri */
-  .bg-brandOrange:focus-visible {
+  .bg-brandOrange:focus-visible,
+  .btn-primary:focus-visible {
     outline-color: theme('colors.brandNavy');
   }
-  .on-dark .bg-brandOrange:focus-visible {
+  .on-dark .bg-brandOrange:focus-visible,
+  .on-dark .btn-primary:focus-visible {
     outline-color: theme('colors.brandOrange');
   }
 
+  /* Né le ancore né l'elemento col focus da tastiera finiscono sotto l'header fisso (alto circa 73px) o, su
+     telefono, sotto la barra fissa in basso (WCAG 2.2, 2.4.11): scroll-padding vale per entrambi i casi */
   html {
     -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 4.5rem;
+  }
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-bottom: 0;
+    }
+  }
+
+  /* Superfici del browser nella palette: selezione arancione con testo nero, cursore e controlli navy */
+  ::selection {
+    background-color: theme('colors.brandOrange');
+    color: theme('colors.brandBlack');
+  }
+  input,
+  textarea {
+    caret-color: theme('colors.brandNavy');
+  }
+  :root {
+    accent-color: theme('colors.brandNavy');
   }
 
   /* Bersagli di tocco: almeno 44px per pulsanti a pillola, pulsanti e tendine */
   a[class*="rounded-full"],
+  .btn,
   button,
   select {
     min-height: 44px;
@@ -33,8 +71,173 @@
     }
     /* Risposta al tocco sui pulsanti */
     a[class*="rounded-full"]:active,
+    .btn:active,
     button:active {
       transform: scale(0.97);
     }
+  }
+}
+
+/*
+  Sistema (passata 2). Le dimensioni stanno qui, i colori restano nell'HTML perché dipendono dal fondo
+  (navy su chiaro, bianco su scuro). Scala dei titoli, dal più grande:
+    t-hero    titolo della pagina, uno solo
+    t-cta     titolo del modulo tariffe, il secondo momento nero
+    t-h2      titolo di ogni sezione
+    t-stat-lg numeri degli eventi
+    t-route   destinazione nel tabellone
+    t-stat    numeri dell'hero
+    t-h3      titolo di un passo o di un pannello
+    t-quote   la recensione lunga (non espansa: si legge come voce, non come insegna)
+  Testo: t-lead (apertura di sezione), t-body, t-meta (etichette piccole).
+*/
+@layer components {
+  .wrap {
+    @apply mx-auto max-w-7xl px-4 sm:px-6;
+  }
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+  /* Testa di sezione: titolo a sinistra, eventuale apertura a destra, stessa distanza dal contenuto */
+  .section-head {
+    @apply mb-10 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end;
+  }
+
+  .t-hero {
+    @apply stretch-wide text-[2.5rem] font-bold leading-[0.98] tracking-[-0.03em] sm:text-5xl md:text-[3.4rem] lg:text-6xl xl:text-[4.6rem];
+    text-wrap: balance;
+  }
+  .t-cta {
+    @apply stretch-wide text-4xl font-bold leading-[0.98] tracking-[-0.03em] sm:text-5xl lg:text-6xl;
+    text-wrap: balance;
+  }
+  .t-h2 {
+    @apply stretch-semi text-3xl font-bold leading-[1.04] tracking-[-0.025em] sm:text-4xl lg:text-5xl;
+    text-wrap: balance;
+  }
+  .t-stat-lg {
+    @apply stretch-wide text-5xl font-bold tracking-tight lg:text-6xl;
+  }
+  .t-route {
+    @apply stretch-wide text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl;
+  }
+  .t-stat {
+    @apply stretch-wide text-3xl font-bold tracking-tight lg:text-4xl;
+  }
+  .t-h3 {
+    @apply stretch-wide text-xl font-bold sm:text-2xl;
+  }
+  .t-quote {
+    @apply text-xl leading-snug tracking-[-0.01em] sm:text-2xl lg:text-[1.75rem] lg:leading-[1.35];
+  }
+  .t-lead {
+    @apply text-base leading-relaxed sm:text-lg;
+  }
+  .t-body {
+    @apply text-base leading-relaxed;
+  }
+  .t-meta {
+    @apply text-sm font-medium;
+  }
+
+  /* Pulsanti: una sola misura per le azioni nel contenuto, una piccola per header e barra mobile */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-7 py-3 text-center text-base font-semibold transition-[color,background-color,border-color,transform] duration-150 ease-out sm:whitespace-nowrap;
+  }
+  .btn-sm {
+    @apply min-h-[44px] px-5 py-2 text-sm;
+  }
+  .btn-primary {
+    @apply bg-brandOrange text-black hover:bg-brandOrangeHover;
+  }
+  .btn-outline-dark {
+    @apply border border-slate-500 bg-brandBlack text-slate-100 hover:border-brandOrange;
+  }
+  .btn-outline-light {
+    @apply border border-brandNavy bg-white text-brandNavy hover:border-brandOrange;
+  }
+
+  /* Voci della navigazione su fondo nero: filetto arancione sotto al passaggio del mouse */
+  .nav-link {
+    @apply border-b-2 border-transparent py-1 text-slate-200 transition-colors hover:border-brandOrange hover:text-white;
+  }
+
+  /* Link nel testo: sottolineatura arancione, il colore del testo lo decide il fondo */
+  .link {
+    @apply font-semibold underline decoration-brandOrange decoration-2 underline-offset-4 hover:decoration-current;
+  }
+
+  /* Modulo */
+  .field-label {
+    @apply space-y-2 text-sm font-semibold text-brandNavy;
+  }
+  .field {
+    @apply min-h-[48px] w-full rounded-lg border border-brandNavy/60 bg-white px-4 py-3 text-base font-normal text-slate-800 placeholder:text-slate-500 hover:border-brandNavy focus:border-brandNavy focus:outline-none focus:ring-1 focus:ring-brandNavy;
+  }
+  /* Tendina: Lucide "chevron-down" (ISC), la stessa della FAQ, al posto di quella del sistema */
+  select.field {
+    @apply appearance-none bg-no-repeat pr-12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B3F5D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 1rem center;
+    background-size: 1.25rem;
+  }
+
+  /* Tabellone delle tratte */
+  .route-row {
+    @apply grid grid-cols-[88px,1fr] items-center gap-x-4 gap-y-3 border-b border-brandNavy/20 py-5 sm:grid-cols-[168px,1fr] sm:gap-x-8 sm:py-6 lg:grid-cols-[200px,1fr,260px];
+  }
+  .route-img {
+    @apply row-span-2 h-20 w-full rounded-lg object-cover sm:h-24 lg:row-span-1 lg:h-28;
+  }
+
+  /* FAQ */
+  .faq-item {
+    @apply border-b border-brandNavy/20;
+  }
+  .faq-q {
+    @apply flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-base font-semibold text-brandNavy sm:text-lg;
+  }
+  .faq-q::-webkit-details-marker {
+    display: none;
+  }
+  .faq-a {
+    @apply max-w-2xl pb-6 pr-10 text-base leading-relaxed text-slate-700;
+  }
+  /* Freccia della FAQ: Lucide "chevron-down" (ISC), da 21st.dev "Accordion" 31351: gira quando la risposta è aperta */
+  .faq-chevron {
+    @apply h-5 w-5 shrink-0 text-brandNavy group-open:rotate-180 motion-safe:transition-transform motion-safe:duration-200;
+  }
+
+  /* Riga di garanzia sotto l'invio (da 21st.dev "Centered Contact Form" 27904) */
+  .form-foot {
+    @apply mt-2 flex items-start gap-2 border-t border-brandNavy/20 pt-4 text-sm text-slate-600;
+  }
+
+  /* Testo legale (privacy.html): colonna di lettura, sezioni divise da filetti */
+  .legal {
+    @apply max-w-[68ch] text-base leading-relaxed text-slate-700;
+  }
+  .legal section {
+    @apply grid gap-3 border-t border-brandNavy/20 py-8 first:border-t-2 first:border-brandNavy;
+  }
+  .legal h2 {
+    @apply stretch-semi text-lg font-bold text-brandNavy sm:text-xl;
+  }
+
+  /* Footer (da 21st.dev "Footer with Suite" 29773). Il nome del marchio chiude la pagina come firma, su una riga:
+     in passata 5, su richiesta del titolare, non supera più il titolo dell'hero (prima 86 px contro 74 a 1440 e
+     tre righe da 61 px su telefono). Resta sotto t-h2: al massimo 48 px. */
+  .footer-link {
+    @apply inline-flex min-h-[44px] items-center text-sm text-slate-300 hover:text-white;
+  }
+}
+
+@layer utilities {
+  /* Larghezze di Archivo: la voce del marchio è il taglio espanso, come la segnaletica stradale */
+  .stretch-wide {
+    font-stretch: 125%;
+  }
+  .stretch-semi {
+    font-stretch: 112%;
   }
 }
