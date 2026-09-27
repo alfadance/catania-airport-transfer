@@ -294,8 +294,9 @@ slate rule; stars in orange, name in white, date and source in slate-300.
 ### Header, footer, cookie banner, mobile bar
 The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, four
 `nav-link`s and the orange pill; on phones a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
-Footer: logo and line, page links, contacts in a rule list, then the brand name on one line as a sign-off
-(`footer-wordmark`, hidden from screen readers; 20px to 48px, never larger than `t-h2`), then copyright, Privacy, Cookie preferences and the legal line.
+Footer: logo and line, page links, contacts in a rule list, then copyright, Privacy, Cookie preferences and the
+legal line. No oversized brand name as a sign-off: the name is already in the logo, the copyright and the legal line
+(removed on 2026-09-27 at the owner's request, it read as out of place).
 Cookie banner: floating black card, navy border, 14px text, reject as outline and accept as primary. Opened from "Cookie preferences", it takes the focus and gives it back to that button after the choice. The phone bottom bar is a `<nav aria-label="Quick contact">`.
 
 ### Browser surfaces

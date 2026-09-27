@@ -230,10 +230,6 @@
   .footer-link {
     @apply inline-flex min-h-[44px] items-center text-sm text-slate-300 hover:text-white;
   }
-  .footer-wordmark {
-    @apply stretch-wide select-none whitespace-nowrap font-bold leading-none tracking-[-0.03em] text-slate-50;
-    font-size: clamp(1.25rem, 6.4vw, 3rem);
-  }
 }
 
 @layer utilities {
