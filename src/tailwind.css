@@ -157,9 +157,9 @@
     @apply border border-brandNavy bg-white text-brandNavy hover:border-brandOrange;
   }
 
-  /* Voci della navigazione su fondo nero: filetto arancione sotto al passaggio del mouse */
+  /* Voci della navigazione su fondo nero: area di tocco da 44 px, filetto arancione sotto al passaggio del mouse */
   .nav-link {
-    @apply border-b-2 border-transparent py-1 text-slate-200 transition-colors hover:border-brandOrange hover:text-white;
+    @apply inline-flex min-h-[44px] items-center whitespace-nowrap text-slate-200 underline decoration-transparent decoration-2 underline-offset-8 transition-colors hover:text-white hover:decoration-brandOrange;
   }
 
   /* Link nel testo: sottolineatura arancione, il colore del testo lo decide il fondo */
