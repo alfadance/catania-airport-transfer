@@ -130,15 +130,16 @@
           </a>
 
           <nav class="flex items-center gap-8 text-sm font-medium" aria-label="Main">
-            <div class="hidden md:flex items-center gap-8">
+            <div class="hidden lg:flex items-center gap-8">
             <a href="#about" class="nav-link">Why us</a>
             <a href="#routes" class="nav-link">Routes</a>
             <a href="#reviews" class="nav-link">Reviews</a>
             <a href="#faq" class="nav-link">FAQ</a>
+            <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <a href="#agency-rates" class="hidden md:inline-flex btn btn-sm btn-primary">Agency rates</a>
+            <a href="#agency-rates" class="hidden lg:inline-flex btn btn-sm btn-primary">Agency rates</a>
             <!-- Menu su telefono: details nativo, funziona anche senza JavaScript; la chiamata all'azione sta nella barra in basso -->
-            <details id="mobile-menu" class="group md:hidden">
+            <details id="mobile-menu" class="group lg:hidden">
               <summary class="btn btn-sm btn-outline-dark cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                 <span class="group-open:hidden">Menu</span>
                 <span class="hidden group-open:inline">Close</span>
@@ -175,7 +176,7 @@
                 <a href="#agency-rates" class="btn btn-primary">
                   <span>Get the 2027 agency rates</span>
                 </a>
-                <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark px-5 text-sm">
+                <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark px-5">
                   <span>Travelling privately? Book on WhatsApp</span>
                 </a>
               </div>
@@ -377,7 +378,7 @@
                 <!-- Review 2: Dennis C -->
                 <article class="flex flex-col gap-4 border-t border-slate-400 pt-8">
                   <svg role="img" aria-label="5 out of 5 stars" class="h-4 w-[5.2rem] text-brandOrange" viewBox="0 0 104 20" fill="currentColor"><use href="#star" width="20" height="20"/><use href="#star" x="21" width="20" height="20"/><use href="#star" x="42" width="20" height="20"/><use href="#star" x="63" width="20" height="20"/><use href="#star" x="84" width="20" height="20"/></svg>
-                  <p class="t-body text-slate-100">
+                  <p class="t-body max-w-xl text-slate-100">
                     “Sebastiano was absolutely wonderful. He picked up my father and me from Catania airport and drove us to Ragusa. When the airport lost my luggage, he was incredibly patient and supportive and even guided me to places to buy clothes. Warm, professional, friendly — we felt completely comfortable. His car was spotless, upscale and comfortable, at the best price I could find. I highly recommend his service to anyone traveling in Sicily.”
                   </p>
                   <p class="text-sm text-slate-300">
@@ -388,7 +389,7 @@
                 <!-- Review 3: Amina Benkessirat -->
                 <article class="flex flex-col gap-4 border-t border-slate-400 pt-8">
                   <svg role="img" aria-label="5 out of 5 stars" class="h-4 w-[5.2rem] text-brandOrange" viewBox="0 0 104 20" fill="currentColor"><use href="#star" width="20" height="20"/><use href="#star" x="21" width="20" height="20"/><use href="#star" x="42" width="20" height="20"/><use href="#star" x="63" width="20" height="20"/><use href="#star" x="84" width="20" height="20"/></svg>
-                  <p class="t-body text-slate-100">
+                  <p class="t-body max-w-xl text-slate-100">
                     “Very professional! He arrived early, which reassured us. Comfortable, clean car and smooth ride. Highly recommended!”
                   </p>
                   <p class="text-sm text-slate-300">
@@ -732,7 +733,7 @@
 
       <!-- Footer (riferimento 21st.dev "Footer with Suite" 29773): colonne a filetti, poi il nome del marchio a tutta larghezza.
            Padding in basso su telefono, così la barra fissa dei contatti non lo copre -->
-      <footer class="bg-brandBlack on-dark border-t border-brandNavy pb-20 md:pb-0">
+      <footer class="bg-brandBlack on-dark border-t border-brandNavy pb-20 lg:pb-0">
         <div class="wrap pt-14 pb-8 lg:pt-20">
           <div class="grid gap-10 sm:grid-cols-2 lg:gap-x-12 lg:grid-cols-12">
             <div class="flex items-start gap-4 sm:col-span-2 lg:col-span-5">
@@ -795,8 +796,9 @@
 
     <!-- Mobile sticky contact bar: un landmark, così il lettore di schermo la trova e non resta contenuto fuori dalle regioni -->
     <nav
+      id="quick-contact"
       aria-label="Quick contact"
-      class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 md:hidden"
+      class="motion-safe:transition-transform motion-safe:duration-200 fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 lg:hidden"
     >
       <div class="flex items-center gap-2">
         <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="shrink-0 btn btn-sm btn-outline-dark px-4">
@@ -864,6 +866,17 @@
         if (!m) return;
         m.addEventListener('click', function(e) { if (e.target.closest('a')) m.open = false; });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+      })();
+      // Barra in basso: nascosta finché il pulsante arancione dell'hero è sullo schermo, così se ne vede uno solo
+      (function() {
+        var bar = document.getElementById('quick-contact');
+        var heroCta = document.querySelector('main section a.btn-primary');
+        if (!bar || !heroCta || !('IntersectionObserver' in window)) return;
+        function set(hidden) { bar.classList.toggle('translate-y-full', hidden); bar.inert = hidden; }
+        new IntersectionObserver(function(entries) {
+          var e = entries[0];
+          set(e.isIntersecting || e.boundingClientRect.top > window.innerHeight);
+        }).observe(heroCta);
       })();
     </script>
     <script>

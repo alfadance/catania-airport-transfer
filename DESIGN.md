@@ -121,7 +121,7 @@ components:
     backgroundColor: "{colors.harbour-navy}"
     textColor: "{colors.signal-orange}"
     rounded: "{rounded.lg}"
-    size: "48px, icon 24px, stroke 1.75"
+    size: "48px, icon 24px, stroke 2"
 ---
 
 # Design System: Catania Airport Transfer
@@ -167,6 +167,14 @@ How the rules map onto this site's tokens:
 | 21–24 components | `btn*`, `field`, `link` classes with hover, focus, active, disabled and loading states |
 | 25–27 usability | the rate-sheet form, its sending and result states, the sticky header and phone bar |
 | 28–30 polish | 44px targets, 16px fields, reduced motion, 360–1440px without horizontal scroll, Lucide stroke 2 icons |
+
+Owner decisions of 2026-09-30 (briefing after the first review against the rules), written here as exceptions so a
+later review does not flag them again:
+- **The long review (`t-quote`)** stays at 20–28px with leading 1.35, and reviews may run past five lines: they are
+  quotations, not body copy (rules 3, 14, 16).
+- **Photo radii** follow the photo type: 8px route thumbnails, 12px event photos, 16px hero (rule 12).
+- **Drive times** in the routes board stay right-aligned from 1024px, like a departures board (rule 6).
+- **Line length**: the 45-character minimum applies from 640px; on phones 16px body text is enough (rule 14).
 
 ## Colors
 
@@ -247,10 +255,14 @@ name when it says what the number is ("Scale", "Catania Airport to"); it never i
 - Section head `section-head`: heading in 8 columns, opening paragraph in 4, aligned at the bottom; 40px, then
   56px, to the content.
 - Grids: 7+5 for text beside a panel, 5+7 for the form, 4+8 for the FAQ (on large screens the heading stays in
-  view while the answers scroll), three columns for events and steps.
-- Phones: the fixed bottom bar carries WhatsApp and the rate sheet, so the footer keeps 80px of bottom padding.
+  view while the answers scroll, and so does the text beside the form), three columns for events and steps. Every
+  12-column grid, `section-head` included, uses the same 48px column gap from 1024px (`lg:gap-x-12`), and the three
+  columns use it too, so all columns fall on the same lines down the page.
+- Phones and tablets (below 1024px): the fixed bottom bar carries WhatsApp and the rate sheet, so the footer keeps
+  80px of bottom padding. On the home page the bar slides in only once the hero's orange button has left the screen,
+  so one orange button is in view at a time; without JavaScript it is always there.
   Event photos hide below 640px and, being `loading="lazy"`, are not downloaded there. `html` has
-  `scroll-padding-top: 5rem` (and 4.5rem at the bottom on phones), so neither an anchor nor the keyboard focus lands
+  `scroll-padding-top: 5rem` (and 4.5rem at the bottom below 1024px), so neither an anchor nor the keyboard focus lands
   under the sticky header or the bottom bar (WCAG 2.2, 2.4.11).
 
 ## Elevation & Depth
@@ -275,13 +287,15 @@ no overlay.
   private-traveller side door, cookie reject, the mobile menu toggle.
 - **`btn-outline-light`**: white fill, navy border and label; the border turns orange on hover. Contact actions.
 - **`btn-sm`**: 44px, 14px, for the header, the mobile bar and the cookie banner.
+- **Disabled** (the form while sending): solid slate-300 fill, slate-800 label, wait cursor, no hover and no press
+  effect; the label reads "Sending…" beside a Lucide `loader-circle` that spins only without reduced motion.
 - **Focus:** 2px outline in the text colour, 3px offset. On orange buttons the outline is navy on light grounds
   and orange inside `.on-dark`. **Active:** scale 0.97, only without reduced motion. Every control is 44px or more.
 
 ### Links
 - **`link`**: semibold, 2px orange underline 4px below; on hover the underline takes the text colour. Navy text on
   light grounds, white on dark ones.
-- **`nav-link`**: header links on black, slate-200, turning white with a 2px orange rule below on hover.
+- **`nav-link`**: header links on black, slate-200, 44px tall, turning white with a 2px orange underline on hover.
 - **`footer-link`**: 44px rows, slate-300, white on hover.
 
 ### Routes board (`route-row`, `route-img`, signature)
@@ -298,10 +312,16 @@ Native `<details>`. Question in navy semibold, 44px or more; a stroke chevron th
 (transition only without reduced motion).
 
 ### Form (`field-label`, `field`, `form-foot`)
-White panel on the black section. Fields 48px, 16px text everywhere (no zoom on iOS), navy border at 60% (3.5:1, enough to see
+White panel on the black section. Two groups, "about you" (name, company, country, email) and "your request" (how
+you heard of us, message), each a `fieldset` whose `legend` is for screen readers only; a 20% navy rule and 32px
+separate them. Fields 48px, 16px text everywhere (no zoom on iOS), navy border at 60% (3.5:1, enough to see
 the field), full navy on hover, full navy plus a 1px ring on focus. The select draws the FAQ chevron in navy instead of the system arrow.
 Under the submit button, a rule and a navy lock with the privacy line. Success is a white box with an orange
-border; error is the red box, with an email fallback. The submit button disables itself and reads "Sending…".
+border and a navy Lucide `circle-check`; error is the red box with a `circle-alert`, and an email fallback. Both are
+16px text with 16px padding, and take the focus when the page comes back from `request-rates.php`, so a screen
+reader reads them. A field the visitor has touched or tried to submit while invalid gets a red-800 border and ring
+(`:user-invalid`); the browser's own message gives the words. The submit button disables itself (see Buttons) and a
+polite live region says "Sending…".
 
 ### Icon chip (signature)
 A 48px Harbour Navy square with 12px corners holding a 24px Signal Orange stroke icon (2 stroke, round caps),
@@ -314,8 +334,8 @@ Solid navy. The long review in `t-quote` on the left (7 columns), the two shorte
 slate rule; stars in orange, name in white, date and source in slate-300.
 
 ### Header, footer, cookie banner, mobile bar
-The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, four
-`nav-link`s and the orange pill; on phones a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
+The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, five
+`nav-link`s (Why us, Routes, Reviews, FAQ, Contact) and the orange pill from 1024px; below that a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
 Logo on black: header and footer use `image_0-dark*.webp`, the CAT mark with its navy turned to white and the
 lighter navy to slate-300 (orange unchanged), because the navy disappears on Night Black. The original `image_0*.webp`
 stays for light grounds and for the structured data.
