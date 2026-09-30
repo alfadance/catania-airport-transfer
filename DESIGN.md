@@ -146,6 +146,28 @@ whole width of the footer. Nothing moves unless the visitor asks for it.
 - Solid fills only: no glows, blurs, colour veils or gradients.
 - Always aligned left, on a 12-column grid inside `max-w-7xl`.
 
+## Base rules
+
+Since 2026-09-30 every change to this site also follows the project's 30 base design rules (hierarchy, spacing,
+alignment, typography, colour, components, usability, polish). They live in one place, the owner's vault:
+`cevvello/wiki/concepts/regole-di-design.md`, with a measurable check for each rule. They are not copied here.
+They apply inside this document: the brand colours below do not change, and a rule that seems to need a new colour
+is met with shape, words or icons. Where a rule collides with a decision recorded here, the recorded decision holds
+until the owner changes it.
+
+How the rules map onto this site's tokens:
+
+| Rules | Where they land here |
+|---|---|
+| 1–4 hierarchy | one `t-hero` per page; one filled `btn-primary` per section; expanded type only for headings, places and numbers |
+| 5–8 spacing | Tailwind's 4px scale; `section-pad`, `section-head`, `wrap` |
+| 9–12 alignment | the 12-column grid in `wrap`; radii 8 / 12 / 16 / full as listed under Shapes |
+| 13–16 typography | the `t-*` scale only; body leading 1.625; 4.5:1 on the rendered page |
+| 17–20 colour | orange is the one accent; `palette-check.py` at 0 pixels off palette; states carry words or icons |
+| 21–24 components | `btn*`, `field`, `link` classes with hover, focus, active, disabled and loading states |
+| 25–27 usability | the rate-sheet form, its sending and result states, the sticky header and phone bar |
+| 28–30 polish | 44px targets, 16px fields, reduced motion, 360–1440px without horizontal scroll, Lucide stroke 2 icons |
+
 ## Colors
 
 Two brand colours on a neutral ground: navy for everything read, orange for everything pressed. The Tailwind names
