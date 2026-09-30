@@ -610,7 +610,7 @@
               <details class="group faq-item">
                 <summary class="faq-q">
                   <span>Do you offer fixed prices for Catania Airport transfers?</span>
-                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="faq-chevron-box"><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <p class="faq-a">
                   Yes. All our Catania Airport transfers are quoted in advance with fixed prices, including
@@ -621,7 +621,7 @@
               <details class="group faq-item">
                 <summary class="faq-q">
                   <span>How do you handle delayed or early flights?</span>
-                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="faq-chevron-box"><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <p class="faq-a">
                   We monitor flight status in real time. Your chauffeur adjusts the pick‑up time accordingly
@@ -633,7 +633,7 @@
               <details class="group faq-item">
                 <summary class="faq-q">
                   <span>Can you support groups and events of different sizes?</span>
-                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="faq-chevron-box"><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <p class="faq-a">
                   Yes. We arrange sedans, vans and buses for anything from a small executive meeting to a large event. For large events, one or more coordinators follow the operations on the day and do nothing else.
@@ -643,7 +643,7 @@
               <details class="group faq-item">
                 <summary class="faq-q">
                   <span>Do you provide child seats if required?</span>
-                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="faq-chevron-box"><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <p class="faq-a">
                   Child and infant seats are provided free of charge on request at the time of booking. Let us know the age
@@ -654,7 +654,7 @@
               <details class="group faq-item">
                 <summary class="faq-q">
                   <span>Are you available 24/7?</span>
-                  <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="faq-chevron-box"><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <p class="faq-a">
                   During every service, yes: our emergency line (phone and WhatsApp) stays open from pickup to drop-off.
@@ -943,9 +943,16 @@
         if (esito === 'sent') { try { sessionStorage.removeItem('rates_form'); } catch (e) {} }
         if (esito === 'sent' || esito === 'error') {
           var box = document.getElementById('rates-' + esito);
-          if (box) { box.classList.remove('hidden'); box.focus(); }
+          if (box) {
+            box.classList.remove('hidden');
+            // Il focus va dato a pagina caricata, e senza ancora nell'indirizzo: lo scorrimento del browser verso
+            // #agency-rates, a fine caricamento, toglierebbe il focus. focus() porta comunque la pagina al riquadro.
+            var toBox = function() { box.focus(); history.replaceState(null, '', location.pathname + '#agency-rates'); };
+            if (document.readyState === 'complete') toBox(); else window.addEventListener('load', toBox);
+          }
           if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_tariffe');
-          history.replaceState(null, '', location.pathname + '#agency-rates');
+          if (!box) history.replaceState(null, '', location.pathname + '#agency-rates');
+          else history.replaceState(null, '', location.pathname);
         }
         document.getElementById('cookie-consent-accept')?.addEventListener('click', accept);
         document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
