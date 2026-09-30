@@ -175,6 +175,8 @@ later review does not flag them again:
 - **Photo radii** follow the photo type: 8px route thumbnails, 12px event photos, 16px hero (rule 12).
 - **Drive times** in the routes board stay right-aligned from 1024px, like a departures board (rule 6).
 - **Line length**: the 45-character minimum applies from 640px; on phones 16px body text is enough (rule 14).
+- **Beside the form**, the short text column may leave empty black space below it, next to the taller form panel
+  (rule 8).
 
 ## Colors
 
