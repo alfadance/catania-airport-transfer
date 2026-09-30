@@ -100,7 +100,7 @@
   }
   /* Testa di sezione: titolo a sinistra, eventuale apertura a destra, stessa distanza dal contenuto */
   .section-head {
-    @apply mb-10 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end;
+    @apply mb-10 grid gap-6 lg:mb-14 lg:gap-x-12 lg:grid-cols-12 lg:items-end;
   }
 
   .t-hero {
