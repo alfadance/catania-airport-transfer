@@ -528,13 +528,20 @@
               </div>
 
               <div class="lg:col-span-7 rounded-2xl bg-white p-5 sm:p-9">
-                <div id="rates-sent" class="hidden mb-5 rounded-xl border border-brandOrange bg-white px-4 py-3 text-sm text-brandNavy" role="status">
-                  Thank you. Your request has reached us, and we will reply by email with our 2027 agency rates.
+                <!-- Esiti: icona Lucide (ISC) e parola, così successo ed errore si distinguono anche senza colore (regola 18).
+                     Dopo il rinvio da request-rates.php il focus va qui, così il lettore di schermo lo legge (regola 26) -->
+                <div id="rates-sent" tabindex="-1" class="hidden mb-6 gap-3 rounded-xl border border-brandOrange bg-white p-4 text-base leading-relaxed text-brandNavy [&:not(.hidden)]:flex" role="status">
+                  <svg class="h-6 w-6 shrink-0 text-brandNavy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span>Thank you. Your request has reached us, and we will reply by email with our 2027 agency rates.</span>
                 </div>
-                <div id="rates-error" class="hidden mb-5 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
-                  Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.
+                <div id="rates-error" tabindex="-1" class="hidden mb-6 gap-3 rounded-xl border border-red-300 bg-red-50 p-4 text-base leading-relaxed text-red-800 [&:not(.hidden)]:flex" role="alert">
+                  <svg class="h-6 w-6 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                  <span>Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.</span>
                 </div>
-                <form action="request-rates.php" method="post" class="grid gap-5 sm:grid-cols-2">
+                <!-- Due gruppi (regola 25): chi scrive, poi la richiesta. I titoli servono solo al lettore di schermo (scelta del titolare, 2026-09-30) -->
+                <form action="request-rates.php" method="post" class="grid gap-8">
+                  <fieldset class="grid min-w-0 gap-5 sm:grid-cols-2">
+                  <legend class="sr-only">About you</legend>
                   <label class="field-label">
                     <span>Your name</span>
                     <input name="name" required maxlength="100" autocomplete="name" class="field">
@@ -551,7 +558,10 @@
                     <span>Work email</span>
                     <input name="email" type="email" required maxlength="200" autocomplete="email" class="field">
                   </label>
-                  <label class="field-label sm:col-span-2">
+                  </fieldset>
+                  <fieldset class="grid min-w-0 gap-5 border-t border-brandNavy/20 pt-8">
+                  <legend class="sr-only">Your request</legend>
+                  <label class="field-label">
                     <span>How did you hear about us?</span>
                     <select name="how" required class="field">
                       <option value="">Please choose</option>
@@ -563,19 +573,21 @@
                       <option value="other">Other</option>
                     </select>
                   </label>
-                  <label class="field-label sm:col-span-2">
+                  <label class="field-label">
                     <span>Anything we should know? <span class="font-normal text-slate-600">(optional)</span></span>
                     <textarea name="message" rows="3" maxlength="2000" placeholder="Destinations, typical group size, season" class="field"></textarea>
                   </label>
+                  </fieldset>
                   <div class="hidden" aria-hidden="true">
                     <label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
                   </div>
-                  <div class="sm:col-span-2 pt-1">
+                  <div>
                     <button type="submit" class="btn btn-primary w-full whitespace-nowrap sm:w-auto">
                       Send my request
                     </button>
+                    <p id="rates-live" class="sr-only" aria-live="polite"></p>
                     <p class="form-foot mt-6">
-                      <svg class="mt-0.5 h-4 w-4 shrink-0 text-brandNavy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <svg class="h-5 w-5 shrink-0 text-brandNavy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                       <span>We use these details only to reply to you. See our <a href="privacy.html" class="link text-brandNavy">privacy policy</a>.</span>
                     </p>
                   </div>
@@ -906,7 +918,10 @@
         var FIELDS = ['name', 'agency', 'country', 'email', 'how', 'message'];
         if (form) form.addEventListener('submit', function() {
           try { sessionStorage.setItem('rates_form', JSON.stringify(FIELDS.reduce(function(o, k) { o[k] = form.elements[k].value; return o; }, {}))); } catch (e) {}
-          var b = form.querySelector('button[type="submit"]'); b.disabled = true; b.textContent = 'Sending…';
+          var b = form.querySelector('button[type="submit"]'); b.disabled = true;
+          // Lucide "loader-circle" (ISC): gira solo senza prefers-reduced-motion
+          b.innerHTML = '<svg class="h-5 w-5 motion-safe:animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Sending…</span>';
+          var live = document.getElementById('rates-live'); if (live) live.textContent = 'Sending…';
         });
         var esito = new URLSearchParams(location.search).get('rates');
         if (form && esito === 'error') {
@@ -914,7 +929,8 @@
         }
         if (esito === 'sent') { try { sessionStorage.removeItem('rates_form'); } catch (e) {} }
         if (esito === 'sent' || esito === 'error') {
-          document.getElementById('rates-' + esito)?.classList.remove('hidden');
+          var box = document.getElementById('rates-' + esito);
+          if (box) { box.classList.remove('hidden'); box.focus(); }
           if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_tariffe');
           history.replaceState(null, '', location.pathname + '#agency-rates');
         }
