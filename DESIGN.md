@@ -336,8 +336,8 @@ Solid navy. The long review in `t-quote` on the left (7 columns), the two shorte
 slate rule; stars in orange, name in white, date and source in slate-300.
 
 ### Header, footer, cookie banner, mobile bar
-The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, five
-`nav-link`s (Why us, Routes, Reviews, FAQ, Contact) and the orange pill from 1024px; below that a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
+The same markup on both pages. Header sticky on black with a navy rule: logo plus the name in expanded, six
+`nav-link`s (Why us, Routes, Weddings, Reviews, FAQ, Contact) and the orange pill from 1024px; below that a native `<details>` menu ("Menu" / "Close", closes on choice or Esc).
 Logo on black: header and footer use `image_0-dark*.webp`, the CAT mark with its navy turned to white and the
 lighter navy to slate-300 (orange unchanged), because the navy disappears on Night Black. The original `image_0*.webp`
 stays for light grounds and for the structured data.
@@ -355,6 +355,7 @@ Icons are Lucide (ISC licence), copied as inline SVG: 24 viewBox, stroke 2, `cur
 ## Pages
 
 - **`index.html`**: hero, why us, routes board, reviews, events, how it works, rate-sheet form, FAQ, contacts.
+- **`wedding-transfers-taormina.html`**: the wedding-planner page. Same header, footer, banner and mobile bar; opening, what a wedding asks, how we plan, a worked example with a two-scene animation (arrival and return after dinner), what you can rely on, its own request form (`request-event.php`) and FAQ. The animation is plain HTML, CSS and JS in the page, driven by one time value; it stays still under `prefers-reduced-motion`. Its photos are AI-generated until a professional set exists (owner decision, 2026-10-03).
 - **`privacy.html`**: the same header, footer, banner and mobile bar (links point to `index.html#…`). A black
   opening with the title in `t-h2` and the date in `t-meta` under it, then the legal text on white in a 68ch
   column (`legal`), each section under a rule, headings in navy `stretch-semi`.
