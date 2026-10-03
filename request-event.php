@@ -1,5 +1,7 @@
 <?php
-// Modulo "Request a transfer plan" (sezione #event-request di wedding-transfers-taormina.html).
+// Moduli "Request a transfer plan" (sezione #event-request di wedding-transfers-taormina.html) e
+// "Request an event plan" (event-transportation-sicily.html): stesso gestore, il campo nascosto `form`
+// sceglie quale; senza il campo e' il modulo del wedding.
 // Stessa struttura di request-rates.php: manda la richiesta a info@ e una copia di sicurezza alla casella
 // personale del titolare, non salva nulla sul server a parte un contatore temporaneo per indirizzo IP contro gli
 // abusi (cancellato dopo un'ora). A differenza del modulo tariffe non manda una conferma a chi compila: la conferma
@@ -9,6 +11,16 @@ $TO = 'info@cataniaairporttransfer.net';
 $BACKUP = 'web.comedas@gmail.com';
 $FROM = 'Catania Airport Transfer <noreply@cataniaairporttransfer.net>';
 $LIMITE = 5;
+// Quale modulo: senza il campo `form` (o con un valore sconosciuto) e' quello del wedding, come prima.
+$EVENTI = (($_POST['form'] ?? '') === 'events');
+$PAGINA = $EVENTI ? 'event-transportation-sicily.html' : 'wedding-transfers-taormina.html';
+$ETYPE = [
+  'conference' => 'Conference or convention',
+  'show' => 'Fashion show or presentation',
+  'film' => 'Film premiere or festival',
+  'corporate' => 'Corporate event or incentive',
+  'other' => 'Other',
+];
 $ARRIVAL = [
   'catania' => 'Catania Airport',
   'palermo' => 'Palermo Airport',
@@ -18,7 +30,8 @@ $ARRIVAL = [
 ];
 
 function back($esito) {
-  header('Location: /wedding-transfers-taormina.html?event=' . $esito . '#event-request', true, 303);
+  global $PAGINA;
+  header('Location: /' . $PAGINA . '?event=' . $esito . '#event-request', true, 303);
   exit;
 }
 // Toglie a capo e caratteri di controllo: nessun campo puo' aggiungere intestazioni alla mail.
@@ -61,19 +74,22 @@ $date = clean($_POST['date'] ?? '', 60);
 $venue = clean($_POST['venue'] ?? '', 150);
 $guests = clean($_POST['guests'] ?? '', 40);
 $arrival = clean($_POST['arrival'] ?? '', 20);
+$etype = clean($_POST['etype'] ?? '', 20);
 $message = mb_substr(trim(str_replace("\r", '', (string)($_POST['message'] ?? ''))), 0, 2000);
 
 if ($name === '' || $agency === '' || $country === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)
-    || $date === '' || $venue === '' || $guests === '' || !isset($ARRIVAL[$arrival])) {
+    || $date === '' || $venue === '' || $guests === '' || !isset($ARRIVAL[$arrival])
+    || ($EVENTI && !isset($ETYPE[$etype]))) {
   back('error');
 }
 
-$subject = 'Wedding transfer plan request - ' . $agency;
-$body = "New request from the website form (cataniaairporttransfer.net/wedding-transfers-taormina.html)\n\n"
+$subject = ($EVENTI ? 'Event transport plan request - ' : 'Wedding transfer plan request - ') . $agency;
+$body = "New request from the website form (cataniaairporttransfer.net/$PAGINA)\n\n"
   . "Name: $name\n"
   . "Company: $agency\n"
   . "Country: $country\n"
   . "Email: $email\n\n"
+  . ($EVENTI ? "Event type: {$ETYPE[$etype]}\n" : '')
   . "Date: $date\n"
   . "Venue or town: $venue\n"
   . "Guests to move: $guests\n"
