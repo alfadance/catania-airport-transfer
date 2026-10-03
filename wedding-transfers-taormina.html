@@ -350,40 +350,61 @@
               </dl>
             </div>
 
-            <figure class="mt-12 lg:mt-16">
-              <figcaption class="t-h3 text-brandNavy">Two minibuses, 13:30 to 15:00</figcaption>
-              <p class="sr-only">Each minibus leaves the hotel at 13:30 and reaches the venue at 13:55. It drives back and loads, leaves again at 14:23 and reaches the venue at 14:48, twelve minutes before the 15:00 deadline.</p>
-              <div class="mt-6 space-y-4">
-              <div class="grid gap-2 sm:grid-cols-[8rem,1fr] sm:items-center sm:gap-6">
-                <p class="t-meta text-slate-700">Minibus 1</p>
-                <div class="relative h-10 rounded-lg bg-mist" aria-hidden="true">
-                  <span class="absolute inset-y-0 rounded-lg bg-brandNavy" style="left:0%;width:27.8%"></span>
-                  <span class="absolute inset-y-2 rounded-lg border-2 border-brandNavy" style="left:27.8%;width:31.1%"></span>
-                  <span class="absolute inset-y-0 rounded-lg bg-brandNavy" style="left:58.9%;width:27.8%"></span>
+            <figure id="shuttle-demo" class="hidden mt-12 lg:mt-16" aria-labelledby="shuttle-title">
+              <figcaption id="shuttle-title" class="t-h3 text-brandNavy">Watch the two minibuses at work</figcaption>
+              <p class="sr-only">Animated diagram of the example. Two minibuses leave the hotel at 13:30 with 19 guests each and reach the venue at 13:55. They drive back, load the last 12 guests, leave again at 14:23 and arrive at 14:48. All 50 guests are at the venue 12 minutes before the 15:00 deadline. The play button and the time slider move through it.</p>
+              <div class="mt-6 rounded-2xl bg-mist p-4 sm:p-6 lg:p-8">
+                <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-2" aria-hidden="true">
+                  <p id="sd-clock" class="t-stat tabular-nums text-brandNavy">13:30</p>
+                  <p class="t-body text-slate-700">At the venue: <strong class="font-semibold text-brandNavy"><span id="sd-count" class="tabular-nums">0</span> of 50</strong></p>
                 </div>
-              </div>
-              <div class="grid gap-2 sm:grid-cols-[8rem,1fr] sm:items-center sm:gap-6">
-                <p class="t-meta text-slate-700">Minibus 2</p>
-                <div class="relative h-10 rounded-lg bg-mist" aria-hidden="true">
-                  <span class="absolute inset-y-0 rounded-lg bg-brandNavy" style="left:0%;width:27.8%"></span>
-                  <span class="absolute inset-y-2 rounded-lg border-2 border-brandNavy" style="left:27.8%;width:31.1%"></span>
-                  <span class="absolute inset-y-0 rounded-lg bg-brandNavy" style="left:58.9%;width:27.8%"></span>
+                <div class="mt-6 grid grid-cols-[auto,1fr,auto] items-center gap-3 sm:gap-6 lg:gap-10" aria-hidden="true">
+                  <div class="flex flex-col items-center gap-3">
+                    <div id="sd-hotel" class="grid grid-cols-5 gap-1"></div>
+                    <span class="inline-flex min-h-[32px] items-center rounded-lg border-2 border-brandNavy bg-white px-3 t-meta font-semibold text-brandNavy">Hotel</span>
+                  </div>
+                  <div class="space-y-4">
+                <div>
+                  <p class="mb-1 t-meta text-slate-700">Minibus 1</p>
+                  <div class="relative h-10" data-lane>
+                    <span class="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-brandNavy"></span>
+                    <span class="absolute left-0 top-0 h-10 w-10" data-bus>
+                      <span class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brandNavy text-brandOrange" data-icon>
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>
+                        <span class="absolute -bottom-2 -right-2 hidden min-w-6 items-center justify-center rounded-full border-2 border-brandNavy bg-white px-1 text-sm font-semibold leading-5 text-brandNavy [&:not(.hidden)]:inline-flex" data-badge></span>
+                      </span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-                <div class="grid gap-2 sm:grid-cols-[8rem,1fr] sm:gap-6">
-                  <span class="hidden sm:block"></span>
-                  <div class="relative h-6 t-meta tabular-nums text-slate-700" aria-hidden="true">
-                    <span class="absolute left-0">13:30</span>
-                    <span class="absolute -translate-x-1/2" style="left:33.3%">14:00</span>
-                    <span class="absolute -translate-x-1/2" style="left:66.7%">14:30</span>
-                    <span class="absolute right-0">15:00</span>
+                <div>
+                  <p class="mb-1 t-meta text-slate-700">Minibus 2</p>
+                  <div class="relative h-10" data-lane>
+                    <span class="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-brandNavy"></span>
+                    <span class="absolute left-0 top-0 h-10 w-10" data-bus>
+                      <span class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brandNavy text-brandOrange" data-icon>
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>
+                        <span class="absolute -bottom-2 -right-2 hidden min-w-6 items-center justify-center rounded-full border-2 border-brandNavy bg-white px-1 text-sm font-semibold leading-5 text-brandNavy [&:not(.hidden)]:inline-flex" data-badge></span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                  </div>
+                  <div class="flex flex-col items-center gap-3">
+                    <div id="sd-venue" class="grid grid-cols-5 gap-1"></div>
+                    <span class="inline-flex min-h-[32px] items-center rounded-lg border-2 border-brandNavy bg-white px-3 t-meta font-semibold text-brandNavy">Venue</span>
+                  </div>
+                </div>
+                <p class="mt-4 t-meta text-slate-700" aria-hidden="true">Each dot is one guest.</p>
+                <p id="sd-caption" class="mt-4 min-h-[3.25rem] t-body text-slate-700 max-w-[65ch]" aria-live="off">Both minibuses are at the hotel at 13:30.</p>
+                <div class="mt-6 flex items-center gap-4">
+                  <button id="sd-play" type="button" class="btn btn-sm btn-outline-light min-w-[6.5rem] shrink-0">Play</button>
+                  <div class="min-w-0 flex-1">
+                    <label for="sd-time" class="sr-only">Time of day</label>
+                    <input id="sd-time" type="range" min="0" max="90" step="0.5" value="0" aria-valuetext="13:30" class="block h-11 w-full cursor-pointer accent-brandNavy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brandNavy">
+                    <div class="flex justify-between t-meta tabular-nums text-slate-700" aria-hidden="true"><span>13:30</span><span>15:00</span></div>
                   </div>
                 </div>
               </div>
-              <ul class="mt-6 flex flex-wrap gap-x-8 gap-y-3 t-meta text-slate-700">
-                <li class="flex items-center gap-3"><span class="h-4 w-8 rounded bg-brandNavy" aria-hidden="true"></span>Driving to the venue (25 min)</li>
-                <li class="flex items-center gap-3"><span class="h-4 w-8 rounded border-2 border-brandNavy" aria-hidden="true"></span>Back to the hotel and loading (28 min)</li>
-              </ul>
             </figure>
           </div>
         </section>
@@ -835,6 +856,73 @@
           showBanner();
           if (banner) banner.focus();
         });
+      })();
+    </script>
+    <script>
+      // Animazione dell'esempio: tutto e' calcolato dal tempo t (minuti dalle 13:30), cosi' cursore e Play mostrano lo stesso stato.
+      (function() {
+        var root = document.getElementById('shuttle-demo');
+        if (!root) return;
+        var clock = document.getElementById('sd-clock'), count = document.getElementById('sd-count');
+        var caption = document.getElementById('sd-caption'), btn = document.getElementById('sd-play'), slider = document.getElementById('sd-time');
+        var buses = [].slice.call(root.querySelectorAll('[data-bus]')), lanes = [].slice.call(root.querySelectorAll('[data-lane]'));
+        var badges = [].slice.call(root.querySelectorAll('[data-badge]')), icons = [].slice.call(root.querySelectorAll('[data-icon]'));
+        var DOT = 'h-2.5 w-2.5 rounded-full border border-brandNavy motion-safe:transition-colors motion-safe:duration-300 ';
+        function dots(id) {
+          var box = document.getElementById(id), out = [];
+          for (var i = 0; i < 50; i++) { var d = document.createElement('span'); d.className = DOT; box.appendChild(d); out.push(d); }
+          return out;
+        }
+        var hotel = dots('sd-hotel'), venue = dots('sd-venue');
+        // Orari dell'esempio: 25 min all'andata, 20 al ritorno, 8 per caricare, seconda partenza a 53 min (14:23), arrivo a 78 (14:48)
+        function pos(t) { return t < 25 ? t / 25 : t < 45 ? 1 - (t - 25) / 20 : t < 53 ? 0 : t < 78 ? (t - 53) / 25 : 1; }
+        function aboard(t) { return t < 25 ? 19 : t < 47 ? 0 : t < 78 ? 6 : 0; }
+        function hotelLeft(t) { return t < 0.5 ? 50 : t < 47 ? 12 : 0; }
+        function arrived(t) { return t < 25 ? 0 : t < 78 ? 38 : 50; }
+        function say(t) {
+          if (t < 25) return 'Trip 1: each minibus carries 19 guests to the venue. It takes 25 minutes.';
+          if (t < 45) return '38 guests are at the venue. The minibuses drive back to the hotel.';
+          if (t < 53) return 'Loading the last 12 guests.';
+          if (t < 78) return 'Trip 2: the last 12 guests ride to the venue.';
+          return 'All 50 guests are at the venue at 14:48, 12 minutes before the 15:00 deadline.';
+        }
+        function hhmm(t) { var m = 810 + Math.floor(t); return String(Math.floor(m / 60)) + ':' + String(m % 60).padStart(2, '0'); }
+        var t = 0, playing = false, last = 0, widths = [];
+        function measure() { widths = lanes.map(function(l) { return Math.max(0, l.clientWidth - 40); }); }
+        function render() {
+          var p = pos(t), a = aboard(t), hl = hotelLeft(t), ar = arrived(t), back = t >= 25 && t < 45;
+          clock.textContent = hhmm(t); count.textContent = ar; caption.textContent = say(t);
+          slider.value = t; slider.setAttribute('aria-valuetext', hhmm(t));
+          buses.forEach(function(b, i) { b.style.transform = 'translateX(' + Math.round(p * widths[i]) + 'px)'; });
+          icons.forEach(function(ic) { ic.style.transform = back ? 'scaleX(-1)' : ''; });
+          badges.forEach(function(g) { g.textContent = a; g.classList.toggle('hidden', a === 0); });
+          hotel.forEach(function(d, i) { d.className = DOT + (i < hl ? 'bg-brandNavy' : 'bg-transparent'); });
+          venue.forEach(function(d, i) { d.className = DOT + (i < ar ? 'bg-brandNavy' : 'bg-transparent'); });
+          btn.textContent = playing ? 'Pause' : (t >= 78 ? 'Replay' : 'Play');
+        }
+        function frame(ts) {
+          if (!playing) return;
+          t = Math.min(90, t + (ts - last) * 0.005); last = ts;
+          if (t >= 90) playing = false;
+          render();
+          if (playing) requestAnimationFrame(frame);
+        }
+        function play() {
+          if (t >= 78) t = 0;
+          playing = true; last = performance.now(); requestAnimationFrame(frame); render();
+        }
+        btn.addEventListener('click', function() { if (playing) { playing = false; render(); } else play(); });
+        slider.addEventListener('input', function() { playing = false; t = parseFloat(slider.value); render(); });
+        window.addEventListener('resize', function() { measure(); render(); });
+        root.classList.remove('hidden');
+        measure();
+        var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (still || !('IntersectionObserver' in window)) { t = 78; render(); return; }
+        render();
+        var io = new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting) { io.disconnect(); play(); }
+        }, { threshold: 0.6 });
+        io.observe(root);
       })();
     </script>
   </body>
