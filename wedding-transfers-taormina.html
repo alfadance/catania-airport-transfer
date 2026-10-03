@@ -149,17 +149,17 @@
 
             <div class="mt-12 lg:mt-16 overflow-hidden rounded-2xl bg-brandNavy">
               <img
-                src="assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp"
+                src="assets/wedding-guests-villa-800.webp"
                 srcset="
-                  assets/catania-airport-transfer-chauffeur-etna-hero-mobile.webp 800w,
-                  assets/catania-airport-transfer-chauffeur-etna-hero-1200.webp   1200w,
-                  assets/catania-airport-transfer-chauffeur-etna-hero.webp        1600w
+                  assets/wedding-guests-villa-800.webp   800w,
+                  assets/wedding-guests-villa-1200.webp 1200w,
+                  assets/wedding-guests-villa.webp      1600w
                 "
                 sizes="(min-width: 1280px) 1232px, 100vw"
                 width="1600"
-                height="893"
-                alt="Black chauffeur car at Catania Airport with Mount Etna in the background"
-                class="h-[220px] sm:h-[320px] lg:h-[420px] w-full object-cover object-[50%_60%]"
+                height="679"
+                alt="Wedding guests in evening dress walking toward a white minibus at the gate of a villa above the sea near Taormina, with Mount Etna in the distance"
+                class="h-[220px] sm:h-[320px] lg:h-[420px] w-full object-cover object-[50%_65%]"
               />
             </div>
 
@@ -352,11 +352,15 @@
 
             <figure id="shuttle-demo" class="hidden mt-12 lg:mt-16" aria-labelledby="shuttle-title">
               <figcaption id="shuttle-title" class="t-h3 text-brandNavy">Watch the two minibuses at work</figcaption>
-              <p class="sr-only">Animated diagram of the example. Two minibuses leave the hotel at 13:30 with 19 guests each and reach the venue at 13:55. They drive back, load the last 12 guests, leave again at 14:23 and arrive at 14:48. All 50 guests are at the venue 12 minutes before the 15:00 deadline. The play button and the time slider move through it.</p>
+              <div class="mt-4 flex flex-wrap gap-3" role="group" aria-label="Choose a scene">
+                <button type="button" data-scene="0" aria-pressed="true" class="btn btn-sm btn-outline-light aria-pressed:bg-brandNavy aria-pressed:text-white">Arrival, 13:30</button>
+                <button type="button" data-scene="1" aria-pressed="false" class="btn btn-sm btn-outline-light aria-pressed:bg-brandNavy aria-pressed:text-white">Return after dinner, 23:30</button>
+              </div>
+              <p class="sr-only">Animated diagram of the example, in two scenes. Arrival: two minibuses leave the hotel at 13:30 with 19 guests each and reach the venue at 13:55. They drive back, load the last 12 guests, leave again at 14:23 and arrive at 14:48, 12 minutes before the 15:00 deadline. Return after dinner: from 23:30 a minibus leaves the venue about every 25 minutes, six departures until 01:41, carrying the guests who are ready to go; the last guests are back at the hotel at 02:06. The scene buttons, the play button and the time slider move through it.</p>
               <div class="mt-6 rounded-2xl bg-mist p-4 sm:p-6 lg:p-8">
                 <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-2" aria-hidden="true">
                   <p id="sd-clock" class="t-stat tabular-nums text-brandNavy">13:30</p>
-                  <p class="t-body text-slate-700">At the venue: <strong class="font-semibold text-brandNavy"><span id="sd-count" class="tabular-nums">0</span> of 50</strong></p>
+                  <p class="t-body text-slate-700"><span id="sd-count-label">At the venue</span>: <strong class="font-semibold text-brandNavy"><span id="sd-count" class="tabular-nums">0</span> of 50</strong></p>
                 </div>
                 <div class="mt-6 grid grid-cols-[auto,1fr,auto] items-center gap-3 sm:gap-6 lg:gap-10" aria-hidden="true">
                   <div class="flex flex-col items-center gap-3">
@@ -401,7 +405,7 @@
                   <div class="min-w-0 flex-1">
                     <label for="sd-time" class="sr-only">Time of day</label>
                     <input id="sd-time" type="range" min="0" max="90" step="0.5" value="0" aria-valuetext="13:30" class="block h-11 w-full cursor-pointer accent-brandNavy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brandNavy">
-                    <div class="flex justify-between t-meta tabular-nums text-slate-700" aria-hidden="true"><span>13:30</span><span>15:00</span></div>
+                    <div class="flex justify-between t-meta tabular-nums text-slate-700" aria-hidden="true"><span id="sd-from">13:30</span><span id="sd-to">15:00</span></div>
                   </div>
                 </div>
               </div>
@@ -859,65 +863,108 @@
       })();
     </script>
     <script>
-      // Animazione dell'esempio: tutto e' calcolato dal tempo t (minuti dalle 13:30), cosi' cursore e Play mostrano lo stesso stato.
+      // Animazione dell'esempio, due scene. Tutto e' calcolato dal tempo t (minuti dall'inizio della scena),
+      // cosi' cursore e Play mostrano lo stesso stato. Orari: 25 min all'andata (carichi), 20 al ritorno, 8 per caricare.
       (function() {
         var root = document.getElementById('shuttle-demo');
         if (!root) return;
-        var clock = document.getElementById('sd-clock'), count = document.getElementById('sd-count');
-        var caption = document.getElementById('sd-caption'), btn = document.getElementById('sd-play'), slider = document.getElementById('sd-time');
+        var $ = function(id) { return document.getElementById(id); };
+        var clock = $('sd-clock'), count = $('sd-count'), countLabel = $('sd-count-label'), caption = $('sd-caption');
+        var btn = $('sd-play'), slider = $('sd-time'), from = $('sd-from'), to = $('sd-to');
         var buses = [].slice.call(root.querySelectorAll('[data-bus]')), lanes = [].slice.call(root.querySelectorAll('[data-lane]'));
-        var badges = [].slice.call(root.querySelectorAll('[data-badge]')), icons = [].slice.call(root.querySelectorAll('[data-icon]'));
+        var badges = [].slice.call(root.querySelectorAll('[data-badge]')), icons = [].slice.call(root.querySelectorAll('[data-icon] svg'));
+        var tabs = [].slice.call(root.querySelectorAll('[data-scene]'));
         var DOT = 'h-2.5 w-2.5 rounded-full border border-brandNavy motion-safe:transition-colors motion-safe:duration-300 ';
         function dots(id) {
-          var box = document.getElementById(id), out = [];
+          var box = $(id), out = [];
           for (var i = 0; i < 50; i++) { var d = document.createElement('span'); d.className = DOT; box.appendChild(d); out.push(d); }
           return out;
         }
         var hotel = dots('sd-hotel'), venue = dots('sd-venue');
-        // Orari dell'esempio: 25 min all'andata, 20 al ritorno, 8 per caricare, seconda partenza a 53 min (14:23), arrivo a 78 (14:48)
-        function pos(t) { return t < 25 ? t / 25 : t < 45 ? 1 - (t - 25) / 20 : t < 53 ? 0 : t < 78 ? (t - 53) / 25 : 1; }
-        function aboard(t) { return t < 25 ? 19 : t < 47 ? 0 : t < 78 ? 6 : 0; }
-        function hotelLeft(t) { return t < 0.5 ? 50 : t < 47 ? 12 : 0; }
-        function arrived(t) { return t < 25 ? 0 : t < 78 ? 38 : 50; }
-        function say(t) {
-          if (t < 25) return 'Trip 1: each minibus carries 19 guests to the venue. It takes 25 minutes.';
-          if (t < 45) return '38 guests are at the venue. The minibuses drive back to the hotel.';
-          if (t < 53) return 'Loading the last 12 guests.';
-          if (t < 78) return 'Trip 2: the last 12 guests ride to the venue.';
-          return 'All 50 guests are at the venue at 14:48, 12 minutes before the 15:00 deadline.';
-        }
-        function hhmm(t) { var m = 810 + Math.floor(t); return String(Math.floor(m / 60)) + ':' + String(m % 60).padStart(2, '0'); }
-        var t = 0, playing = false, last = 0, widths = [];
+        function hhmm(base, t) { var m = (base + Math.floor(t)) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+
+        // Scena 0, arrivo: da hotel (p = 0) a villa (p = 1). t = 0 alle 13:30.
+        var arrival = {
+          base: 810, max: 90, endAt: 78, speed: 0.005, label: 'At the venue', from: '13:30', to: '15:00',
+          pos: function(b, t) { return t < 25 ? t / 25 : t < 45 ? 1 - (t - 25) / 20 : t < 53 ? 0 : t < 78 ? (t - 53) / 25 : 1; },
+          back: function(b, t) { return t >= 25 && t < 45; },
+          aboard: function(b, t) { return t < 25 ? 19 : t < 47 ? 0 : t < 78 ? 6 : 0; },
+          hotel: function(t) { return t < 0.5 ? 50 : t < 47 ? 12 : 0; },
+          venue: function(t) { return t < 25 ? 0 : t < 78 ? 38 : 50; },
+          count: function(t) { return t < 25 ? 0 : t < 78 ? 38 : 50; },
+          say: function(t) {
+            if (t < 25) return 'Trip 1: each minibus carries 19 guests to the venue. It takes 25 minutes.';
+            if (t < 45) return '38 guests are at the venue. The minibuses drive back to the hotel.';
+            if (t < 53) return 'Loading the last 12 guests.';
+            if (t < 78) return 'Trip 2: the last 12 guests ride to the venue.';
+            return 'All 50 guests are at the venue at 14:48, 12 minutes before the 15:00 deadline.';
+          }
+        };
+
+        // Scena 1, ritorno: dalla villa (p = 1) all'hotel (p = 0). t = 0 alle 23:20. Una partenza ogni ~25 minuti, a turno.
+        var DEP = [10, 35, 63, 88, 116, 141], LOAD = [10, 8, 9, 7, 9, 7], BUSOF = [0, 1, 0, 1, 0, 1];
+        function last(b, t) { var k = -1; for (var i = 0; i < DEP.length; i++) if (BUSOF[i] === b && DEP[i] <= t) k = i; return k; }
+        function sum(f) { var n = 0; for (var i = 0; i < DEP.length; i++) if (f(i)) n += LOAD[i]; return n; }
+        var ret = {
+          base: 1400, max: 170, endAt: 166, speed: 0.0085, label: 'Back at the hotel', from: '23:20', to: '02:10',
+          pos: function(b, t) {
+            var k = last(b, t); if (k < 0) return 1;
+            var d = t - DEP[k]; return d < 25 ? 1 - d / 25 : d < 45 ? (d - 25) / 20 : 1;
+          },
+          back: function(b, t) { var k = last(b, t); return k >= 0 && t - DEP[k] < 25; },
+          aboard: function(b, t) {
+            for (var i = 0; i < DEP.length; i++) if (BUSOF[i] === b && t >= DEP[i] - 3 && t < DEP[i] + 25) return LOAD[i];
+            return 0;
+          },
+          hotel: function(t) { return 50 - sum(function(i) { return DEP[i] + 25 <= t; }); },
+          venue: function(t) { return 50 - sum(function(i) { return DEP[i] - 3 <= t; }); },
+          count: function(t) { return sum(function(i) { return DEP[i] + 25 <= t; }); },
+          say: function(t) {
+            var k = -1; for (var i = 0; i < DEP.length; i++) if (DEP[i] - 3 <= t) k = i;
+            if (k < 0) return 'The party is still on. Both minibuses wait at the venue.';
+            if (t >= 166) return 'All 50 guests are back at the hotel. A minibus left about every 25 minutes, so nobody had to leave at a fixed time.';
+            return 'Departure ' + (k + 1) + ' of 6, at ' + hhmm(1400, DEP[k]) + ': ' + LOAD[k] + ' guests ride back to the hotel.';
+          }
+        };
+        // Dalla scena di ritorno i puntini si riempiono al contrario: la villa parte piena e l'hotel vuoto
+        var scenes = [arrival, ret], cur = 0, sc = arrival, t = 0, playing = false, lastTs = 0, widths = [];
         function measure() { widths = lanes.map(function(l) { return Math.max(0, l.clientWidth - 40); }); }
         function render() {
-          var p = pos(t), a = aboard(t), hl = hotelLeft(t), ar = arrived(t), back = t >= 25 && t < 45;
-          clock.textContent = hhmm(t); count.textContent = ar; caption.textContent = say(t);
-          slider.value = t; slider.setAttribute('aria-valuetext', hhmm(t));
-          buses.forEach(function(b, i) { b.style.transform = 'translateX(' + Math.round(p * widths[i]) + 'px)'; });
-          icons.forEach(function(ic) { ic.style.transform = back ? 'scaleX(-1)' : ''; });
-          badges.forEach(function(g) { g.textContent = a; g.classList.toggle('hidden', a === 0); });
-          hotel.forEach(function(d, i) { d.className = DOT + (i < hl ? 'bg-brandNavy' : 'bg-transparent'); });
-          venue.forEach(function(d, i) { d.className = DOT + (i < ar ? 'bg-brandNavy' : 'bg-transparent'); });
-          btn.textContent = playing ? 'Pause' : (t >= 78 ? 'Replay' : 'Play');
+          clock.textContent = hhmm(sc.base, t); count.textContent = sc.count(t); caption.textContent = sc.say(t);
+          slider.value = t; slider.setAttribute('aria-valuetext', hhmm(sc.base, t));
+          buses.forEach(function(b, i) { b.style.transform = 'translateX(' + Math.round(sc.pos(i, t) * widths[i]) + 'px)'; });
+          icons.forEach(function(ic, i) { ic.style.transform = sc.back(i, t) ? 'scaleX(-1)' : ''; });
+          badges.forEach(function(g, i) { var a = sc.aboard(i, t); g.textContent = a; g.classList.toggle('hidden', a === 0); });
+          var h = sc.hotel(t), v = sc.venue(t);
+          hotel.forEach(function(d, i) { d.className = DOT + (cur === 0 ? (i < h ? 'bg-brandNavy' : 'bg-transparent') : (i < 50 - h ? 'bg-brandNavy' : 'bg-transparent')); });
+          venue.forEach(function(d, i) { d.className = DOT + (i < v ? 'bg-brandNavy' : 'bg-transparent'); });
+          btn.textContent = playing ? 'Pause' : (t >= sc.endAt ? 'Replay' : 'Play');
         }
         function frame(ts) {
           if (!playing) return;
-          t = Math.min(90, t + (ts - last) * 0.005); last = ts;
-          if (t >= 90) playing = false;
+          t = Math.min(sc.max, t + (ts - lastTs) * sc.speed); lastTs = ts;
+          if (t >= sc.max) playing = false;
           render();
           if (playing) requestAnimationFrame(frame);
         }
         function play() {
-          if (t >= 78) t = 0;
-          playing = true; last = performance.now(); requestAnimationFrame(frame); render();
+          if (t >= sc.endAt) t = 0;
+          playing = true; lastTs = performance.now(); requestAnimationFrame(frame); render();
         }
+        function setScene(i, autoplay) {
+          cur = i; sc = scenes[i]; t = 0; playing = false;
+          tabs.forEach(function(b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+          slider.max = sc.max; from.textContent = sc.from; to.textContent = sc.to; countLabel.textContent = sc.label;
+          if (autoplay) play(); else { t = sc.endAt; render(); }
+        }
+        tabs.forEach(function(b, i) { b.addEventListener('click', function() { if (i !== cur) setScene(i, !still); }); });
         btn.addEventListener('click', function() { if (playing) { playing = false; render(); } else play(); });
         slider.addEventListener('input', function() { playing = false; t = parseFloat(slider.value); render(); });
         window.addEventListener('resize', function() { measure(); render(); });
         root.classList.remove('hidden');
         measure();
         var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (still || !('IntersectionObserver' in window)) { t = 78; render(); return; }
+        if (still || !('IntersectionObserver' in window)) { t = sc.endAt; render(); return; }
         render();
         var io = new IntersectionObserver(function(entries) {
           if (entries[0].isIntersecting) { io.disconnect(); play(); }
