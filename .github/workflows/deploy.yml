@@ -33,11 +33,11 @@ jobs:
       - name: Version the CSS URL
         run: |
           v=$(sha256sum assets/tailwind.css | cut -c1-10)
-          for f in index.html privacy.html; do
+          for f in index.html privacy.html wedding-transfers-taormina.html; do
             grep -q 'href="assets/tailwind.css"' "$f" || { echo "::error::$f: riferimento al CSS non trovato"; exit 1; }
             sed -i "s#href=\"assets/tailwind.css\"#href=\"assets/tailwind.css?v=$v\"#" "$f"
           done
-          grep -c "tailwind.css?v=$v" index.html privacy.html
+          grep -c "tailwind.css?v=$v" index.html privacy.html wedding-transfers-taormina.html
 
       - name: Sync files to Bluehost
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4

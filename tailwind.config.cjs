@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   future: { hoverOnlyWhenSupported: true },
-  content: ['./index.html', './privacy.html'],
+  content: ['./index.html', './privacy.html', './wedding-transfers-taormina.html'],
   theme: {
     extend: {
       fontFamily: {
