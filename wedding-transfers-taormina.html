@@ -222,7 +222,7 @@
                 </p>
               </li>
               <li class="grid gap-3 border-b border-brandNavy/20 py-6 lg:grid-cols-12 lg:gap-x-12">
-                <h3 class="lg:col-span-4 t-h3 text-brandNavy">A return with no fixed time</h3>
+                <h3 class="lg:col-span-4 t-h3 text-brandNavy">A return in several departures</h3>
                 <p class="lg:col-span-8 t-body text-slate-700 max-w-[65ch]">
                   Guests leave when the party ends, not all at once. We run the return as a shuttle with a stated
                   frequency, not as a single departure.
@@ -353,8 +353,8 @@
             <figure id="shuttle-demo" class="hidden mt-12 lg:mt-16" aria-labelledby="shuttle-title">
               <figcaption id="shuttle-title" class="t-h3 text-brandNavy">Watch the two minibuses at work</figcaption>
               <div class="mt-4 flex flex-wrap gap-3" role="group" aria-label="Choose a scene">
-                <button type="button" data-scene="0" aria-pressed="true" class="btn btn-sm btn-outline-light aria-pressed:bg-brandNavy aria-pressed:text-white">Arrival, 13:30</button>
-                <button type="button" data-scene="1" aria-pressed="false" class="btn btn-sm btn-outline-light aria-pressed:bg-brandNavy aria-pressed:text-white">Return after dinner, 23:30</button>
+                <button type="button" data-scene="0" aria-pressed="true" class="btn btn-sm btn-outline-light w-full sm:w-auto sm:min-w-[12rem] aria-pressed:bg-brandNavy aria-pressed:text-white">Arrival</button>
+                <button type="button" data-scene="1" aria-pressed="false" class="btn btn-sm btn-outline-light w-full sm:w-auto sm:min-w-[12rem] aria-pressed:bg-brandNavy aria-pressed:text-white">Return after dinner</button>
               </div>
               <p class="sr-only">Animated diagram of the example, in two scenes. Arrival: two minibuses leave the hotel at 13:30 with 19 guests each and reach the venue at 13:55. They drive back, load the last 12 guests, leave again at 14:23 and arrive at 14:48, 12 minutes before the 15:00 deadline. Return after dinner: from 23:30 a minibus leaves the venue about every 25 minutes, six departures until 01:41, carrying the guests who are ready to go; the last guests are back at the hotel at 02:06. The scene buttons, the play button and the time slider move through it.</p>
               <div class="mt-6 rounded-2xl bg-mist p-4 sm:p-6 lg:p-8">
@@ -398,7 +398,7 @@
                     <span class="inline-flex min-h-[32px] items-center rounded-lg border-2 border-brandNavy bg-white px-3 t-meta font-semibold text-brandNavy">Venue</span>
                   </div>
                 </div>
-                <p class="mt-4 t-meta text-slate-700" aria-hidden="true">Each dot is one guest.</p>
+                <p class="mt-4 t-meta text-slate-700" aria-hidden="true">Each dot is one guest. In the return scene, how many guests leave on each departure is made up for the drawing; the times follow from the plan.</p>
                 <p id="sd-caption" class="mt-4 min-h-[3.25rem] t-body text-slate-700 max-w-[65ch]" aria-live="off">Both minibuses are at the hotel at 13:30.</p>
                 <div class="mt-6 flex items-center gap-4">
                   <button id="sd-play" type="button" class="btn btn-sm btn-outline-light min-w-[6.5rem] shrink-0">Play</button>
@@ -922,16 +922,16 @@
           say: function(t) {
             var k = -1; for (var i = 0; i < DEP.length; i++) if (DEP[i] - 3 <= t) k = i;
             if (k < 0) return 'The party is still on. Both minibuses wait at the venue.';
-            if (t >= 166) return 'All 50 guests are back at the hotel. A minibus left about every 25 minutes, so nobody had to leave at a fixed time.';
+            if (t >= 166) return 'All 50 guests are back at the hotel. With a departure about every 25 minutes, guests are not tied to a single time.';
             return 'Departure ' + (k + 1) + ' of 6, at ' + hhmm(1400, DEP[k]) + ': ' + LOAD[k] + ' guests ride back to the hotel.';
           }
         };
         // Dalla scena di ritorno i puntini si riempiono al contrario: la villa parte piena e l'hotel vuoto
-        var scenes = [arrival, ret], cur = 0, sc = arrival, t = 0, playing = false, lastTs = 0, widths = [];
+        var scenes = [arrival, ret], cur = 0, sc = arrival, t = 0, playing = false, lastTs = 0, raf = 0, widths = [];
         function measure() { widths = lanes.map(function(l) { return Math.max(0, l.clientWidth - 40); }); }
         function render() {
           clock.textContent = hhmm(sc.base, t); count.textContent = sc.count(t); caption.textContent = sc.say(t);
-          slider.value = t; slider.setAttribute('aria-valuetext', hhmm(sc.base, t));
+          slider.value = t; if (!playing) slider.setAttribute('aria-valuetext', hhmm(sc.base, t));
           buses.forEach(function(b, i) { b.style.transform = 'translateX(' + Math.round(sc.pos(i, t) * widths[i]) + 'px)'; });
           icons.forEach(function(ic, i) { ic.style.transform = sc.back(i, t) ? 'scaleX(-1)' : ''; });
           badges.forEach(function(g, i) { var a = sc.aboard(i, t); g.textContent = a; g.classList.toggle('hidden', a === 0); });
@@ -942,24 +942,25 @@
         }
         function frame(ts) {
           if (!playing) return;
-          t = Math.min(sc.max, t + (ts - lastTs) * sc.speed); lastTs = ts;
-          if (t >= sc.max) playing = false;
+          var dt = lastTs ? Math.max(0, ts - lastTs) : 0; lastTs = ts;
+          t = Math.min(sc.endAt, t + dt * sc.speed);
+          if (t >= sc.endAt) playing = false;
           render();
-          if (playing) requestAnimationFrame(frame);
+          if (playing) raf = requestAnimationFrame(frame);
         }
         function play() {
           if (t >= sc.endAt) t = 0;
-          playing = true; lastTs = performance.now(); requestAnimationFrame(frame); render();
+          playing = true; lastTs = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); render();
         }
         function setScene(i, autoplay) {
-          cur = i; sc = scenes[i]; t = 0; playing = false;
+          cur = i; sc = scenes[i]; t = 0; playing = false; cancelAnimationFrame(raf);
           tabs.forEach(function(b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
           slider.max = sc.max; from.textContent = sc.from; to.textContent = sc.to; countLabel.textContent = sc.label;
           if (autoplay) play(); else { t = sc.endAt; render(); }
         }
         tabs.forEach(function(b, i) { b.addEventListener('click', function() { if (i !== cur) setScene(i, !still); }); });
-        btn.addEventListener('click', function() { if (playing) { playing = false; render(); } else play(); });
-        slider.addEventListener('input', function() { playing = false; t = parseFloat(slider.value); render(); });
+        btn.addEventListener('click', function() { if (playing) { playing = false; cancelAnimationFrame(raf); render(); } else play(); });
+        slider.addEventListener('input', function() { playing = false; cancelAnimationFrame(raf); t = parseFloat(slider.value); slider.setAttribute('aria-valuetext', hhmm(sc.base, t)); render(); });
         window.addEventListener('resize', function() { measure(); render(); });
         root.classList.remove('hidden');
         measure();
