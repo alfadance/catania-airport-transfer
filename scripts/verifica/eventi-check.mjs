@@ -108,3 +108,15 @@ for (const { file } of FORM_PAGES) {
     assert.deepEqual(morti, []);
   });
 }
+
+test('deploy.yml versiona il CSS di ogni pagina HTML che lo carica', () => {
+  const yml = read('.github/workflows/deploy.yml');
+  const step = yml.slice(yml.indexOf('Version the CSS URL'));
+  assert.ok(step.length > 0, 'passo "Version the CSS URL" presente');
+  const pagine = fs.readdirSync(ROOT).filter((f) => f.endsWith('.html') && read(f).includes('href="assets/tailwind.css"'));
+  assert.ok(pagine.length >= 5, 'trovate le pagine che caricano il CSS');
+  for (const f of pagine) {
+    // una volta nel ciclo che riscrive l'indirizzo, una volta nel conteggio finale
+    assert.ok(step.split(f).length - 1 >= 2, `${f}: manca nel passo che versiona il CSS`);
+  }
+});
