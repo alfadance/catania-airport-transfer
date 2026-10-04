@@ -99,3 +99,12 @@ test('hub: title proprio, canonical proprio, nessun FAQPage, nessun testo vietat
   assert.match(hub, /href="wedding-transfers-taormina\.html"/);
   assert.match(hub, /href="event-transportation-sicily\.html"/);
 });
+
+for (const { file } of FORM_PAGES) {
+  test(`${file}: ogni link #ancora ha il suo bersaglio`, () => {
+    const html = read(file);
+    const morti = [...new Set([...html.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]))]
+      .filter((a) => !html.includes(`id="${a}"`));
+    assert.deepEqual(morti, []);
+  });
+}
