@@ -120,3 +120,26 @@ test('deploy.yml versiona il CSS di ogni pagina HTML che lo carica', () => {
     assert.ok(step.split(f).length - 1 >= 2, `${f}: manca nel passo che versiona il CSS`);
   }
 });
+
+test('hub: ogni scheda ha la sua immagine, con misure, testo alternativo e file presenti', () => {
+  const hub = read('events.html');
+  const cards = (hub.match(/<section id="types"[\s\S]*?<\/section>/) || [''])[0].match(/<li\b[\s\S]*?<\/li>/g) || [];
+  assert.equal(cards.length, 3, 'tre schede');
+  const srcs = new Set();
+  for (const c of cards) {
+    const img = (c.match(/<img\b[^>]*>/) || [''])[0];
+    assert.ok(img, 'scheda senza <img>');
+    const attr = (n) => (img.match(new RegExp('\\s' + n + '="([^"]*)"')) || [])[1];
+    assert.ok((attr('alt') || '').length >= 20, 'alt descrittivo');
+    assert.equal(attr('width'), '800');
+    assert.equal(attr('height'), '533');
+    assert.equal(attr('loading'), 'lazy');
+    const set = (attr('srcset') || '').split(',').map((s) => s.trim().split(/\s+/));
+    assert.deepEqual(set.map((s) => s[1]), ['800w', '1200w'], 'srcset a 800 e 1200');
+    for (const f of [attr('src'), ...set.map((s) => s[0])]) {
+      assert.ok(fs.existsSync(new URL(f, ROOT)), `file mancante: ${f}`);
+      srcs.add(f);
+    }
+  }
+  assert.ok(srcs.size >= 6, 'tre immagini diverse');
+});
