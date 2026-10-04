@@ -100,6 +100,7 @@
           <nav class="flex items-center gap-8 text-sm font-medium" aria-label="Main">
             <div class="hidden lg:flex items-center gap-8">
             <a href="index.html" class="nav-link">Home</a>
+            <a href="events.html" class="nav-link">All events</a>
             <a href="#plan" class="nav-link">How we plan</a>
             <a href="#example" class="nav-link">Example</a>
             <a href="#faq" class="nav-link">FAQ</a>
@@ -113,6 +114,7 @@
               <div class="absolute inset-x-0 top-full border-b border-brandNavy bg-brandBlack">
                 <ul class="wrap divide-y divide-brandNavy py-2">
                   <li><a href="index.html" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Home</a></li>
+                  <li><a href="events.html" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">All events</a></li>
                   <li><a href="#plan" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">How we plan</a></li>
                   <li><a href="#example" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Example</a></li>
                   <li><a href="#faq" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">FAQ</a></li>
@@ -479,6 +481,7 @@
                   <span>Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.</span>
                 </div>
                 <form action="request-event.php" method="post" class="grid gap-8">
+                  <input type="hidden" name="page" value="wedding">
                   <fieldset class="grid min-w-0 gap-5 sm:grid-cols-2">
                   <legend class="sr-only">About you</legend>
                   <label class="field-label">
@@ -500,6 +503,18 @@
                   </fieldset>
                   <fieldset class="grid min-w-0 gap-5 border-t border-brandNavy/20 pt-8 sm:grid-cols-2">
                   <legend class="sr-only">The wedding</legend>
+                  <label class="field-label">
+                    <span>Type of event</span>
+                    <select name="etype" required class="field">
+                      <option value="">Please choose</option>
+                      <option value="wedding" selected>Wedding</option>
+                      <option value="conference">Conference or convention</option>
+                      <option value="show">Fashion show or presentation</option>
+                      <option value="film">Film premiere or festival</option>
+                      <option value="corporate">Corporate event or incentive</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </label>
                   <label class="field-label">
                     <span>Date</span>
                     <input name="date" required maxlength="60" class="field">
@@ -829,7 +844,7 @@
         else if (consent !== 'rejected') showBanner();
         // Esito del modulo: request-event.php rimanda qui con ?event=sent oppure ?event=error.
         var form = document.querySelector('form[action="request-event.php"]');
-        var FIELDS = ['name', 'agency', 'country', 'email', 'date', 'venue', 'guests', 'arrival', 'message'];
+        var FIELDS = ['name', 'agency', 'country', 'email', 'etype', 'date', 'venue', 'guests', 'arrival', 'message'];
         if (form) form.addEventListener('submit', function() {
           try { sessionStorage.setItem('event_form', JSON.stringify(FIELDS.reduce(function(o, k) { o[k] = form.elements[k].value; return o; }, {}))); } catch (e) {}
           var b = form.querySelector('button[type="submit"]'); b.disabled = true;
@@ -838,6 +853,8 @@
           var live = document.getElementById('event-live'); if (live) live.textContent = 'Sending…';
         });
         var esito = new URLSearchParams(location.search).get('event');
+        var tipo = 'unknown';
+        try { tipo = JSON.parse(sessionStorage.getItem('event_form') || '{}').etype || 'unknown'; } catch (e) {}
         if (form && esito === 'error') {
           try { var saved = JSON.parse(sessionStorage.getItem('event_form') || '{}'); FIELDS.forEach(function(k) { if (saved[k]) form.elements[k].value = saved[k]; }); } catch (e) {}
         }
@@ -850,7 +867,7 @@
             var toBox = function() { box.focus(); history.replaceState(null, '', location.pathname + '#event-request'); };
             if (document.readyState === 'complete') toBox(); else window.addEventListener('load', toBox);
           }
-          if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_evento');
+          if (esito === 'sent' && window.gtag) window.gtag('event', 'richiesta_evento', { tipo_evento: tipo });
           if (!box) history.replaceState(null, '', location.pathname + '#event-request');
           else history.replaceState(null, '', location.pathname);
         }
