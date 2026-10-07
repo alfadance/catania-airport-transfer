@@ -6,6 +6,11 @@
   RewriteCond %{HTTP_HOST} ^www\. [NC]
   RewriteRule ^ https://cataniaairporttransfer.net%{REQUEST_URI} [L,R=301]
 
+  # /index.html è un duplicato di /: si manda all'indirizzo senza il nome del file.
+  # THE_REQUEST è la richiesta del browser, non quella riscritta da DirectoryIndex: così non c'è ciclo.
+  RewriteCond %{THE_REQUEST} \s/(.*/)?index\.html[\s?]
+  RewriteRule ^(.*/)?index\.html$ /$1 [R=301,L]
+
   # Sorgenti e dipendenze non si servono
   RewriteRule ^(src|scripts|node_modules)(/|$) - [R=404,L]
 </IfModule>
