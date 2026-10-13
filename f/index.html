@@ -121,7 +121,7 @@ function giornoLabel(iso) {
 
 function tipoMezzo(m) {
   const t = (m || "").toLowerCase();
-  return /standard|minivan|van/.test(t) ? "minivan" : /bus/.test(t) ? "bus" : /sedan/.test(t) ? "sedan" : "altro";
+  return /standard|economy|minivan|van/.test(t) ? "minivan" : /bus/.test(t) ? "bus" : /sedan/.test(t) ? "sedan" : "altro";
 }
 const badgeMezzo = (m) => m ? h("span", { class: "tm " + tipoMezzo(m) }, m) : null;
 
