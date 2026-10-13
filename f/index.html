@@ -27,6 +27,11 @@ main{max-width:640px;margin:0 auto;padding-bottom:40px}
 .r1{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .ora{font-size:30px;font-weight:800;line-height:1}
 .mezzo{font-size:13px;font-weight:600;color:var(--navy)}
+.tm{display:inline-block;font-size:12px;font-weight:700;line-height:1.2;border-radius:999px;padding:3px 10px;white-space:nowrap;margin-top:3px;background:#e3edf7;color:#17406b}
+.tm.minivan{background:#dff3e8;color:#14603a}
+.tm.bus{background:#ece4f7;color:#52307f}
+.tm.altro{background:#e8ebef;color:#3b4652}
+@media (prefers-color-scheme:dark){.tm{background:#1d3550;color:#a9d0f5}.tm.minivan{background:#17372a;color:#8fe0b5}.tm.bus{background:#33274a;color:#cfb6f2}.tm.altro{background:#2a323b;color:#c4ccd5}}
 .tratta{margin:10px 0 6px;line-height:1.35}
 .tratta small{display:block;color:var(--grigio);font-size:13px}
 .tratta a{color:inherit}
@@ -114,10 +119,16 @@ function giornoLabel(iso) {
   return giornoBreve(iso);
 }
 
+function tipoMezzo(m) {
+  const t = (m || "").toLowerCase();
+  return /minivan|van/.test(t) ? "minivan" : /bus/.test(t) ? "bus" : /sedan/.test(t) ? "sedan" : "altro";
+}
+const badgeMezzo = (m) => m ? h("span", { class: "tm " + tipoMezzo(m) }, m) : null;
+
 function card(s, titolare) {
   return h("div", { class: "c" + (s.annullato ? " annullato" : "") },
     s.annullato && h("span", { class: "ann" }, "ANNULLATO"),
-    h("div", { class: "r1" }, h("span", { class: "ora" }, s.ora || "—"), h("span", { class: "mezzo" }, [s.mezzo, s.tipo && s.tipo !== "Transfer" ? s.tipo : ""].filter(Boolean).join(" · "))),
+    h("div", { class: "r1" }, h("span", { class: "ora" }, s.ora || "—"), h("span", { class: "mezzo" }, badgeMezzo(s.mezzo), s.tipo && s.tipo !== "Transfer" ? " " + s.tipo : "")),
     h("div", { class: "tratta" }, h("a", { href: mappa(s.da), target: "_blank", rel: "noopener" }, s.da || "—"),
       h("small", {}, "→ ", h("a", { href: mappa(s.a), target: "_blank", rel: "noopener" }, s.a || "—"))),
     h("div", { class: "riga" }, h("b", {}, [s.pax ? s.pax + " pax" : "", s.nome].filter(Boolean).join(" · ")),
@@ -174,7 +185,7 @@ function elenco() {
       return h("div", {},
         h("button", { class: "riga-el" + (s.annullato ? " annullato" : ""), "aria-expanded": String(apri), onclick: () => { S.aperto = apri ? null : s.id; disegna(); } },
           h("div", { class: "a" }, h("span", { class: "t" }, luogo(s.da) + " → " + luogo(s.a)), h("span", { class: "q" }, s.annullato ? "annullato" : s.quota ? euro(s.quota) : "da definire")),
-          h("div", { class: "m" }, s.mezzo || ""),
+          h("div", { class: "m" }, badgeMezzo(s.mezzo)),
           h("div", { class: "d" }, giornoBreve(s.data) + " · " + (s.ora || "")),
           s.incasso && !s.annullato && h("span", { class: "badge" }, "INCASSARE " + euro(s.incasso))),
         apri && h("div", { class: "dentro" }, card(s, S.dati.ruolo === "titolare")));
