@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon-cat.ico" />
     <meta
       name="description"
-      content="Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania or Milazzo. We reply by email with the price and a payment link."
+      content="Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania or Milazzo. You see the price on the form. We check availability and reply by email with a payment link."
     />
     <link rel="canonical" href="https://cataniaairporttransfer.net/book-a-transfer.html" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
@@ -16,7 +16,7 @@
     <meta property="og:site_name" content="Catania Airport Transfer" />
     <meta property="og:url" content="https://cataniaairporttransfer.net/book-a-transfer.html" />
     <meta property="og:title" content="Book a Private Transfer from Catania Airport | Catania Airport Transfer" />
-    <meta property="og:description" content="Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania or Milazzo. We reply by email with the price and a payment link." />
+    <meta property="og:description" content="Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania or Milazzo. You see the price on the form. We check availability and reply by email with a payment link." />
     <meta property="og:image" content="https://cataniaairporttransfer.net/assets/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -75,6 +75,33 @@
       .book .js-route .route-step { opacity: .35; transform: translateX(-8px); }
       .book .js-route .route-step.is-lit { opacity: 1; transform: none; }
       .book label:has(input:focus-visible) { outline: 2px solid #1B3F5D; outline-offset: 3px; }
+
+      /* Scheda del viaggio: mappa con l'auto e prezzo. Colori del marchio, spazi a passi di 4 px. */
+      .book .trip-card { border: 1px solid rgba(27, 63, 93, .2); border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(5, 6, 8, .08), 0 8px 24px rgba(5, 6, 8, .12); }
+      .book .trip-map { position: relative; height: 280px; background: #050608; }
+      .book .trip-map[hidden] { display: none; }
+      @media (min-width: 640px) { .book .trip-map { height: 340px; } }
+      .book .trip-info { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; padding: 16px; }
+      @media (min-width: 640px) { .book .trip-info { padding: 24px; } }
+      .book .trip-route { margin: 0; font-size: 1rem; line-height: 1.5; color: #334155; }
+      .book .trip-route strong { color: #050608; }
+      .book .trip-price { margin: 0; text-align: right; }
+      .book .trip-eur { display: block; font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 3rem; line-height: 1; letter-spacing: -0.03em; color: #1B3F5D; }
+      .book .trip-sub { display: block; margin-top: 4px; font-size: 1rem; line-height: 1.5; color: #334155; }
+      .book .trip-pick { margin: 0; font-size: 1rem; line-height: 1.5; color: #334155; }
+      .book .pin { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 8px; font-size: 1rem; font-weight: 700; line-height: 1.5; color: #fff; background: #050608; border: 2px solid #fff; border-radius: 9999px; white-space: nowrap; }
+      .book .pin i { display: block; flex: none; width: 16px; height: 16px; border-radius: 9999px; background: #EE8211; }
+      .book .pin.end { border-color: #EE8211; }
+      /* Il prezzo salta fuori sulla destinazione quando l'auto arriva. Solo transform e opacity si animano; il guscio esterno lo muove MapLibre, quello interno l'animazione. */
+      .book .pop { display: flex; align-items: center; gap: 8px; padding: 4px 16px 4px 4px; font-size: 1.25rem; font-weight: 800; line-height: 1.5; color: #050608; background: #EE8211; border: 2px solid #050608; border-radius: 9999px; box-shadow: 0 2px 8px rgba(5, 6, 8, .6); opacity: 0; transform: translateY(12px) scale(.5); transform-origin: 50% 100%; pointer-events: none; }
+      .book .pop[hidden] { display: none; }
+      .book .pop .coin { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9999px; color: #EE8211; background: #050608; font-size: 1.125rem; }
+      .book .pop.on { opacity: 1; transform: none; transition: transform .6s var(--elastic), opacity .2s linear; }
+      @media (prefers-reduced-motion: reduce) { .book .pop.on { transition: none; } }
+      .book .car { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 9999px; background: #EE8211; border: 2px solid #050608; box-shadow: 0 2px 8px rgba(5, 6, 8, .6); }
+      .book .car svg { width: 24px; height: 24px; }
+      .book .maplibregl-ctrl-group button { width: 44px; height: 44px; }
+      .book .maplibregl-ctrl-attrib { font-size: 12px; }
     </style>
   </head>
   <body class="book bg-brandBlack text-slate-100 font-sans antialiased">
@@ -164,7 +191,7 @@
             </h1>
             <div class="mt-6 lg:mt-8 grid gap-8 lg:gap-x-12 lg:grid-cols-12 lg:items-end">
               <p class="lg:col-span-5 t-lead text-slate-200 max-w-xl rise rise-3">
-                Send us your trip. We reply by email with the price and a payment link. Your booking is
+                Choose your trip and see the price. We check availability and reply by email with a payment link. Your booking is
                 confirmed when you pay.
               </p>
             </div>
@@ -181,12 +208,12 @@
                   <li class="route-step">
                     <span class="route-dot" aria-hidden="true">1</span>
                     <h3 class="t-h3 text-white">You send the request</h3>
-                    <p class="mt-2 t-body text-slate-200">Tell us the route, the day, the time and how many of you travel.</p>
+                    <p class="mt-2 t-body text-slate-200">Choose the route, the day, the time and the vehicle. The price shows at once.</p>
                   </li>
                   <li class="route-step">
                     <span class="route-dot" aria-hidden="true">2</span>
                     <h3 class="t-h3 text-white">We reply by email</h3>
-                    <p class="mt-2 t-body text-slate-200">The email has the price and a payment link. The link works for 24 hours.</p>
+                    <p class="mt-2 t-body text-slate-200">If a vehicle is free, the email has a payment link. The link works for 24 hours.</p>
                   </li>
                   <li class="route-step">
                     <span class="route-dot" aria-hidden="true">3</span>
@@ -203,7 +230,7 @@
               <div class="lg:col-span-7 panel rounded-2xl bg-white p-5 sm:p-9">
                 <div id="book-sent" tabindex="-1" class="hidden mb-6 gap-3 rounded-xl border border-brandOrange bg-white p-4 text-base leading-relaxed text-brandNavy [&:not(.hidden)]:flex" role="status">
                   <svg class="h-6 w-6 shrink-0 text-brandNavy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                  <span>Thank you. Your request has reached us<span id="book-ref"></span>. We reply by email with the price and a payment link. Your booking is confirmed when you pay.</span>
+                  <span>Thank you. Your request has reached us<span id="book-ref"></span>. Your price is <strong id="book-price"></strong>, VAT included. We check availability and reply by email with a payment link. Your booking is confirmed when you pay.</span>
                 </div>
                 <div id="book-error" tabindex="-1" class="hidden mb-6 gap-3 rounded-xl border border-red-300 bg-red-50 p-4 text-base leading-relaxed text-red-800 [&:not(.hidden)]:flex" role="alert">
                   <svg class="h-6 w-6 shrink-0 text-red-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
@@ -253,6 +280,14 @@
                       <span>Pickup time (your choice, Italian time)</span>
                       <input name="ora" type="time" required class="field">
                     </label>
+                    <div id="trip-card" class="trip-card hidden sm:col-span-2" role="group" aria-label="Your trip: map and price">
+                      <div id="trip-map" class="trip-map" role="img" aria-label="Map of the route"></div>
+                      <div class="trip-info">
+                        <p class="trip-route"><strong id="trip-from">Catania Airport</strong> to <strong id="trip-to"></strong><br><span id="trip-km"></span></p>
+                        <p class="trip-price" aria-live="polite"><span id="trip-eur" class="trip-eur"></span><span id="trip-sub" class="trip-sub"></span></p>
+                        <p id="trip-pick" class="trip-pick hidden"></p>
+                      </div>
+                    </div>
                     <label class="field-label">
                       <span>Passengers</span>
                       <input name="pax" type="number" inputmode="numeric" min="1" max="7" value="1" required class="field">
@@ -524,7 +559,7 @@
     </script>
     <script>
       // Modulo per i privati: invia JSON alla funzione di Supabase `richiesta-privati`.
-      // Il prezzo non esiste qui: lo calcola il server e lo legge solo il titolare.
+      // Il prezzo che si vede qui viene da assets/prezzi-sito.json, lo stesso file che la funzione usa per calcolarlo: il server ricalcola sempre e non si fida del browser.
       (function() {
         var ENDPOINT = 'https://lsekwlvnlumjxliyysuy.supabase.co/functions/v1/richiesta-privati';
         var MAX_PAX = { business_sedan: 3, business_minivan: 7 };
@@ -576,13 +611,169 @@
           form.elements.pax.max = max;
           if (Number(form.elements.pax.value) > max) form.elements.pax.value = max;
         }
+        // ---- Prezzo e mappa ------------------------------------------------------------------------------------------------------
+        var DATA = null, MAP = null, CAR = null, ANIM = null, MAPLIB = null, MAP_BROKEN = false, POP = null, POP_TEXT = '';
+        function setPop(text) {
+          POP_TEXT = text || '';
+          if (!POP) return;
+          POP.hidden = !POP_TEXT;
+          POP.querySelector('b').textContent = POP_TEXT;
+          if (!POP_TEXT) POP.classList.remove('on');
+        }
+        var BRAND = { night: '#050608', navy: '#1B3F5D', orange: '#EE8211' };
+        var CAR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#050608" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17H3v-5l2-5h10l3 4h3v6h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5M5 12h12"/></svg>';
+        function loadJson(url) { return fetch(url).then(function(r) { if (!r.ok) throw new Error(url); return r.json(); }); }
+        function ensureData() {
+          if (!DATA) DATA = Promise.all([loadJson('assets/prezzi-sito.json'), loadJson('assets/routes-privati.json')]).then(function(a) { return { prices: a[0], routes: a[1] }; });
+          return DATA;
+        }
+        // Stessa regola della funzione: notte dalle 22:00 alle 05:59, ora italiana del ritiro.
+        function isNight(time) { var m = /^(\d{2}):(\d{2})$/.exec(time); return m ? (+m[1] * 60 + +m[2] >= 1320 || +m[1] * 60 + +m[2] < 360) : null; }
+        function priceFor(prices, town, vehicle, time) {
+          var t = prices.tratte.filter(function(x) { return x.id === town; })[0], night = isNight(time);
+          var p = t && t.prezzi[vehicle];
+          return p && night !== null ? { eur: night ? p.notte : p.giorno, night: night } : null;
+        }
+        function loadMaplibre() {
+          if (MAPLIB) return MAPLIB;
+          MAPLIB = new Promise(function(ok, ko) {
+            var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'assets/vendor/maplibre-gl-4.7.1.css'; document.head.appendChild(css);
+            var js = document.createElement('script'); js.src = 'assets/vendor/maplibre-gl-4.7.1.js'; js.onload = ok; js.onerror = ko; document.head.appendChild(js);
+          });
+          return MAPLIB;
+        }
+        function paintStyle(map) {
+          map.getStyle().layers.forEach(function(l) {
+            try {
+              if (l.type === 'background') map.setPaintProperty(l.id, 'background-color', BRAND.night);
+              else if (l.type === 'fill') map.setPaintProperty(l.id, 'fill-color', /water/.test(l.id) ? BRAND.navy : /building/.test(l.id) ? '#1E293B' : '#0F172A');
+              else if (l.type === 'line') map.setPaintProperty(l.id, 'line-color', /motorway|trunk/.test(l.id) ? '#94A3B8' : /water/.test(l.id) ? BRAND.navy : /boundary/.test(l.id) ? '#475569' : '#334155');
+              else if (l.type === 'symbol') { map.setPaintProperty(l.id, 'text-color', '#CBD5E1'); map.setPaintProperty(l.id, 'text-halo-color', BRAND.night); }
+            } catch (e) { /* livello senza quella proprieta' */ }
+          });
+        }
+        function pin(text, end) { var d = document.createElement('div'); d.className = 'pin' + (end ? ' end' : ''); d.innerHTML = '<i></i><span></span>'; d.lastChild.textContent = text; return d; }
+        function stopCar() { if (ANIM) cancelAnimationFrame(ANIM); ANIM = null; }
+        function line(coords) { return { type: 'Feature', geometry: { type: 'LineString', coordinates: coords } }; }
+        function bearingPoints(pts) {
+          var cum = [0];
+          for (var i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot((pts[i][0] - pts[i - 1][0]) * Math.cos(pts[i][1] * Math.PI / 180), pts[i][1] - pts[i - 1][1]));
+          return cum;
+        }
+        function runCar(pts) {
+          stopCar();
+          var still = matchMedia('(prefers-reduced-motion: reduce)').matches, src = MAP.getSource('trip');
+          if (POP) POP.classList.remove('on');
+          if (still) { src.setData(line(pts)); CAR.setLngLat(pts[pts.length - 1]); if (POP) POP.classList.add('on'); return; }
+          var cum = bearingPoints(pts), total = cum[cum.length - 1], DUR = 7000, PAUSE = 1800, t0 = null;
+          function frame(ts) {
+            if (t0 === null) t0 = ts;
+            var f = Math.min(((ts - t0) % (DUR + PAUSE)) / DUR, 1);
+            f = f < .5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2;      // parte e arriva piano
+            var d = f * total, lo = 0, hi = cum.length - 1;
+            while (hi - lo > 1) { var mid = (lo + hi) >> 1; if (cum[mid] <= d) lo = mid; else hi = mid; }
+            var u = (d - cum[lo]) / ((cum[hi] - cum[lo]) || 1), pos = [pts[lo][0] + (pts[hi][0] - pts[lo][0]) * u, pts[lo][1] + (pts[hi][1] - pts[lo][1]) * u];
+            src.setData(line(pts.slice(0, lo + 1).concat([pos])));
+            CAR.setLngLat(pos);
+            if (POP && POP_TEXT) POP.classList.toggle('on', f >= 1);      // arrivata: esce il prezzo; alla ripartenza rientra
+            ANIM = requestAnimationFrame(frame);
+          }
+          ANIM = requestAnimationFrame(frame);
+        }
+        function showRoute(route, fromAirport) {
+          var mapEl = document.getElementById('trip-map');
+          if (MAP_BROKEN) { mapEl.hidden = true; return; }
+          loadMaplibre().then(function() {
+            var coords = fromAirport ? route.coordinate : route.coordinate.slice().reverse();
+            var a = coords[0], b = coords[coords.length - 1], town = route.nome;
+            function draw() {
+              MAP.resize();
+              MAP.__pins.forEach(function(m) { m.remove(); });
+              var bounds = coords.reduce(function(bb, c) { return bb.extend(c); }, new maplibregl.LngLatBounds(coords[0], coords[0]));
+              var narrow = MAP.getContainer().clientWidth < 640;
+              MAP.fitBounds(bounds, { padding: narrow ? { top: 96, bottom: 56, left: 24, right: 24 } : { top: 96, bottom: 56, left: 64, right: 64 }, duration: 0 });
+              // I cartellini si mettono dopo l'inquadratura: ognuno si apre verso l'interno della mappa, cosi' non esce dal bordo.
+              var W = MAP.getContainer().clientWidth, pa = MAP.project(a), pb = MAP.project(b);
+              function side(pt) { return pt.x < W / 2 ? { anchor: 'left', offset: [8, 0] } : { anchor: 'right', offset: [-8, 0] }; }
+              var sa = side(pa), sb = side(pb), popY = -28;
+              if (Math.abs(pa.x - pb.x) < 200 && Math.abs(pa.y - pb.y) < 48) {      // cartellini quasi sovrapposti: uno sopra e uno sotto il proprio punto
+                var aBelow = pa.y >= pb.y;
+                sa = aBelow ? { anchor: 'top', offset: [0, 16] } : { anchor: 'bottom', offset: [0, -16] };
+                sb = aBelow ? { anchor: 'bottom', offset: [0, -16] } : { anchor: 'top', offset: [0, 16] };
+                popY = aBelow ? -64 : -28;
+              }
+              MAP.__pins = [
+                new maplibregl.Marker({ element: pin(fromAirport ? 'Catania Airport' : town, false), anchor: sa.anchor, offset: sa.offset }).setLngLat(a).addTo(MAP),
+                new maplibregl.Marker({ element: pin(fromAirport ? town : 'Catania Airport', true), anchor: sb.anchor, offset: sb.offset }).setLngLat(b).addTo(MAP)
+              ];
+              var shell = document.createElement('div');
+              shell.innerHTML = '<div class="pop" aria-hidden="true" hidden><span class="coin" aria-hidden="true">€</span><b></b></div>';
+              POP = shell.firstChild;
+              var popX = Math.max(56, Math.min(W - 56, pb.x)) - pb.x;      // il fumetto del prezzo resta dentro la mappa
+              MAP.__pins.push(new maplibregl.Marker({ element: shell, anchor: 'bottom', offset: [popX, popY] }).setLngLat(b).addTo(MAP));
+              setPop(POP_TEXT);
+              MAP.getSource('base').setData(line(coords));
+              runCar(coords);
+            }
+            if (!MAP) {
+              MAP = new maplibregl.Map({ container: mapEl, style: 'https://tiles.openfreemap.org/styles/dark', center: a, zoom: 9, attributionControl: { compact: true }, cooperativeGestures: true });
+              MAP.__pins = [];
+              MAP.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+              MAP.on('error', function() { if (!MAP.loaded()) { MAP_BROKEN = true; stopCar(); mapEl.hidden = true; } });
+              MAP.on('load', function() {
+                paintStyle(MAP);
+                var credits = mapEl.querySelector('.maplibregl-ctrl-attrib');      // i crediti restano (OpenFreeMap, OpenStreetMap) ma chiusi, con l'icona "i"
+                if (credits) { credits.classList.remove('maplibregl-compact-show'); credits.removeAttribute('open'); }
+                MAP.addSource('base', { type: 'geojson', data: line([a, b]) });
+                MAP.addSource('trip', { type: 'geojson', data: line([a, a]) });
+                MAP.addLayer({ id: 'base-line', type: 'line', source: 'base', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#94A3B8', 'line-width': 4, 'line-opacity': .45 } });
+                MAP.addLayer({ id: 'trip-edge', type: 'line', source: 'trip', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': BRAND.night, 'line-width': 10 } });
+                MAP.addLayer({ id: 'trip-line', type: 'line', source: 'trip', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': BRAND.orange, 'line-width': 5 } });
+                var el = document.createElement('div'); el.className = 'car'; el.innerHTML = CAR_SVG;
+                CAR = new maplibregl.Marker({ element: el }).setLngLat(a).addTo(MAP);
+                MAP.__ready = true;
+                draw();
+              });
+              MAP.__draw = draw;
+            } else if (MAP.__ready) { draw(); }
+            MAP.__draw = draw;
+          }).catch(function() { MAP_BROKEN = true; mapEl.hidden = true; });
+        }
+        var shownRoute = '';
+        function updateTrip() {
+          var el = form.elements, town = el.tratta.value, card = document.getElementById('trip-card');
+          if (!town) { card.classList.add('hidden'); stopCar(); shownRoute = ''; return; }
+          card.classList.remove('hidden');
+          ensureData().then(function(d) {
+            var route = d.routes.tratte[town], fromAirport = el.direzione.value === 'da_aeroporto';
+            var priceEl = document.getElementById('trip-eur'), sub = document.getElementById('trip-sub'), pick = document.getElementById('trip-pick');
+            document.getElementById('trip-from').textContent = fromAirport ? 'Catania Airport' : route.nome;
+            document.getElementById('trip-to').textContent = fromAirport ? route.nome : 'Catania Airport';
+            document.getElementById('trip-km').textContent = 'About ' + Math.round(route.km) + ' km by road';
+            document.getElementById('trip-map').setAttribute('aria-label', 'Map of the route between Catania Airport and ' + route.nome + ', about ' + Math.round(route.km) + ' kilometres');
+            var p = priceFor(d.prices, town, el.mezzo.value, el.ora.value);
+            priceEl.textContent = p ? '€' + p.eur : '';
+            setPop(p ? String(p.eur) : '');       // il simbolo € sta gia' nella moneta del fumetto
+            sub.textContent = p ? 'VAT included, whole vehicle' + (p.night ? ', night rate (22:00 to 06:00) included' : '') : '';
+            pick.textContent = 'Choose a vehicle and a pickup time to see the price.';
+            pick.classList.toggle('hidden', !!p);
+            var key = town + '|' + el.direzione.value;
+            if (key !== shownRoute) { shownRoute = key; showRoute(route, fromAirport); }
+          }).catch(function() {
+            document.getElementById('trip-eur').textContent = '';
+            document.getElementById('trip-sub').textContent = '';
+            var pick = document.getElementById('trip-pick'); pick.textContent = 'We send you the price by email.'; pick.classList.remove('hidden');
+          });
+        }
         form.addEventListener('change', function(e) {
           if (e.target.name === 'direzione') syncDirection();
           if (e.target.name === 'mezzo') syncVehicle();
+          if (/^(tratta|direzione|mezzo|ora)$/.test(e.target.name)) updateTrip();
         });
         form.addEventListener('input', function(e) {
           if (e.target.name === 'bagagli_imbarcati' || e.target.name === 'bagagli_mano') syncVehicle();
           if (e.target.name === 'telefono' || e.target.name === 'nome') e.target.setCustomValidity('');
+          if (e.target.name === 'ora') updateTrip();
         });
 
         // Nome e cognome: almeno due parole. Telefono: libphonenumber (carico solo alla prima interazione; se non carica, controlla il server).
@@ -682,12 +873,14 @@
             busy(false);
             if (res.status === 200 && res.body.ok) {
               document.getElementById('book-ref').textContent = res.body.codice ? ' (reference ' + res.body.codice + ')' : '';
+              document.getElementById('book-price').textContent = res.body.prezzo ? '\u20AC' + res.body.prezzo : 'in our email';
               sent.classList.remove('hidden');
               sent.focus();
               live.textContent = 'Request sent.';
               form.reset();
               syncDirection();
               syncVehicle();
+              updateTrip();
               if (window.gtag) window.gtag('event', 'richiesta_privati');
             } else if (res.status === 400 && res.body.errori) {
               fieldProblems(Object.keys(res.body.errori));
