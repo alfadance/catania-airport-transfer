@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "instrument serif",
+        "createdAt": "2026-10-26T13:10:46.552Z",
+        "reason": "user confirmed 2026-10-26: serif display titles on book-a-transfer.html only (owner chose to apply the pasted workflow literally to this page)"
+      }
+    ]
+  }
+}
