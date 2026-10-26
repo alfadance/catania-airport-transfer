@@ -100,6 +100,15 @@
       @media (prefers-reduced-motion: reduce) { .book .pop.on { transition: none; } }
       .book .car { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 9999px; background: #EE8211; border: 2px solid #050608; box-shadow: 0 2px 8px rgba(5, 6, 8, .6); }
       .book .car svg { width: 24px; height: 24px; }
+      /* Il veicolo scelto: immagine (render AI da foto di catalogo, finche' non c'e' un set professionale) e nome, tra la mappa e il prezzo. */
+      .book .trip-vehicle { display: flex; align-items: center; gap: 16px; padding: 16px; background: #F4F6F9; border-top: 1px solid rgba(27, 63, 93, .15); }
+      @media (min-width: 640px) { .book .trip-vehicle { gap: 24px; padding: 16px 24px; } }
+      .book .trip-vehicle[hidden] { display: none; }
+      .book .trip-vimg { display: block; flex: none; width: 46%; max-width: 280px; height: auto; }
+      .book .trip-vname { margin: 0; font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.03em; color: #1B3F5D; }
+      .book .trip-vsub { margin: 4px 0 0; font-size: 1rem; line-height: 1.5; color: #334155; }
+      @media (prefers-reduced-motion: no-preference) { .book .trip-vimg.is-in { animation: veh-in .7s var(--elastic) both; } }
+      @keyframes veh-in { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
       .book .maplibregl-ctrl-group button { width: 44px; height: 44px; }
       .book .maplibregl-ctrl-attrib { font-size: 12px; }
     </style>
@@ -282,6 +291,13 @@
                     </label>
                     <div id="trip-card" class="trip-card hidden sm:col-span-2" role="group" aria-label="Your trip: map and price">
                       <div id="trip-map" class="trip-map" role="img" aria-label="Map of the route"></div>
+                      <div id="trip-vehicle" class="trip-vehicle" hidden>
+                        <img id="trip-vimg" class="trip-vimg" src="" alt="" width="720" height="337" decoding="async">
+                        <div>
+                          <p id="trip-vname" class="trip-vname"></p>
+                          <p id="trip-vsub" class="trip-vsub"></p>
+                        </div>
+                      </div>
                       <div class="trip-info">
                         <p class="trip-route"><strong id="trip-from">Catania Airport</strong> to <strong id="trip-to"></strong><br><span id="trip-km"></span></p>
                         <p class="trip-price" aria-live="polite"><span id="trip-eur" class="trip-eur"></span><span id="trip-sub" class="trip-sub"></span></p>
@@ -607,11 +623,16 @@
           if (needsMinivan && select.value !== 'business_minivan') select.value = 'business_minivan';
           note.textContent = needsMinivan ? 'More than 2 checked suitcases need a Minivan. We chose it for you.' : '';
           note.classList.toggle('hidden', !needsMinivan);
+          if (typeof updateTrip === 'function') updateTrip();
           var max = MAX_PAX[select.value] || 7;
           form.elements.pax.max = max;
           if (Number(form.elements.pax.value) > max) form.elements.pax.value = max;
         }
         // ---- Prezzo e mappa ------------------------------------------------------------------------------------------------------
+        var VEHICLES = {
+          business_sedan: { src: 'assets/veicoli/sedan-e-class.webp', w: 720, h: 337, alt: 'Black Mercedes-Benz E-Class saloon', name: 'Business Sedan', sub: 'Mercedes-Benz E-Class · up to 3 passengers' },
+          business_minivan: { src: 'assets/veicoli/minivan-vito.webp', w: 720, h: 399, alt: 'Black Mercedes-Benz Vito Tourer van', name: 'Business Minivan', sub: 'Mercedes-Benz Vito Tourer · up to 7 passengers' }
+        };
         var DATA = null, MAP = null, CAR = null, ANIM = null, MAPLIB = null, MAP_BROKEN = false, POP = null, POP_TEXT = '';
         function setPop(text) {
           POP_TEXT = text || '';
@@ -753,7 +774,15 @@
             document.getElementById('trip-map').setAttribute('aria-label', 'Map of the route between Catania Airport and ' + route.nome + ', about ' + Math.round(route.km) + ' kilometres');
             var p = priceFor(d.prices, town, el.mezzo.value, el.ora.value);
             priceEl.textContent = p ? '€' + p.eur : '';
-            setPop(p ? String(p.eur) : '');       // il simbolo € sta gia' nella moneta del fumetto
+            setPop(p ? String(p.eur) : '');
+            var veh = VEHICLES[el.mezzo.value], vbox = document.getElementById('trip-vehicle'), vimg = document.getElementById('trip-vimg');
+            if (veh) {
+              if (vimg.getAttribute('src') !== veh.src) { vimg.src = veh.src; vimg.width = veh.w; vimg.height = veh.h; vimg.classList.remove('is-in'); void vimg.offsetWidth; vimg.classList.add('is-in'); }
+              vimg.alt = veh.alt;
+              document.getElementById('trip-vname').textContent = veh.name;
+              document.getElementById('trip-vsub').textContent = veh.sub;
+              vbox.hidden = false;
+            } else { vbox.hidden = true; }       // il simbolo € sta gia' nella moneta del fumetto
             sub.textContent = p ? 'VAT included, whole vehicle' + (p.night ? ', night rate (22:00 to 06:00) included' : '') : '';
             pick.textContent = 'Choose a vehicle and a pickup time to see the price.';
             pick.classList.toggle('hidden', !!p);
