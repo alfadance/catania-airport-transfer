@@ -359,6 +359,18 @@ Icons are Lucide (ISC licence), copied as inline SVG: 24 viewBox, stroke 2, `cur
 - **`privacy.html`**: the same header, footer, banner and mobile bar (links point to `index.html#…`). A black
   opening with the title in `t-h2` and the date in `t-meta` under it, then the legal text on white in a 68ch
   column (`legal`), each section under a rule, headings in navy `stretch-semi`.
+- **`book-a-transfer.html`**: the private traveller's booking form (request first, payment link and confirmation by email
+  later). Same header, footer, cookie banner and mobile bar. **Owner exception, 2026-10-26: this page alone has an
+  editorial variant**, written in a `<style>` block under the `book` class so nothing else on the site changes:
+  headings in Instrument Serif (OFL, `assets/fonts/instrument-serif-latin-400.woff2`) with tracking −0.03em and body
+  leading 1.7; a navy-to-black gradient with SVG grain; layered shadows on the form panel, the header and the mobile
+  bar (neutral black, no coloured glow); a route line that draws as the visitor scrolls and lights the three steps
+  (`requestAnimationFrame`, only `transform` and `opacity`, elastic easing, no `transition-all`); hover, active and
+  focus-visible states. It is still bound by the brand colours, the 30 base rules (contrast, 44px targets, 4px spacing
+  scale, no horizontal scroll) and `prefers-reduced-motion` (the line is then fully drawn). Do not copy this variant to
+  other pages without a new owner decision. The page shows no price (`DECISIONS.md`: private prices only on request)
+  and loads libphonenumber-js (MIT, `assets/vendor/`) on first interaction with the form.
+- **`terms.html`**: terms and conditions for private bookings, built on the `privacy.html` layout.
 
 ## Do's and Don'ts
 
