@@ -461,6 +461,11 @@
                 <li class="border-b border-brandNavy"><a href="#how" class="footer-link w-full">How booking works</a></li>
                 <li class="border-b border-brandNavy"><a href="#faq" class="footer-link w-full">Questions</a></li>
                 <li class="border-b border-brandNavy"><a href="/#agency-rates" class="footer-link w-full">Agency rates</a></li>
+                <li class="border-b border-brandNavy"><a href="catania-airport-to-taormina.html" class="footer-link w-full">Catania Airport to Taormina</a></li>
+                <li class="border-b border-brandNavy"><a href="catania-airport-to-giardini-naxos.html" class="footer-link w-full">Catania Airport to Giardini Naxos</a></li>
+                <li class="border-b border-brandNavy"><a href="catania-airport-to-siracusa.html" class="footer-link w-full">Catania Airport to Siracusa</a></li>
+                <li class="border-b border-brandNavy"><a href="catania-airport-to-catania.html" class="footer-link w-full">Catania Airport to Catania</a></li>
+                <li class="border-b border-brandNavy"><a href="catania-airport-to-milazzo.html" class="footer-link w-full">Catania Airport to Milazzo</a></li>
               </ul>
             </nav>
 
@@ -948,6 +953,15 @@
         addEventListener('scroll', queue, { passive: true });
         addEventListener('resize', queue);
         paint();
+      })();
+    </script>
+    <script>
+      // Arrivo da una pagina di destinazione (catania-airport-to-<tratta>.html): la tratta e' gia' scelta nel modulo.
+      (function() {
+        var q = new URLSearchParams(location.search).get('tratta'), f = document.getElementById('book-form');
+        if (!q || !f || !f.elements.tratta) return;
+        var ok = [].some.call(f.elements.tratta.options, function(o) { return o.value === q; });
+        if (ok) { f.elements.tratta.value = q; f.elements.tratta.dispatchEvent(new Event('change', { bubbles: true })); }
       })();
     </script>
   </body>

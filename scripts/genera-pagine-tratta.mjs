@@ -1,0 +1,362 @@
+// Genera una pagina per ogni destinazione del modulo di prenotazione privati (book-a-transfer.html):
+// catania-airport-to-<tratta>.html. Stesso guscio e stessa variante editoriale della pagina di prenotazione
+// (intestazione, titoli serif, sfondi a strati, grana, FAQ, piede, banner dei cookie).
+// Uso, dalla radice del sito:  node scripts/genera-pagine-tratta.mjs
+// Dati: assets/prezzi-sito.json (prezzi) e assets/routes-privati.json (km). I minuti vengono dalla matrice
+// prezzi/listino-agenzie-2027/tools/distanze.json del vault (CTA|<tratta>, traffico storico tipico, fascia piu' lunga,
+// 8/9/2026): se cambiano la', si aggiornano qui sotto.
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const BASE = 'https://cataniaairporttransfer.net';
+const prezzi = JSON.parse(readFileSync('assets/prezzi-sito.json', 'utf8')).tratte;
+const km = JSON.parse(readFileSync('assets/routes-privati.json', 'utf8')).tratte;
+
+// minuti: dalla matrice del vault (CTA -> destinazione). Testi: solo fatti noti e verificabili, nessuna esperienza personale.
+const TRATTE = [
+  { id: 'taormina', nome: 'Taormina', min: 56, via: 'along the A18 motorway and the Ionian coast',
+    titolo: 'Taormina',
+    testo: ['Taormina sits on a hillside terrace above the Ionian Sea. Most guests come for its ancient theatre, the main street Corso Umberto and the views of Mount Etna.',
+            'Isola Bella and the hilltop village of Castelmola are close by, and Giardini Naxos is on the bay below.'] },
+  { id: 'giardini-naxos', nome: 'Giardini Naxos', min: 48, via: 'along the A18 motorway and the Ionian coast',
+    titolo: 'Giardini Naxos',
+    testo: ['Giardini Naxos lies on a wide bay at the foot of Taormina, with a long seafront. The archaeological site of Naxos, the first Greek colony in Sicily, is here.',
+            'From the town, Taormina is a short drive up the hill.'] },
+  { id: 'siracusa', nome: 'Siracusa', min: 48, via: 'by motorway towards the south of the island',
+    titolo: 'Siracusa (Syracuse)',
+    testo: ['The old town of Syracuse, Ortigia, is a small island joined to the mainland by bridges. The Neapolis Archaeological Park, with its Greek theatre, is on the mainland.',
+            'Syracuse is on the UNESCO World Heritage list.'] },
+  { id: 'catania', nome: 'Catania', min: 22, via: 'to the city centre',
+    titolo: 'Catania city centre',
+    testo: ['The city centre is the closest destination to the airport. Piazza del Duomo, the Elephant Fountain and the fish market, La Pescheria, are in the old town.',
+            'Mount Etna rises behind the city.'] },
+  { id: 'milazzo', nome: 'Milazzo', min: 103, via: 'by motorway across the north-east of the island',
+    titolo: 'Milazzo',
+    testo: ['Milazzo is the port where hydrofoils and ferries leave for the Aeolian Islands. The castle and the Capo Milazzo peninsula are also here.',
+            'It is the longest of our five destinations from the airport: plan the departure with some margin if you have a boat to catch.'] },
+];
+
+const eur = (n) => `€${n}`;
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+function faq(t, p, kmDest) {
+  return [
+    [`How long is the drive from Catania Airport to ${t.nome}?`,
+      `About ${t.min} minutes by car (${kmDest} km). The time is calculated for a typical weekday with usual traffic in the morning and in the afternoon, and we keep the longer one.`],
+    [`How much does the transfer to ${t.nome} cost?`,
+      `The price is for the whole vehicle, VAT included: ${eur(p.business_sedan.giorno)} by day in the Business Sedan (up to 3 passengers, Mercedes-Benz E-Class) and ${eur(p.business_minivan.giorno)} in the Business Minivan (up to 7 passengers). At night (22:00 to 06:00) it is ${eur(p.business_sedan.notte)} and ${eur(p.business_minivan.notte)}. The booking form shows the exact price for your day and time.`],
+    ['What if my flight is late?', 'Give us your flight number. We monitor flight status in real time, and your chauffeur adjusts the pick-up time accordingly. With a flight number, free waiting is 60 minutes after landing. Without it, it is 15 minutes.'],
+    ['When is my booking confirmed?', 'When you have paid. Until then it is only a request. We send a second email when the booking is confirmed. The payment link works for 24 hours.'],
+    [`Can I book the way back from ${t.nome} to the airport?`, 'Yes. Choose "To Catania Airport" in the booking form.'],
+  ];
+}
+
+const CHEVRON = '<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+
+function pagina(t) {
+  const p = prezzi.find((x) => x.id === t.id).prezzi;
+  const kmDest = Math.round(km[t.id].km);
+  const url = `${BASE}/catania-airport-to-${t.id}.html`;
+  const titolo = `Private Transfer Catania Airport to ${t.nome} | Catania Airport Transfer`;
+  const descr = `Private transfer from Catania Airport to ${t.nome}: about ${t.min} minutes, from ${eur(p.business_sedan.giorno)} for the whole vehicle, VAT included. See the price on the form. We reply by email with a payment link.`;
+  const domande = faq(t, p, kmDest);
+  const altre = TRATTE.filter((x) => x.id !== t.id);
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Book a transfer', item: `${BASE}/book-a-transfer.html` },
+        { '@type': 'ListItem', position: 3, name: `Catania Airport to ${t.nome}`, item: url } ] },
+      { '@type': 'Service', name: `Private transfer from Catania Airport to ${t.nome}`, serviceType: 'Private chauffeur transfer',
+        areaServed: 'Sicily', url,
+        provider: { '@type': 'LocalBusiness', name: 'Catania Airport Transfer', url: `${BASE}/`, telephone: '+39 320 052 8300', email: 'info@cataniaairporttransfer.net' },
+        offers: { '@type': 'Offer', priceCurrency: 'EUR', price: String(p.business_sedan.giorno), url: `${BASE}/book-a-transfer.html?tratta=${t.id}#book` } },
+      { '@type': 'FAQPage', mainEntity: domande.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+    ],
+  };
+  const faqHtml = domande.map(([q, a]) => `
+                <details class="group faq-item">
+                  <summary class="faq-q">
+                    <span>${esc(q)}</span>
+                    <span class="faq-chevron-box">${CHEVRON}</span>
+                  </summary>
+                  <p class="faq-a">${esc(a)}</p>
+                </details>`).join('\n');
+  const altreHtml = altre.map((x) => `<li class="border-b border-brandNavy"><a href="catania-airport-to-${x.id}.html" class="footer-link w-full">Catania Airport to ${esc(x.nome)}</a></li>`).join('\n                ');
+  const cta = `book-a-transfer.html?tratta=${t.id}#book`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${esc(titolo)}</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon-cat.ico" />
+    <meta name="description" content="${esc(descr)}" />
+    <link rel="canonical" href="${url}" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#050608" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Catania Airport Transfer" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:title" content="${esc(titolo)}" />
+    <meta property="og:description" content="${esc(descr)}" />
+    <meta property="og:image" content="${BASE}/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Black chauffeur car at Catania Airport with Mount Etna in the background" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-400-700.woff2" crossorigin />
+    <link rel="stylesheet" href="assets/tailwind.css" fetchpriority="high" />
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/instrument-serif-latin-400.woff2" crossorigin />
+    <script type="application/ld+json">${JSON.stringify(ld)}</script>
+    <style>
+      /* Stessa variante editoriale della pagina di prenotazione (book-a-transfer.html): titoli serif, profondita' a strati, grana. Colori del marchio invariati. */
+      @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      .book { --elastic: cubic-bezier(.34, 1.56, .64, 1); }
+      .book p, .book .t-body, .book .t-lead { line-height: 1.7; }
+      .book .t-hero, .book .t-h2, .book .t-h3 { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-weight: 400; font-stretch: 100%; letter-spacing: -0.03em; }
+      .book .t-hero { font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95; }
+      .book .t-h2 { font-size: clamp(2.25rem, 4.5vw, 3.5rem); line-height: 1; word-spacing: .06em; }
+      .book .t-h3 { font-size: 1.75rem; line-height: 1.1; word-spacing: .12em; }
+      .book .btn, .book .nav-link, .book .footer-link, .book .link, .book summary, .book .faq-chevron { transition-property: transform, opacity; transition-duration: .45s; transition-timing-function: var(--elastic); }
+      @media (prefers-reduced-motion: no-preference) {
+        .book .btn:hover { transform: translateY(-2px); }
+        .book .btn:active { transform: scale(.97); }
+        .book .rise { animation: rise 1.1s var(--elastic) both; }
+        .book .rise-2 { animation-delay: .12s; }
+        .book .rise-3 { animation-delay: .24s; }
+      }
+      @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+      .book .sky { position: relative; overflow: hidden; background: linear-gradient(180deg, #1B3F5D 0%, #0D1D2B 46%, #050608 100%); }
+      .book .stage { position: relative; background: radial-gradient(ellipse 60% 40% at 78% 46%, #1B3F5D 0%, rgba(27, 63, 93, 0) 70%), #050608; }
+      .book .grain > .wrap { position: relative; z-index: 1; }
+      .book .grain::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .16;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+      .book .panel { box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(5, 6, 8, .18), 0 6px 12px rgba(5, 6, 8, .2), 0 24px 48px rgba(5, 6, 8, .35), 0 56px 96px rgba(0, 0, 0, .5); }
+      .book header { box-shadow: 0 1px 2px rgba(5, 6, 8, .4), 0 10px 24px rgba(5, 6, 8, .4); }
+      .book #quick-contact, .book #cookie-consent-banner { box-shadow: 0 -2px 6px rgba(5, 6, 8, .4), 0 -12px 28px rgba(5, 6, 8, .5); }
+      .book .facts { display: grid; gap: 24px 32px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 0; }
+      .book .facts dt { font-size: 1rem; line-height: 1.5; color: #475569; }
+      .book .facts dd { margin: 4px 0 0; font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 2.5rem; line-height: 1; letter-spacing: -0.03em; color: #1B3F5D; }
+      .book .facts small { display: block; margin-top: 4px; font-family: Archivo, system-ui, sans-serif; font-size: 1rem; line-height: 1.5; letter-spacing: 0; color: #334155; }
+      /* Mappa e scheda del viaggio: stessi stili della pagina di prenotazione. Spazi a passi di 4 px. */
+      .book .trip-card { border: 1px solid rgba(27, 63, 93, .2); border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(5, 6, 8, .08), 0 8px 24px rgba(5, 6, 8, .12); }
+      .book .trip-map { position: relative; height: 280px; background: #050608; }
+      .book .trip-map[hidden] { display: none; }
+      @media (min-width: 640px) { .book .trip-map { height: 340px; } }
+      .book .trip-info { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; padding: 16px; }
+      @media (min-width: 640px) { .book .trip-info { padding: 24px; } }
+      .book .trip-route { margin: 0; font-size: 1rem; line-height: 1.5; color: #334155; }
+      .book .trip-route strong { color: #050608; }
+      .book .trip-price { margin: 0; text-align: right; }
+      .book .trip-eur { display: block; font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 3rem; line-height: 1; letter-spacing: -0.03em; color: #1B3F5D; }
+      .book .trip-sub { display: block; margin-top: 4px; font-size: 1rem; line-height: 1.5; color: #334155; }
+      .book .pin { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 8px; font-size: 1rem; font-weight: 700; line-height: 1.5; color: #fff; background: #050608; border: 2px solid #fff; border-radius: 9999px; white-space: nowrap; }
+      .book .pin i { display: block; flex: none; width: 16px; height: 16px; border-radius: 9999px; background: #EE8211; }
+      .book .pin.end { border-color: #EE8211; }
+      .book .pop { display: flex; align-items: center; gap: 8px; padding: 4px 16px 4px 4px; font-size: 1.25rem; font-weight: 800; line-height: 1.5; color: #050608; background: #EE8211; border: 2px solid #050608; border-radius: 9999px; box-shadow: 0 2px 8px rgba(5, 6, 8, .6); opacity: 0; transform: translateY(12px) scale(.5); transform-origin: 50% 100%; pointer-events: none; }
+      .book .pop .coin { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9999px; color: #EE8211; background: #050608; font-size: 1.125rem; }
+      .book .pop.on { opacity: 1; transform: none; transition: transform .6s var(--elastic), opacity .2s linear; }
+      @media (prefers-reduced-motion: reduce) { .book .pop.on { transition: none; } }
+      .book .car { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 9999px; background: #EE8211; border: 2px solid #050608; box-shadow: 0 2px 8px rgba(5, 6, 8, .6); }
+      .book .car svg { width: 24px; height: 24px; }
+      .book .maplibregl-ctrl-group button { width: 44px; height: 44px; }
+      .book .maplibregl-ctrl-attrib { font-size: 12px; }
+    </style>
+  </head>
+  <body class="book bg-brandBlack text-slate-100 font-sans antialiased">
+    <a href="#top" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-brandNavy">Skip to content</a>
+    <!-- Cookie consent banner (GDPR/ePrivacy compliant: no analytics until consent) -->
+    <div id="cookie-consent-banner" role="dialog" tabindex="-1" aria-label="Cookie consent" aria-describedby="cookie-consent-text"
+      class="hidden fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-2xl border border-brandNavy bg-brandBlack on-dark p-5 sm:p-6 sm:inset-x-6 sm:bottom-6">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <p id="cookie-consent-text" class="flex-1 text-sm leading-relaxed text-slate-300">
+          We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept.
+          <a href="privacy.html" class="link whitespace-nowrap text-white">Privacy policy</a>
+        </p>
+        <div class="grid shrink-0 grid-cols-[1fr,auto] gap-2 sm:flex">
+          <button type="button" id="cookie-consent-reject" class="btn btn-sm btn-outline-dark whitespace-nowrap px-4">Reject non-essential</button>
+          <button type="button" id="cookie-consent-accept" class="btn btn-sm btn-primary px-6">Accept</button>
+        </div>
+      </div>
+    </div>
+    <div class="min-h-screen flex flex-col">
+      <header class="sticky top-0 z-30 border-b border-brandNavy bg-brandBlack on-dark">
+        <div class="wrap py-3 flex items-center justify-between gap-4">
+          <a href="/" class="inline-flex items-center gap-3">
+            <img src="image_0-dark-small.webp" srcset="image_0-dark-small.webp 250w, image_0-dark.webp 500w" sizes="(max-width: 640px) 160px, 220px" alt="Catania Airport Transfer" width="400" height="250" class="h-11 sm:h-12 w-auto object-contain" />
+            <span aria-hidden="true" class="hidden sm:inline stretch-wide text-sm font-semibold text-slate-50">Catania Airport Transfer</span>
+          </a>
+          <nav class="flex items-center gap-8 text-sm font-medium" aria-label="Main">
+            <div class="hidden lg:flex items-center gap-8">
+              <a href="/" class="nav-link">Home</a>
+              <a href="#about" class="nav-link">The trip</a>
+              <a href="#faq" class="nav-link">Questions</a>
+            </div>
+            <a href="${cta}" class="hidden lg:inline-flex btn btn-sm btn-primary">Book this transfer</a>
+            <details id="mobile-menu" class="group lg:hidden">
+              <summary class="btn btn-sm btn-outline-dark cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span class="group-open:hidden">Menu</span>
+                <span class="hidden group-open:inline">Close</span>
+              </summary>
+              <div class="absolute inset-x-0 top-full border-b border-brandNavy bg-brandBlack">
+                <ul class="wrap divide-y divide-brandNavy py-2">
+                  <li><a href="/" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Home</a></li>
+                  <li><a href="#about" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">The trip</a></li>
+                  <li><a href="#faq" class="flex min-h-[48px] items-center text-base font-semibold text-slate-100">Questions</a></li>
+                </ul>
+              </div>
+            </details>
+          </nav>
+        </div>
+      </header>
+
+      <main id="top" class="flex-1">
+        <section class="on-dark sky grain">
+          <div class="wrap pt-14 sm:pt-20 lg:pt-24 pb-12 lg:pb-20">
+            <h1 class="t-hero text-slate-50">
+              <span class="block rise">Catania Airport</span>
+              <span class="block rise rise-2">to ${esc(t.nome)}</span>
+            </h1>
+            <div class="mt-6 lg:mt-8 grid gap-8 lg:gap-x-12 lg:grid-cols-12 lg:items-end">
+              <p class="lg:col-span-6 t-lead text-slate-200 max-w-xl rise rise-3">
+                A private transfer with a chauffeur. About ${t.min} minutes by car ${esc(t.via)}. Choose your day, time and car and the price shows at once. We reply by email with a payment link.
+              </p>
+              <div class="lg:col-span-6 rise rise-3"><a href="${cta}" class="btn btn-primary">See the price and book</a></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="bg-white">
+          <div class="wrap section-pad">
+            <div class="grid gap-10 lg:gap-x-12 lg:grid-cols-12">
+              <div class="lg:col-span-4 lg:sticky lg:top-28 lg:self-start space-y-8">
+                <h2 class="t-h2 text-brandNavy">${esc(t.titolo)}</h2>
+                <div class="trip-card" role="group" aria-label="Your trip: map">
+                  <div id="trip-map" class="trip-map" data-route="${t.id}" data-price="${p.business_sedan.giorno}" role="img" aria-label="Map of the route between Catania Airport and ${esc(t.nome)}, about ${kmDest} kilometres"></div>
+                  <div class="trip-info">
+                    <p class="trip-route"><strong>Catania Airport</strong> to <strong>${esc(t.nome)}</strong><br><span>About ${kmDest} km by road</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="lg:col-span-8 space-y-8 text-slate-800">
+                <dl class="facts">
+                  <div><dt>Drive time</dt><dd>${t.min} min<small>${kmDest} km, typical weekday</small></dd></div>
+                  <div><dt>Business Sedan, up to 3</dt><dd>${eur(p.business_sedan.giorno)}<small>${eur(p.business_sedan.notte)} at night</small></dd></div>
+                  <div><dt>Business Minivan, up to 7</dt><dd>${eur(p.business_minivan.giorno)}<small>${eur(p.business_minivan.notte)} at night</small></dd></div>
+                </dl>
+                <p class="t-body max-w-[65ch]">Prices are for the whole vehicle, VAT included. Night rate applies from 22:00 to 06:00.</p>
+                ${t.testo.map((x) => `<p class="t-body max-w-[65ch]">${esc(x)}</p>`).join('\n                ')}
+                <p class="t-body max-w-[65ch]">Book at least 24 hours before pickup. Add your flight number in the form: we follow your flight, and with a flight number free waiting is 60 minutes after landing.</p>
+                <p><a href="${cta}" class="btn btn-primary">Book Catania Airport to ${esc(t.nome)}</a></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="stage grain">
+          <div class="wrap section-pad on-dark">
+            <div class="grid gap-10 lg:gap-x-12 lg:grid-cols-12">
+              <h2 class="lg:col-span-4 lg:sticky lg:top-28 lg:self-start t-h2 text-white">Questions about this transfer</h2>
+              <div class="lg:col-span-8 border-t-2 border-brandOrange bg-white text-slate-900 panel rounded-2xl px-5 sm:px-9">${faqHtml}
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="bg-brandBlack on-dark border-t border-brandNavy pb-20 lg:pb-0">
+        <div class="wrap pt-14 pb-8 lg:pt-20">
+          <div class="grid gap-10 sm:grid-cols-2 lg:gap-x-12 lg:grid-cols-12">
+            <div class="flex items-start gap-4 sm:col-span-2 lg:col-span-5">
+              <img src="image_0-dark-small.webp" srcset="image_0-dark-small.webp 250w, image_0-dark.webp 500w" sizes="(max-width: 640px) 120px, 180px" alt="Catania Airport Transfer logo" width="400" height="250" class="h-10 w-auto object-contain" loading="lazy" decoding="async" />
+              <p class="pt-2 text-sm text-slate-300">Private chauffeur services for Catania &amp; Sicily.</p>
+            </div>
+            <nav aria-label="Footer" class="lg:col-span-3">
+              <ul class="border-t border-brandNavy">
+                <li class="border-b border-brandNavy"><a href="/" class="footer-link w-full">Home</a></li>
+                <li class="border-b border-brandNavy"><a href="book-a-transfer.html" class="footer-link w-full">Book a transfer</a></li>
+                ${altreHtml}
+              </ul>
+            </nav>
+            <dl class="border-t border-brandNavy text-sm lg:col-span-4">
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy"><dt class="text-slate-400">Email</dt><dd><a href="mailto:info@cataniaairporttransfer.net" class="footer-link break-all">info@cataniaairporttransfer.net</a></dd></div>
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy"><dt class="text-slate-400">Phone</dt><dd><a href="tel:+393200528300" class="footer-link tabular-nums">+39 320 052 8300</a></dd></div>
+              <div class="flex min-h-[44px] items-center justify-between gap-4 border-b border-brandNavy"><dt class="text-slate-400">WhatsApp</dt><dd><a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="footer-link tabular-nums">+39 320 052 8300</a></dd></div>
+            </dl>
+          </div>
+          <div class="mt-12 lg:mt-16 flex flex-col gap-3 border-t border-brandNavy pt-4 text-sm text-slate-400 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+            <p class="flex flex-wrap items-center gap-x-5">
+              <span>© <span id="year"></span> Catania Airport Transfer. All rights reserved.</span>
+              <a href="privacy.html" class="footer-link text-slate-400">Privacy</a>
+              <a href="terms.html" class="footer-link text-slate-400">Terms</a>
+              <button type="button" id="cookie-consent-manage" class="footer-link text-slate-400">Cookie preferences</button>
+            </p>
+            <p class="max-w-xl text-xs leading-relaxed text-slate-400 lg:py-3 lg:text-right">
+              Catania Airport Transfer di Valenti Sebastiano, Via Badia 3, 95123 Catania (CT), Italy – VAT IT05924950875 – REA CT-448461 – NCC licences no. 10 and 43, Comune di Scordia
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <nav id="quick-contact" aria-label="Quick contact" class="fixed bottom-0 inset-x-0 z-40 border-t border-brandNavy bg-brandBlack on-dark px-4 py-2 lg:hidden">
+      <div class="flex items-center gap-2">
+        <a href="https://wa.me/393200528300" target="_blank" rel="noopener noreferrer" class="shrink-0 btn btn-sm btn-outline-dark px-4"><span>WhatsApp</span></a>
+        <a href="${cta}" class="flex-1 btn btn-sm btn-primary whitespace-nowrap px-3"><span>Book this transfer</span></a>
+      </div>
+    </nav>
+
+    <script src="assets/trip-map.js" defer></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      (function() {
+        var m = document.getElementById('mobile-menu');
+        if (!m) return;
+        m.addEventListener('click', function(e) { if (e.target.closest('a')) m.open = false; });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+      })();
+    </script>
+    <script>
+      (function() {
+        var CONSENT_KEY = 'cat_cookie_consent';
+        var GA_ID = 'G-7F7QCJJL8S';
+        var banner = document.getElementById('cookie-consent-banner');
+        var consent = null;
+        try { consent = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+        function store(value) { try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {} }
+        function loadGA() {
+          if (window.gtag) return;
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+        }
+        var opener = null;
+        function showBanner() { if (banner) banner.classList.remove('hidden'); }
+        function hideBanner() { if (banner) banner.classList.add('hidden'); if (opener) { opener.focus(); opener = null; } }
+        function accept() { store('accepted'); loadGA(); hideBanner(); }
+        function reject() { store('rejected'); hideBanner(); }
+        if (consent === 'accepted') loadGA();
+        else if (consent !== 'rejected') showBanner();
+        document.getElementById('cookie-consent-accept')?.addEventListener('click', accept);
+        document.getElementById('cookie-consent-reject')?.addEventListener('click', reject);
+        document.getElementById('cookie-consent-manage')?.addEventListener('click', function(e) { e.preventDefault(); opener = this; showBanner(); if (banner) banner.focus(); });
+      })();
+    </script>
+  </body>
+</html>
+`;
+}
+
+for (const t of TRATTE) {
+  const file = `catania-airport-to-${t.id}.html`;
+  writeFileSync(file, pagina(t), 'utf8');
+  console.log('scritto', file);
+}
