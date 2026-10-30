@@ -43,7 +43,17 @@ function faq(t, p, kmDest) {
     [`How long is the drive from Catania Airport to ${t.nome}?`,
       `About ${t.min} minutes by car (${kmDest} km). The time is calculated for a typical weekday with usual traffic in the morning and in the afternoon, and we keep the longer one.`],
     [`How much does the transfer to ${t.nome} cost?`,
-      `The price is for the whole vehicle, VAT included: ${eur(p.business_sedan.giorno)} by day in the Business Sedan (up to 3 passengers, Mercedes-Benz E-Class) and ${eur(p.business_minivan.giorno)} in the Business Minivan (up to 7 passengers). At night (22:00 to 06:00) it is ${eur(p.business_sedan.notte)} and ${eur(p.business_minivan.notte)}. The booking form shows the exact price for your day and time.`],
+      `The price is for the whole vehicle, VAT included. Business Sedan (Mercedes-Benz E-Class, up to 3 passengers): ${eur(p.business_sedan.giorno)} by day, ${eur(p.business_sedan.notte)} at night. Business Minivan (Mercedes-Benz Vito Tourer, up to 7 passengers): ${eur(p.business_minivan.giorno)} by day, ${eur(p.business_minivan.notte)} at night. Night is from 22:00 to 06:00. The booking form shows the exact price for your day and time.`,
+      `<p class="mb-3">One price for the whole vehicle, VAT included, however many passengers travel.</p>
+                  <table class="price-table">
+                    <caption class="sr-only">Prices from Catania Airport to ${esc(t.nome)}, VAT included</caption>
+                    <thead><tr><th scope="col">Vehicle</th><th scope="col">Day</th><th scope="col">Night</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">Business Sedan<small>Mercedes-Benz E-Class, up to 3 passengers</small></th><td>${eur(p.business_sedan.giorno)}</td><td>${eur(p.business_sedan.notte)}</td></tr>
+                      <tr><th scope="row">Business Minivan<small>Mercedes-Benz Vito Tourer, up to 7 passengers</small></th><td>${eur(p.business_minivan.giorno)}</td><td>${eur(p.business_minivan.notte)}</td></tr>
+                    </tbody>
+                  </table>
+                  <p class="mt-3">Night rate applies from 22:00 to 06:00. The booking form shows the exact price for your day and time.</p>`],
     ['What if my flight is late?', 'Give us your flight number. We monitor flight status in real time, and your chauffeur adjusts the pick-up time accordingly. With a flight number, free waiting is 60 minutes after landing. Without it, it is 15 minutes.'],
     ['When is my booking confirmed?', 'When you have paid. Until then it is only a request. We send a second email when the booking is confirmed. The payment link works for 24 hours.'],
     [`Can I book the way back from ${t.nome} to the airport?`, 'Yes. Choose "To Catania Airport" in the booking form.'],
@@ -74,13 +84,13 @@ function pagina(t) {
       { '@type': 'FAQPage', mainEntity: domande.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ],
   };
-  const faqHtml = domande.map(([q, a]) => `
+  const faqHtml = domande.map(([q, a, html]) => `
                 <details class="group faq-item">
                   <summary class="faq-q">
                     <span>${esc(q)}</span>
                     <span class="faq-chevron-box">${CHEVRON}</span>
                   </summary>
-                  <p class="faq-a">${esc(a)}</p>
+                  ${html ? `<div class="faq-a faq-wide">${html}</div>` : `<p class="faq-a">${esc(a)}</p>`}
                 </details>`).join('\n');
   const altreHtml = altre.map((x) => `<li class="border-b border-brandNavy"><a href="catania-airport-to-${x.id}.html" class="footer-link w-full">Catania Airport to ${esc(x.nome)}</a></li>`).join('\n                ');
   const cta = `book-a-transfer.html?tratta=${t.id}#book`;
@@ -140,6 +150,14 @@ function pagina(t) {
       .book .facts dt { font-size: 1rem; line-height: 1.5; color: #475569; }
       .book .facts dd { margin: 4px 0 0; font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 2.5rem; line-height: 1; letter-spacing: -0.03em; color: #1B3F5D; }
       .book .facts small { display: block; margin-top: 4px; font-family: Archivo, system-ui, sans-serif; font-size: 1rem; line-height: 1.5; letter-spacing: 0; color: #334155; }
+      .book .faq-wide { max-width: none; }
+      .book .price-table { width: 100%; border-collapse: collapse; font-size: 1rem; line-height: 1.5; }
+      .book .price-table th, .book .price-table td { padding: 12px 8px; border-bottom: 1px solid rgba(27, 63, 93, .2); text-align: right; vertical-align: top; }
+      .book .price-table thead th { font-weight: 700; color: #1B3F5D; border-bottom: 2px solid #1B3F5D; }
+      .book .price-table tbody th { text-align: left; font-weight: 700; color: #050608; }
+      .book .price-table thead th:first-child { text-align: left; }
+      .book .price-table small { display: block; margin-top: 4px; font-weight: 400; color: #475569; }
+      .book .price-table td { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: 1.75rem; line-height: 1.1; color: #1B3F5D; white-space: nowrap; }
       /* Mappa e scheda del viaggio: stessi stili della pagina di prenotazione. Spazi a passi di 4 px. */
       .book .trip-card { border: 1px solid rgba(27, 63, 93, .2); border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(5, 6, 8, .08), 0 8px 24px rgba(5, 6, 8, .12); }
       .book .trip-map { position: relative; height: 280px; background: #050608; }
