@@ -63,6 +63,8 @@
         var STATI = { in_attesa: 'In attesa della tua decisione', link_inviato: 'Già accettata: link di pagamento inviato', rifiutata: 'Già rifiutata',
           pagata: 'Pagata', scaduta: 'Link scaduto', annullata: 'Annullata', nuova: 'Non ancora sul gestionale' };
         var token = new URLSearchParams(location.hash.slice(1)).get('t') || '';
+        // Il token resta in memoria: via dalla barra e dalla cronologia del browser (se ricarichi la pagina, riapri il link dalla mail).
+        if (token) history.replaceState(null, '', location.pathname);
         var scelta = '';
         var $ = function (id) { return document.getElementById(id); };
 
