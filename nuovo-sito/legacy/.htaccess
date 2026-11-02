@@ -1,0 +1,61 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Un solo indirizzo: https, senza www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://cataniaairporttransfer.net%{REQUEST_URI} [L,R=301]
+
+  # /index.html è un duplicato di /: si manda all'indirizzo senza il nome del file.
+  # THE_REQUEST è la richiesta del browser, non quella riscritta da DirectoryIndex: così non c'è ciclo.
+  RewriteCond %{THE_REQUEST} \s/(.*/)?index\.html[\s?]
+  RewriteRule ^(.*/)?index\.html$ /$1 [R=301,L]
+
+  # Sorgenti e dipendenze non si servono
+  RewriteRule ^(src|scripts|node_modules)(/|$) - [R=404,L]
+</IfModule>
+
+# Configurazione e stato del deploy non si servono
+<FilesMatch "^(package(-lock)?\.json|tailwind\.config\.cjs|\.ftp-deploy-sync-state\.json|.*\.md)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Long cache for static assets
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png  "access plus 6 months"
+  ExpiresByType image/gif  "access plus 6 months"
+  ExpiresByType image/x-icon "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpe?g|png|gif|ico)$">
+    Header set Cache-Control "public, max-age=15552000"
+  </FilesMatch>
+  # I font cambiano solo cambiando nome al file
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Il CSS arriva con l'impronta nell'indirizzo (tailwind.css?v=..., scritta dal deploy): si tiene un anno
+  <FilesMatch "\.css$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Le pagine hanno nomi fissi: browser, cache di Bluehost e CDN le ricontrollano a ogni visita (304 se invariate).
+  # Senza, la cache del server continuava a servire ai browser la pagina di prima del deploy.
+  <FilesMatch "\.(html|php|js)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json application/ld+json image/svg+xml
+</IfModule>

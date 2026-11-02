@@ -1,0 +1,77 @@
+{
+  "fonte": "prezzi/listino-agenzie-2027/cruscotto-tariffe-2027.json (colonne privatiE/privatiV) + notturno +30% da prezzo-dinamico.mjs, arrotondato da arrotondaPrivato()",
+  "cruscotto_generato": "2026-10-22T11:02:55.989Z",
+  "fascia_notturna": "22:00-06:00",
+  "tratte": [
+    {
+      "id": "taormina",
+      "luogo": "Taormina",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 140,
+          "notte": 185
+        },
+        "business_minivan": {
+          "giorno": 185,
+          "notte": 245
+        }
+      }
+    },
+    {
+      "id": "giardini-naxos",
+      "luogo": "Giardini Naxos",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 130,
+          "notte": 170
+        },
+        "business_minivan": {
+          "giorno": 175,
+          "notte": 230
+        }
+      }
+    },
+    {
+      "id": "siracusa",
+      "luogo": "Siracusa",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 140,
+          "notte": 185
+        },
+        "business_minivan": {
+          "giorno": 185,
+          "notte": 245
+        }
+      }
+    },
+    {
+      "id": "catania",
+      "luogo": "Catania",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 60,
+          "notte": 80
+        },
+        "business_minivan": {
+          "giorno": 70,
+          "notte": 95
+        }
+      }
+    },
+    {
+      "id": "milazzo",
+      "luogo": "Milazzo",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 330,
+          "notte": 430
+        },
+        "business_minivan": {
+          "giorno": 380,
+          "notte": 500
+        }
+      }
+    }
+  ]
+}
