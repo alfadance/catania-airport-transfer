@@ -1,0 +1,30 @@
+/* Ritocchi della home: parola in arancione nel titolo (solo su fondo scuro), capienza dei mezzi con icone, banda scura «Somewhere else in Sicily?». */
+
+/* Arancione del marchio come testo solo sul fondo scuro dell'hero (mai su fondo chiaro). */
+.hero-band h1 .accent { color: var(--orange); }
+
+/* Schede dei mezzi: icone accanto a passeggeri e bagagli, prezzo in grassetto. */
+.car .car-specs li { display: inline-flex; align-items: center; gap: 7px; }
+.car .car-specs svg { flex: none; color: var(--navy); }
+.car .car-price strong { font-weight: 700; }
+
+/* Banda scura dopo l'elenco delle destinazioni: spezza il ritmo, un solo bottone. */
+.quote-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 28px;
+  padding: 28px 32px;
+  border-radius: var(--radius);
+  background: var(--night);
+  color: var(--on-dark);
+}
+.quote-band h3 { margin: 0 0 4px; font-size: 22px; font-weight: 600; line-height: 1.2; }
+.quote-band p { margin: 0; color: #f2f1ebb3; font-size: 15px; }
+.quote-band .solid-button { flex: none; }
+
+@media (max-width: 760px) {
+  .quote-band { flex-direction: column; align-items: stretch; padding: 24px 20px; text-align: left; }
+  .quote-band .solid-button { text-align: center; }
+}
