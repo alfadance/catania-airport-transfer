@@ -783,6 +783,11 @@ dialog::backdrop { background: #0c0c0eb3; }
   .quote-band .solid-button { text-align: center; }
 }
 
+/* Capienza nella scelta del mezzo: allineata col testo sopra, con aria fra passeggeri e bagagli. */
+.vehicle .cap { margin-left: 0; }
+.cap .ico-bag { margin-left: 12px; }
+.vehicle .cap .ico-pax:first-child { margin-left: 0; }
+
 
 /* pages/_minimal.css */
 /* Layout spoglio per le pagine private e di servizio (decidi, payment-status): intestazione con il solo logo, piede di una riga. */

@@ -28,3 +28,8 @@
   .quote-band { flex-direction: column; align-items: stretch; padding: 24px 20px; text-align: left; }
   .quote-band .solid-button { text-align: center; }
 }
+
+/* Capienza nella scelta del mezzo: allineata col testo sopra, con aria fra passeggeri e bagagli. */
+.vehicle .cap { margin-left: 0; }
+.cap .ico-bag { margin-left: 12px; }
+.vehicle .cap .ico-pax:first-child { margin-left: 0; }
