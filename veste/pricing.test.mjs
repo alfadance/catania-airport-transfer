@@ -1,7 +1,7 @@
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
-import { AIRPORT, DIRECT_ROUTES, HOURLY_FARES, HOUR_CHOICES, PALERMO_AIRPORT, bookingMessage, usesBookingSystem, hourlyTerms, bookingRequest, equivalentBags, fare, fits, hasFullName, isInternationalPhone, isNight, quote, tripProblem } from './src/assets/js/pricing.js';
+import { AIRPORT, DIRECT_ROUTES, HOURLY_FARES, HOUR_CHOICES, PALERMO_AIRPORT, bookingMessage, usesBookingSystem, hourlyTerms, bookingRequest, equivalentBags, fare, fits, hasFullName, isInternationalPhone, isNight, quote, tripProblem, FARES, RETURN_DISCOUNT, returnLegs } from './src/assets/js/pricing.js';
 
 const trip = { mode: 'transfer', from: AIRPORT, to: 'Taormina', date: '2027-06-10', time: '13:45', pax: 2, checked: 1, carry: 0 };
 const NOW = new Date('2027-06-01T12:00:00');
@@ -115,4 +115,40 @@ test('the message carries the trip, the price and the traveller', () => {
   const text = bookingMessage(trip, 'sedan', { name: 'Ann', phone: '+44 1', email: 'a@b.c', address: 'Hotel X' });
   for (const part of ['Taormina', '€140', 'Ann', 'Hotel X']) assert.ok(text.includes(part), part);
   assert.ok(!text.includes('Flight:'));
+});
+
+const back = { ...trip, mode: 'return', returnDate: '2027-06-13', returnTime: '10:00' };
+
+test('a return costs the outbound fare plus the return fare with 20% off', () => {
+  assert.equal(RETURN_DISCOUNT, 0.2);
+  assert.deepEqual(returnLegs(back, 'sedan'), { out: 140, back: 112, total: 252 });
+  assert.deepEqual(returnLegs(back, 'minivan'), { out: 185, back: 148, total: 333 });
+  assert.equal(quote(back, 'sedan'), 252);
+});
+
+test('the return is priced by its own pickup time, day or night', () => {
+  assert.deepEqual(returnLegs({ ...back, returnTime: '23:00' }, 'sedan'), { out: 140, back: 148, total: 288 });
+  assert.deepEqual(returnLegs({ ...back, time: '23:00', returnTime: '10:00' }, 'sedan'), { out: 185, back: 112, total: 297 });
+});
+
+test('every listed return price is a whole euro amount', () => {
+  for (const perVehicle of Object.values(FARES)) {
+    for (const prices of Object.values(perVehicle)) {
+      for (const price of prices) assert.equal(price * (1 - RETURN_DISCOUNT), Math.round(price * (1 - RETURN_DISCOUNT)), String(price));
+    }
+  }
+});
+
+test('the return needs 8 hours after the first pickup, else by the hour', () => {
+  assert.equal(tripProblem(back, NOW), null);
+  assert.equal(tripProblem({ ...back, returnDate: '2027-06-10', returnTime: '21:45' }, NOW), null);
+  assert.match(tripProblem({ ...back, returnDate: '2027-06-10', returnTime: '21:44' }, NOW), /8 hours.*By the hour/);
+  assert.match(tripProblem({ ...back, returnDate: '' }, NOW), /return date/);
+  assert.match(tripProblem({ ...back, from: AIRPORT, to: 'Agrigento' }, NOW), /price list|fixed-price/);
+});
+
+test('the booking system gets the return with its date, time and flight', () => {
+  const request = bookingRequest(back, 'sedan', { returnFlight: 'FR1234', flight: '', address: 'Hotel X', name: 'Ann Lee', phone: '+44 1', email: 'a@b.c', notes: '', consent: true, terms: true, trap: '' });
+  assert.deepEqual(request.ritorno, { data: '2027-06-13', ora: '10:00', volo: 'FR1234' });
+  assert.equal(bookingRequest(trip, 'sedan', { address: 'x' }).ritorno, undefined);
 });

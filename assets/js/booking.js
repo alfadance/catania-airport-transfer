@@ -2,8 +2,8 @@
 // Transfers go to the booking system, which replies by email with a payment link.
 // Hourly hire has no fixed fare there, so the traveller sends that request by WhatsApp or email.
 import {
-  AIRPORT, HOURLY_ROUND_TRIP_RULE, HOUR_CHOICES, MAX_PASSENGERS, PLACES, TOWNS, VEHICLES,
-  bookingMessage, bookingRequest, directRoute, fits, isListedRoute, usesBookingSystem, hourlyTerms, hasFullName, isInternationalPhone, isNightTrip, italyNow, quote, tripProblem,
+  AIRPORT, HOURLY_ROUND_TRIP_RULE, HOUR_CHOICES, MAX_PASSENGERS, PLACES, RETURN_DISCOUNT, TOWNS, VEHICLES,
+  bookingMessage, bookingRequest, directRoute, fits, isListedRoute, usesBookingSystem, hourlyTerms, hasFullName, isInternationalPhone, isNightTrip, isReturnTrip, italyNow, quote, returnLegs, tripProblem,
 } from './pricing.js';
 import { createRouteMap, loadRoutes, whenNearView } from './routemap.js';
 
@@ -13,6 +13,7 @@ const WHATSAPP = '393200528300';
 const EMAIL = 'info@cataniaairporttransfer.net';
 const DEFAULT_LEAD_DAYS = 2;
 const DEFAULT_TIME = '13:45';
+const DEFAULT_RETURN_DAYS = 3;
 const GENERIC_ERROR = `Something went wrong and the request was not sent. Please check the fields, or email us at ${EMAIL}.`;
 const BUSY_ERROR = 'Too many requests from this connection. Please try again later, or message us on WhatsApp.';
 const FIELD_ERRORS = {
@@ -25,6 +26,7 @@ const FIELD_ERRORS = {
   bagagli: 'Check the luggage: a Sedan takes 2 checked suitcases, from the third you need a Minivan.',
   termini: 'Tick the box to accept the terms and conditions.',
   data: 'Check the date: we need at least 24 hours before pickup.',
+  ritorno: 'Check the return date and time: at least 8 hours after the first pickup.',
   ora: 'Check the pickup time.',
   volo: 'Check the flight number, for example FR1234.',
   indirizzo: 'Add the address (at least 5 characters).',
@@ -73,6 +75,7 @@ function setMode(next) {
   });
   $('#from-label').textContent = next === 'hourly' ? 'Start and end' : 'From';
   $('#hourly-rule').hidden = next !== 'hourly';
+  $('#return-note').hidden = next !== 'return';
   problem.textContent = '';
 }
 
@@ -91,6 +94,8 @@ function readTrip() {
     hours: Number(bar.hours.value),
     date: bar.date.value,
     time: bar.time.value,
+    returnDate: bar.rdate.value,
+    returnTime: bar.rtime.value,
     pax: Number($('#pax').textContent),
     checked: 0,
     carry: 0,
@@ -112,12 +117,18 @@ const money = (euro) => `€${euro}`;
 
 function tripSummary() {
   const route = trip.mode === 'hourly' ? `${trip.from}, ${trip.hours} hours` : `${trip.from} to ${trip.to}`;
-  return `${route}. ${trip.date} at ${trip.time}. ${trip.pax} passenger${trip.pax > 1 ? 's' : ''}.`;
+  const back = isReturnTrip(trip) ? ` Return: ${trip.returnDate} at ${trip.returnTime}.` : '';
+  return `${route}. ${trip.date} at ${trip.time}.${back} ${trip.pax} passenger${trip.pax > 1 ? 's' : ''}.`;
 }
 
 function priceLabel() {
   const total = vehicle ? quote(trip, vehicle) : null;
   return total === null ? '' : money(total);
+}
+
+function returnTerms(key) {
+  const legs = isReturnTrip(trip) ? returnLegs(trip, key) : null;
+  return legs ? `<small class="vehicle-terms">Outbound €${legs.out} + return €${legs.back} (${RETURN_DISCOUNT * 100}% off)</small>` : '';
 }
 
 function renderVehicles() {
@@ -131,7 +142,7 @@ function renderVehicles() {
       <img src="${item.img}" alt="" width="104" height="52">
       <span class="vehicle-name"><strong>${item.name}</strong><small>${item.model}</small>
       <small class="cap"><span class="ico ico-pax" aria-hidden="true"></span>Up to ${item.pax} passengers <span class="ico ico-bag" aria-hidden="true"></span>${item.bags} suitcases</small>
-      ${trip.mode === 'hourly' ? `<small class="vehicle-terms">${hourlyTerms(trip.hours, key)}</small>` : ''}</span>
+      ${trip.mode === 'hourly' ? `<small class="vehicle-terms">${hourlyTerms(trip.hours, key)}</small>` : ''}${returnTerms(key)}</span>
       <span class="vehicle-price">${usableNow ? (total === null ? 'On request' : money(total)) : 'Too small'}</span>
     </label>`;
   }).join('');
@@ -140,7 +151,7 @@ function renderVehicles() {
     ? 'That is more than one minivan can take. Message us and we will arrange a larger vehicle.'
     : quote(trip, vehicle) === null
       ? 'We send the price for this trip by email or WhatsApp.'
-      : `Whole vehicle, VAT included${isNightTrip(trip) ? ', night rate from 22:00 to 06:00 included' : ''}.${trip.mode === 'hourly' ? ` ${HOURLY_ROUND_TRIP_RULE}` : ''}`;
+      : `${isReturnTrip(trip) ? 'Both trips, one payment. ' : ''}Whole vehicle, VAT included${isNightTrip(trip) ? ', night rate from 22:00 to 06:00 included' : ''}.${trip.mode === 'hourly' ? ` ${HOURLY_ROUND_TRIP_RULE}` : ''}`;
   tripMap.setPrice(priceLabel());
 }
 
@@ -197,6 +208,7 @@ function openBooking() {
   renderVehicles();
   $('#address-label').textContent = trip.mode === 'hourly' ? 'Start and end address' : directRoute(trip.from, trip.to) ? 'Pickup and drop-off addresses' : trip.from === AIRPORT ? 'Drop-off address' : 'Pickup address';
   $('#flight-hint').hidden = !trip.from.includes('Airport');
+  $('#return-flight-field').hidden = !isReturnTrip(trip);
   $('#details-submit').textContent = usesBookingSystem(trip) ? 'Send my request' : 'Continue →';
   showDetailsError('');
   showStep('vehicle');
@@ -215,7 +227,7 @@ function readDetails() {
   const value = (name) => detailsForm.elements[name].value.trim();
   return {
     name: value('name'), phone: value('phone'), email: value('email'),
-    address: value('address'), flight: value('flight'), notes: value('notes'),
+    address: value('address'), flight: value('flight'), returnFlight: value('return_flight'), notes: value('notes'),
     terms: detailsForm.elements.terms.checked,
     consent: detailsForm.elements.consent.checked,
     trap: detailsForm.elements.sito_web.value,
@@ -266,7 +278,9 @@ async function sendRequest() {
 function showConfirmation(body) {
   $('#done-reference').textContent = body.codice ? ` (reference ${body.codice})` : '';
   $('#done-price').textContent = body.prezzo ? `€${body.prezzo}` : 'in our email';
-  ['address', 'flight', 'notes', 'sito_web'].forEach((name) => { detailsForm.elements[name].value = ''; });
+  $('#done-both').textContent = isReturnTrip(trip) ? ' for both trips' : '';
+  $('#book-return').hidden = isReturnTrip(trip);
+  ['address', 'flight', 'return_flight', 'notes', 'sito_web'].forEach((name) => { detailsForm.elements[name].value = ''; });
   detailsForm.elements.terms.checked = false;
   detailsForm.elements.consent.checked = false;
   showStep('done');
@@ -297,6 +311,11 @@ const dayText = firstDay.toLocaleDateString('sv-SE');
 bar.date.value = dayText;
 bar.date.min = italyNow().toLocaleDateString('sv-SE');
 bar.time.value = DEFAULT_TIME;
+const returnDay = new Date(firstDay);
+returnDay.setDate(returnDay.getDate() + DEFAULT_RETURN_DAYS);
+bar.rdate.value = returnDay.toLocaleDateString('sv-SE');
+bar.rdate.min = bar.date.min;
+bar.rtime.value = DEFAULT_TIME;
 bar.from.value = AIRPORT;
 setPassengers(2);
 
@@ -392,4 +411,5 @@ const query = new URLSearchParams(location.search);
 const wanted = query.get('to');
 const wantedFrom = query.get('from');
 if (PLACES.includes(wanted)) presetDestination(wanted, PLACES.includes(wantedFrom) ? wantedFrom : AIRPORT);
-if (new URLSearchParams(location.search).get('mode') === 'hourly') setMode('hourly');
+const wantedMode = new URLSearchParams(location.search).get('mode');
+if (wantedMode === 'hourly' || wantedMode === 'return') setMode(wantedMode);

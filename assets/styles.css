@@ -146,7 +146,8 @@ h1 { font-size: 57.6px; line-height: 1.02; color: var(--on-dark); max-width: 892
 .when input[type='time'] { flex: 1 1 0; }
 .cell-when { flex: 1.15 1 0; }
 .bar[data-mode='hourly'] .only-transfer { display: none; }
-.bar[data-mode='transfer'] .only-hourly { display: none; }
+.bar:not([data-mode='hourly']) .only-hourly { display: none; }
+.bar:not([data-mode='return']) .only-return { display: none; }
 .cell-pax { flex: 0 0 120px; border-right: 0; }
 .stepper { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .stepper button {
@@ -787,6 +788,38 @@ dialog::backdrop { background: #0c0c0eb3; }
 .vehicle .cap { margin-left: 0; }
 .cap .ico-bag { margin-left: 12px; }
 .vehicle .cap .ico-pax:first-child { margin-left: 0; }
+
+/* Linguetta «Return» con lo sconto: testo, non un colore nuovo (arancione solo sul tab scuro). */
+.tabs button small { margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--orange-ink); }
+.tabs button.is-on small { color: var(--orange); }
+
+/* Servizi principali con gerarchia: una scheda grande per i transfer aeroportuali, tre piccole accanto. */
+.service-hub { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: repeat(3, auto); gap: 20px; }
+.service-main { grid-row: 1 / 4; display: flex; flex-direction: column; }
+.service-main img { aspect-ratio: 900 / 560; }
+.service-main .service-body { display: flex; flex: 1; flex-direction: column; }
+.service-main h3 { font-size: 30px; }
+.service-main p { max-width: 46ch; font-size: 17px; }
+.service-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: auto; padding-top: 20px; }
+.service-actions .more { margin-top: 0; }
+.service-side { display: grid; grid-template-columns: 38% 1fr; align-items: center; gap: 20px; }
+.service-side img { aspect-ratio: 4 / 3; }
+.service-side h3 { margin: 0 0 6px; font-size: 20px; }
+.service-side p { font-size: 15px; }
+@media (max-width: 900px) {
+  .service-hub { grid-template-columns: 1fr; grid-template-rows: none; }
+  .service-main { grid-row: auto; }
+  .service-main h3 { font-size: 24px; }
+}
+@media (max-width: 520px) {
+  .service-side { grid-template-columns: 34% 1fr; gap: 14px; }
+}
+.service-hub { grid-template-rows: repeat(3, 1fr); }
+.service-main img { aspect-ratio: 900 / 470; }
+.service-actions .solid-button { display: inline-flex; align-items: center; gap: 8px; }
+.service-side { padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.service-side img { border-radius: var(--radius-small); }
+@media (max-width: 900px) { .service-hub { grid-template-rows: none; } }
 
 
 /* pages/_minimal.css */

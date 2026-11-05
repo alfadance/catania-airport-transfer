@@ -5,6 +5,7 @@
 
     <div class="tabs" role="tablist" aria-label="Type of ride">
       <button type="button" role="tab" class="is-on" aria-selected="true" data-mode="transfer">Transfer</button>
+      <button type="button" role="tab" aria-selected="false" data-mode="return">Return <small>20% off</small></button>
       <button type="button" role="tab" aria-selected="false" data-mode="hourly">By the hour</button>
     </div>
 
@@ -28,6 +29,13 @@
           <input type="time" name="time" aria-label="Pickup time">
         </div>
       </div>
+      <div class="cell cell-when only-return">
+        <span class="cell-label">Return date and time</span>
+        <div class="when">
+          <input type="date" name="rdate" aria-label="Return date">
+          <input type="time" name="rtime" aria-label="Return time">
+        </div>
+      </div>
       <div class="cell cell-pax">
         <span class="cell-label"><span class="ico ico-pax" aria-hidden="true"></span>Passengers</span>
         <div class="stepper">
@@ -39,6 +47,7 @@
       <button type="submit" class="go"><span id="go-label">See prices</span> <span aria-hidden="true">→</span></button>
     </form>
     <p id="hourly-rule" class="hourly-rule" hidden>Hourly hire must start and end at the same place. For a one-way trip, please book a transfer.</p>
+    <p id="return-note" class="hourly-rule" hidden>Book both trips together and pay once: the return costs 20% less. The return pickup is at your first drop-off address. Less than 8 hours between trips? Book <a href="/?mode=hourly#book" data-open-hourly>By the hour</a>.</p>
     <p id="search-problem" class="problem" role="alert"></p>
 
     <div class="trust">
@@ -108,30 +117,38 @@
 
   <section class="section wrap" aria-labelledby="services-title">
     <div class="section-head"><h2 id="services-title">Core services</h2></div>
-    <div class="grid-4">
-      <article class="service">
+    <div class="service-hub">
+      <article class="service service-main">
         <img src="/assets/route-taormina.webp" alt="Taormina and the bay, with Etna behind" loading="lazy" width="900" height="502">
-        <h3>The whole of Sicily</h3>
-        <p>Based at Catania Airport, with private transfers right across the island.</p>
-        <a class="more" href="#destinations">Details →</a>
+        <div class="service-body">
+          <h3>Airport transfers</h3>
+          <p>Fixed-price private transfers from Catania Airport across Sicily. Tolls and VAT included, 60 minutes of free waiting with your flight number.</p>
+          <div class="service-actions"><a class="solid-button" href="#book">Book a transfer <span aria-hidden="true">→</span></a><a class="more" href="#destinations">See destinations →</a></div>
+        </div>
       </article>
-      <article class="service">
-        <img src="/assets/img/events-experience.webp" alt="A chauffeur greeting a traveller at the airport" loading="lazy" width="900" height="502">
-        <h3>Professional drivers</h3>
-        <p>Licensed NCC operator, with drivers and office speaking English and Italian.</p>
-        <a class="more" href="/contact-us/">Details →</a>
-      </article>
-      <article class="service">
+      <article class="service service-side">
         <img src="/assets/img/chauffeur.webp" alt="A chauffeur beside a black sedan, with Etna at sunset" loading="lazy" width="800" height="447">
-        <h3>Chauffeur by the hour</h3>
-        <p>Keep a car and driver from 3 hours, with {{km-per-hour}} km per hour included, starting and ending at the same place.</p>
-        <a class="more" href="#book" data-open-hourly>Details →</a>
+        <div class="service-body">
+          <h3>Chauffeur by the hour</h3>
+          <p>A car and driver from 3 hours, with {{km-per-hour}} km per hour included.</p>
+          <a class="more" href="#book" data-open-hourly>Details →</a>
+        </div>
       </article>
-      <article class="service">
+      <article class="service service-side">
         <img src="/assets/img/events-scale.webp" alt="A fleet of black cars outside a Sicilian villa" loading="lazy" width="900" height="502">
-        <h3>Events and weddings</h3>
-        <p>Fleets coordinated for conferences, shows and weddings across Sicily.</p>
-        <a class="more" href="/events.html">Details →</a>
+        <div class="service-body">
+          <h3>Events</h3>
+          <p>Fleets coordinated for conferences and shows across Sicily.</p>
+          <a class="more" href="/events.html">Details →</a>
+        </div>
+      </article>
+      <article class="service service-side">
+        <img src="/assets/wedding-guests-villa-800.webp" alt="Wedding guests outside a villa" loading="lazy" width="800" height="339">
+        <div class="service-body">
+          <h3>Weddings</h3>
+          <p>Guest transport for weddings in Taormina.</p>
+          <a class="more" href="/wedding-transfers-taormina.html">Details →</a>
+        </div>
       </article>
     </div>
   </section>
@@ -321,6 +338,7 @@
         <label class="field">Phone, with country code<input name="phone" type="tel" required maxlength="24" autocomplete="tel" placeholder="+44 20 7946 0000"></label>
         <label class="field">Email<input name="email" type="email" required maxlength="120" autocomplete="email"></label>
         <label class="field">Flight number (optional)<input name="flight" maxlength="10" autocomplete="off"></label>
+        <label class="field only-return-field" id="return-flight-field" hidden>Return flight number (optional)<input name="return_flight" maxlength="10" autocomplete="off"></label>
         <p id="flight-hint" class="hint wide-hint">Add it so we can follow your flight: free waiting time is then 60 minutes after landing. Without it, it is 15 minutes.</p>
         <label class="field wide"><span id="address-label">Address</span><input name="address" required maxlength="160" autocomplete="street-address"></label>
         <label class="field wide">Anything we should know? (optional)<textarea name="notes" rows="3" maxlength="300" placeholder="Child seat, a stop on the way"></textarea></label>
@@ -352,7 +370,7 @@
   </section>
   <section class="step" data-step="done" hidden>
     <h2>Thank you</h2>
-    <p class="done-text">Your request has reached us<span id="done-reference"></span>. Your price is <strong id="done-price"></strong>, VAT included.</p>
+    <p class="done-text">Your request has reached us<span id="done-reference"></span>. Your price is <strong id="done-price"></strong>, VAT included<span id="done-both"></span>.</p>
     <p class="done-text">We check availability and reply by email with a payment link that works for 24 hours. Your booking is confirmed when you pay, and a second email confirms it.</p>
     <div class="dialog-actions">
       <button type="button" class="quiet-button" id="book-return">Book the return trip</button>

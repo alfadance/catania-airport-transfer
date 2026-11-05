@@ -146,7 +146,8 @@ h1 { font-size: 57.6px; line-height: 1.02; color: var(--on-dark); max-width: 892
 .when input[type='time'] { flex: 1 1 0; }
 .cell-when { flex: 1.15 1 0; }
 .bar[data-mode='hourly'] .only-transfer { display: none; }
-.bar[data-mode='transfer'] .only-hourly { display: none; }
+.bar:not([data-mode='hourly']) .only-hourly { display: none; }
+.bar:not([data-mode='return']) .only-return { display: none; }
 .cell-pax { flex: 0 0 120px; border-right: 0; }
 .stepper { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .stepper button {

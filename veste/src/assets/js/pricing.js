@@ -34,6 +34,10 @@ export const VEHICLES = {
 };
 
 export const MIN_NOTICE_HOURS = 24;
+// Return trips: booked together with the outbound trip, paid once. The return costs 20% less than a single trip.
+// The same number sits in prezzi-sito.json for the server; prezzi-sito.test.mjs fails if they differ.
+export const RETURN_DISCOUNT = 0.2;
+export const RETURN_MIN_GAP_HOURS = 8;
 export const MAX_PASSENGERS = 7;
 export const HOUR_CHOICES = [3, 4, 5, 6, 8, 10, 12];
 export const KM_INCLUDED_PER_HOUR = 20;
@@ -119,6 +123,8 @@ export const isListedRoute = (from, to) => isFareRoute(from, to) || Boolean(dire
 
 export const usesBookingSystem = (trip) => trip.mode !== 'hourly' && isFareRoute(trip.from, trip.to);
 
+export const isReturnTrip = (trip) => trip.mode === 'return';
+
 export function fare(from, to, vehicle, time) {
   const direct = directRoute(from, to);
   if (direct) return direct[vehicle][isNight(time) ? 1 : 0];
@@ -133,8 +139,22 @@ export const equivalentBags = (checked, carry) => checked + Math.ceil(carry / 2)
 export const fits = (vehicle, pax, checked, carry) =>
   pax <= VEHICLES[vehicle].pax && equivalentBags(checked, carry) <= VEHICLES[vehicle].bagLimit;
 
+// The return runs the other way and is priced by its own pickup time, with the return discount.
+export function returnFare(trip, vehicle) {
+  const full = fare(trip.to, trip.from, vehicle, trip.returnTime);
+  return full === null ? null : Math.round(full * (1 - RETURN_DISCOUNT));
+}
+
+// The price of each trip and the total for a return booking, or null when a leg has no listed fare.
+export function returnLegs(trip, vehicle) {
+  const out = fare(trip.from, trip.to, vehicle, trip.time);
+  const back = returnFare(trip, vehicle);
+  return out === null || back === null ? null : { out, back, total: out + back };
+}
+
 // Returns the euro price, or null when the trip has no listed fare (price on request).
 export function quote(trip, vehicle) {
+  if (isReturnTrip(trip)) return returnLegs(trip, vehicle)?.total ?? null;
   if (trip.mode === 'hourly') {
     const prices = HOURLY_FARES[trip.from]?.[trip.hours]?.[vehicle];
     return prices ? prices[isNight(trip.time) ? 1 : 0] : null;
@@ -153,6 +173,16 @@ export function hoursUntil(date, time, now = italyNow()) {
   return (new Date(`${date}T${time}`) - now) / 3_600_000;
 }
 
+function returnProblem(trip) {
+  if (!isFareRoute(trip.from, trip.to)) return 'Return trips are available on our fixed-price airport routes. For other routes, book each trip separately.';
+  if (!trip.returnDate || !trip.returnTime) return 'Choose a return date and time.';
+  const gap = (new Date(`${trip.returnDate}T${trip.returnTime}`) - new Date(`${trip.date}T${trip.time}`)) / 3_600_000;
+  if (gap < RETURN_MIN_GAP_HOURS) {
+    return `The return must be at least ${RETURN_MIN_GAP_HOURS} hours after the first pickup. For less time, book By the hour.`;
+  }
+  return null;
+}
+
 // Returns the first problem with the search, or null when it can go ahead.
 export function tripProblem(trip, now = italyNow()) {
   if (!trip.from) return 'Choose where we pick you up.';
@@ -165,6 +195,7 @@ export function tripProblem(trip, now = italyNow()) {
   if (hoursUntil(trip.date, trip.time, now) < MIN_NOTICE_HOURS) {
     return `Online requests need at least ${MIN_NOTICE_HOURS} hours' notice. For less notice, message us on WhatsApp.`;
   }
+  if (isReturnTrip(trip)) return returnProblem(trip);
   return null;
 }
 
@@ -193,6 +224,7 @@ export function bookingRequest(trip, vehicle, details) {
     consenso: details.consent,
     termini: details.terms,
     sito_web: details.trap,
+    ...(isReturnTrip(trip) ? { ritorno: { data: trip.returnDate, ora: trip.returnTime, volo: details.returnFlight } } : {}),
   };
 }
 
