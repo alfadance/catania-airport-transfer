@@ -54,6 +54,14 @@
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
+
+  # decidi.html e' la pagina privata del titolare (il token sta nell'indirizzo e la pagina puo' accettare o rifiutare una richiesta):
+  # nessuno script, stile o immagine che non siano del sito, connessioni solo alla funzione di Supabase, nessun incorniciamento.
+  # Come intestazione e non come meta: il layout della pagina carica script e CSS esterni.
+  <Files "decidi.html">
+    Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src https://lsekwlvnlumjxliyysuy.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    Header always set Referrer-Policy "no-referrer"
+  </Files>
 </IfModule>
 
 <IfModule mod_deflate.c>

@@ -702,6 +702,15 @@ dialog::backdrop { background: #0c0c0eb3; }
 @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
 
 
+/* pages/_minimal.css */
+/* Layout spoglio per le pagine private e di servizio (decidi, payment-status): intestazione con il solo logo, piede di una riga. */
+.minimal-header { justify-content: flex-start; min-height: 0; }
+.minimal-header .logo img { width: 96px; height: auto; }
+.minimal-footer { padding-block: 1.25rem; }
+.minimal-footer .legal { margin: 0; }
+.minimal-footer .legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+
 /* pages/_prose.css */
 /* Long text: terms, privacy and any page that is mostly paragraphs.
    Put the text inside <div class="prose"> (inside a .section.wrap). Inside it:

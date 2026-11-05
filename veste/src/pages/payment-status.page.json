@@ -1,6 +1,7 @@
 {
   "out": "payment-status.html",
   "path": "/payment-status.html",
+  "layout": "minimal",
   "title": "Payment status | Catania Airport Transfer",
   "description": "Status of your payment for a private transfer with Catania Airport Transfer.",
   "body": "src/pages/payment-status.html",

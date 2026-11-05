@@ -35,9 +35,12 @@ const scriptTag = (name) => `<script type="module" src="/assets/js/${name}"></sc
 
 // `head`: righe in piu' per <head> (es. noindex). `script`: file in assets/js solo di quella pagina, o nessuno.
 // `bodyClass` e `current` sono facoltativi. `faq-booking` si riempie solo se il corpo lo cita.
-function render({ body, title, description, path, current, script, head = '' }) {
-  const scripts = [...COMMON_SCRIPTS, ...(script ? [script] : [])].map(scriptTag).join('\n');
-  let html = read('src/layout.html')
+// `layout: "minimal"`: pagine private o di servizio, fuori dalla sitemap (decidi, payment-status). Intestazione con il solo logo, piede di una riga,
+// nessun banner cookie e nessuno script comune (quindi niente Google Analytics): solo lo script della pagina.
+function render({ body, title, description, path, current, script, head = '', layout = 'full' }) {
+  const minimal = layout === 'minimal';
+  const scripts = [...(minimal ? [] : COMMON_SCRIPTS), ...(script ? [script] : [])].map(scriptTag).join('\n');
+  let html = read(minimal ? 'src/layout-minimal.html' : 'src/layout.html')
     .replace('{{header}}', header)
     .replace('{{footer}}', footer)
     .replace('{{body}}', read(body))
