@@ -1,0 +1,6 @@
+{
+  "name": "catania-airport-transfer-veste",
+  "private": true,
+  "type": "module",
+  "description": "Nuova veste del sito. Il tipo ESM vale solo per questa cartella: il resto del sito e' CommonJS (tailwind). Costruzione: node veste/build.mjs. Prove: node --test veste/"
+}
