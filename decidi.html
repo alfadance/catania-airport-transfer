@@ -44,7 +44,9 @@
         <dl id="dati"></dl>
         <p id="stato" class="stato" role="status"></p>
         <div id="azioni" class="azioni" hidden>
-          <button id="accetta" class="principale" type="button">Accetta e manda il link di pagamento</button>
+          <button id="accetta" class="principale" type="button">Accetta con SumUp</button>
+          <button id="accetta-stripe" type="button">Accetta con Stripe</button>
+          <p class="nota">Stripe solo se SumUp non funziona.</p>
           <button id="rifiuta" type="button">Rifiuta e avvisa la cliente</button>
         </div>
         <div id="conferma" class="azioni" hidden>
@@ -52,7 +54,7 @@
           <button id="si" class="principale" type="button">Sì, conferma</button>
           <button id="no" type="button">Annulla</button>
         </div>
-        <p class="nota">Il servizio è già sul gestionale. Con «Rifiuta» il presidio lo annulla da solo. Con «Accetta» la cliente riceve la mail col link di pagamento, valido 24 ore.</p>
+        <p class="nota">Il servizio è già sul gestionale. Con «Rifiuta» il presidio lo annulla da solo. Con «Accetta con SumUp» la cliente riceve la mail col link di pagamento di NCCGEST, da usare fino a 24 ore prima del ritiro. Con «Accetta con Stripe» il link vale 24 ore.</p>
       </section>
     </main>
     <script>
@@ -65,6 +67,11 @@
         var token = new URLSearchParams(location.hash.slice(1)).get('t') || '';
         // Il token resta in memoria: via dalla barra e dalla cronologia del browser (se ricarichi la pagina, riapri il link dalla mail).
         if (token) history.replaceState(null, '', location.pathname);
+        var DOMANDE = {
+          accetta: 'Confermi? La cliente riceve subito la mail con il link di pagamento SumUp.',
+          accetta_stripe: 'Confermi? La cliente riceve subito la mail con il link di pagamento Stripe.',
+          rifiuta: 'Confermi? La cliente riceve subito la mail di rifiuto.'
+        };
         var scelta = '';
         var $ = function (id) { return document.getElementById(id); };
 
@@ -112,7 +119,7 @@
 
         function chiedi(op) {
           scelta = op;
-          testo($('domanda'), op === 'accetta' ? 'Confermi? La cliente riceve subito la mail con il link di pagamento.' : 'Confermi? La cliente riceve subito la mail di rifiuto.');
+          testo($('domanda'), DOMANDE[op]);
           mostra('azioni', false); mostra('conferma', true);
         }
 
@@ -123,7 +130,7 @@
             mostra('conferma', false);
             if (r.ok) {
               var st = $('stato'); st.className = 'stato';
-              testo(st, r.esito === 'accettata' ? 'Fatto: la mail col link di pagamento è partita.' : 'Fatto: la mail di rifiuto è partita.');
+              testo(st, r.esito === 'accettata' ? 'Fatto: la mail col link di pagamento ' + (r.metodo === 'stripe' ? 'Stripe' : 'SumUp') + ' è partita.' : 'Fatto: la mail di rifiuto è partita.');
               return;
             }
             errore(r.errore || 'Errore');
@@ -132,6 +139,7 @@
         }
 
         $('accetta').addEventListener('click', function () { chiedi('accetta'); });
+        $('accetta-stripe').addEventListener('click', function () { chiedi('accetta_stripe'); });
         $('rifiuta').addEventListener('click', function () { chiedi('rifiuta'); });
         $('no').addEventListener('click', function () { mostra('conferma', false); mostra('azioni', true); });
         $('si').addEventListener('click', esegui);
