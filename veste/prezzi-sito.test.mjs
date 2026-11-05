@@ -38,7 +38,7 @@ test('i mezzi del browser sono quelli che il server accetta', () => {
   uguali(Object.values(VEHICLES).map((v) => v.apiName).sort(), ['business_minivan', 'business_sedan']);
 });
 
-test('lo sconto del ritorno e' lo stesso nel browser e sul server', () => {
+test("lo sconto del ritorno e' lo stesso nel browser e sul server", () => {
   uguali(RETURN_DISCOUNT, server.sconto_ritorno);
 });
 
