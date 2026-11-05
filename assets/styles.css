@@ -702,6 +702,34 @@ dialog::backdrop { background: #0c0c0eb3; }
 @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
 
 
+/* pages/_home-hero.css */
+/* Home e intestazione: bottone Book, pillole delle garanzie sotto il titolo, card delle destinazioni con il prezzo a destra. */
+
+/* Bottone pieno in intestazione: la stessa altezza dei bottoni a contorno accanto. */
+.header-book { min-height: 38px; padding: 0 20px; font-size: 13.5px; white-space: nowrap; }
+
+/* Card grandi: prefisso dell'origine sopra il nome; sotto, durata e km a sinistra e prezzo a destra sulla stessa riga. */
+.place-card { display: grid; grid-template-columns: 1fr auto; align-content: end; column-gap: 0; }
+.place-card .card-from { grid-column: 1 / -1; position: relative; z-index: 1; color: #f2f1ebb3; font-size: 13px; font-weight: 500; line-height: 1.3; pointer-events: none; }
+.place-card strong { grid-column: 1 / -1; }
+.place-card span, .place-card .card-price {
+  grid-row: 4;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #ffffff33;
+}
+.place-card span { grid-column: 1; }
+.place-card .card-price { grid-column: 2; justify-content: flex-end; padding-left: 12px; text-align: right; white-space: nowrap; }
+.place-card .card-quote { align-items: flex-end; }
+.place-card .card-price small { margin-right: 5px; }   /* con display:flex lo spazio fra «From» e il prezzo sparisce */
+
+@media (max-width: 760px) {
+  .header-book { padding: 0 16px; }
+}
+
+
 /* pages/_home-links.css */
 /* Card e righe delle destinazioni nella home: il titolo porta alla pagina della destinazione (link per il SEO),
    il resto della card continua a precompilare il motore di prenotazione. Un solo link esteso sopra la card, il titolo sopra di lui. */
