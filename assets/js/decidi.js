@@ -32,9 +32,12 @@ document.documentElement.lang = 'it';
     var dati = $('dati'); dati.textContent = '';
     var rotta = rie.direzione === 'da_aeroporto' ? 'Aeroporto di Catania → ' + rie.luogo : rie.luogo + ' → Aeroporto di Catania';
     var d = String(rie.data).split('-').reverse().join('/');
-    [['Richiesta', rie.codice], ['Tratta', rotta], ['Quando', d + ' alle ' + rie.ora], ['Mezzo', MEZZI[rie.mezzo] || rie.mezzo],
-      ['Passeggeri', String(rie.pax)], ['Note', rie.note || '-'], ['Prezzo', '€' + Number(rie.prezzo).toFixed(2) + ' IVA inclusa']
-    ].forEach(function (c) { dati.appendChild(riga(c[0], c[1])); });
+    var rit = rie.ritorno;
+    var righe = [['Richiesta', rie.codice], ['Tratta', rotta], ['Quando', d + ' alle ' + rie.ora]];
+    if (rit) righe.push(['Ritorno', String(rit.data).split('-').reverse().join('/') + ' alle ' + rit.ora + (rit.volo ? ', volo ' + rit.volo : '')]);
+    righe.push(['Mezzo', MEZZI[rie.mezzo] || rie.mezzo], ['Passeggeri', String(rie.pax)], ['Note', rie.note || '-'],
+      ['Prezzo', '€' + Number(rie.prezzo).toFixed(2) + ' IVA inclusa' + (rit ? ' (andata €' + Number(rit.prezzo_andata).toFixed(2) + ' + ritorno scontato del 20% €' + Number(rit.prezzo_ritorno).toFixed(2) + ')' : '')]);
+    righe.forEach(function (c) { dati.appendChild(riga(c[0], c[1])); });
     var st = $('stato'); st.className = 'dc-status'; testo(st, STATI[rie.stato] || rie.stato);
     mostra('azioni', rie.stato === 'in_attesa');
   }
