@@ -1,7 +1,8 @@
 {
   "fonte": "prezzi/listino-agenzie-2027/cruscotto-tariffe-2027.json (colonne privatiE/privatiV) + notturno +30% da prezzo-dinamico.mjs, arrotondato da arrotondaPrivato()",
-  "cruscotto_generato": "2026-10-22T11:02:55.989Z",
+  "cruscotto_generato": "2026-11-05T14:59:37.747Z",
   "fascia_notturna": "22:00-06:00",
+  "sconto_ritorno": 0.2,
   "tratte": [
     {
       "id": "taormina",

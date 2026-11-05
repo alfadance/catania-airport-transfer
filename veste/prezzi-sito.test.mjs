@@ -5,11 +5,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { FARES, VEHICLES, isNight } from './src/assets/js/pricing.js';
+import { FARES, RETURN_DISCOUNT, VEHICLES, isNight } from './src/assets/js/pricing.js';
 
 const server = JSON.parse(readFileSync(new URL('../assets/prezzi-sito.json', import.meta.url), 'utf8'));
 const idOf = (town) => town.toLowerCase().replaceAll(' ', '-');
-const CONTROLLI_MINIMI = 13;      // 1 (tratte) + 10 (5 tratte x 2 mezzi) + 1 (fascia notturna) + 1 (mezzi)
+const CONTROLLI_MINIMI = 14;      // 1 (tratte) + 10 (5 tratte x 2 mezzi) + 1 (fascia notturna) + 1 (mezzi)
 let controlli = 0;
 const uguali = (a, b, msg) => { controlli += 1; assert.deepEqual(a, b, msg); };
 
@@ -36,6 +36,10 @@ test('la fascia notturna del browser e\' quella del server', () => {
 
 test('i mezzi del browser sono quelli che il server accetta', () => {
   uguali(Object.values(VEHICLES).map((v) => v.apiName).sort(), ['business_minivan', 'business_sedan']);
+});
+
+test('lo sconto del ritorno e' lo stesso nel browser e sul server', () => {
+  uguali(RETURN_DISCOUNT, server.sconto_ritorno);
 });
 
 test('il test ha davvero confrontato i prezzi', () => {
