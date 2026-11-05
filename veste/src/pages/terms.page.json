@@ -1,0 +1,7 @@
+{
+  "out": "terms.html",
+  "path": "/terms.html",
+  "title": "Terms and Conditions for Private Bookings | Catania Airport Transfer",
+  "description": "Terms and conditions for private travellers who book a transfer with Catania Airport Transfer: payment, cancellation, luggage, waiting time.",
+  "body": "src/pages/terms.html"
+}

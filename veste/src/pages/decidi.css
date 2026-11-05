@@ -1,0 +1,18 @@
+/* Pagina privata decidi: scheda della richiesta e pulsanti di decisione. Classi dc-. */
+.dc-page [hidden] { display: none !important; }
+.dc-page { max-width: 640px; }
+.dc-card { margin-top: 16px; }
+.dc-list { margin: 0; }
+.dc-row { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.dc-row:last-child { border-bottom: 0; }
+.dc-row dt { flex: 0 0 7rem; color: var(--ink-soft); font-size: 14px; }
+.dc-row dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.dc-status { margin: 20px 0 0; padding: 12px 16px; border-radius: var(--radius-small); background: var(--band); font-weight: 600; }
+.dc-status.is-error { background: #fdecea; color: #8c1d18; }
+.dc-actions { display: grid; gap: 12px; margin-top: 20px; }
+.dc-actions .solid-button, .dc-actions .quiet-button { min-height: 56px; border-radius: 999px; font-size: 16px; font-weight: 700; }
+.dc-actions .quiet-button { border: 2px solid var(--night); background: var(--surface); }
+.dc-actions button:disabled { opacity: .5; cursor: not-allowed; }
+.dc-note { margin-top: 12px; color: var(--ink-soft); font-size: 14px; }
+.dc-actions .dc-note { margin-top: 0; }
+@media (max-width: 760px) { .dc-row { flex-direction: column; gap: 2px; } .dc-row dt { flex: none; } }

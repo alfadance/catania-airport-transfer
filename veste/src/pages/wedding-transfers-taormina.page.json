@@ -1,0 +1,10 @@
+{
+  "out": "wedding-transfers-taormina.html",
+  "path": "/wedding-transfers-taormina.html",
+  "title": "Wedding Transportation in Taormina | Catania Airport Transfer",
+  "description": "Wedding guest transportation in Taormina and East Sicily: airport arrivals, shuttle to the venue and late return. For planners and agencies.",
+  "body": "src/pages/wedding-transfers-taormina.html",
+  "script": "wedding.js",
+  "current": "partners",
+  "head": "<meta name=\"theme-color\" content=\"#050608\">\n<meta property=\"og:site_name\" content=\"Catania Airport Transfer\">\n<meta property=\"og:image\" content=\"https://cataniaairporttransfer.net/assets/og-image.jpg\">\n<meta property=\"og:image:width\" content=\"1200\">\n<meta property=\"og:image:height\" content=\"630\">\n<meta property=\"og:image:alt\" content=\"Black chauffeur car at Catania Airport with Mount Etna in the background\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">\n<script type=\"application/ld+json\">{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"@id\": \"https://cataniaairporttransfer.net/wedding-transfers-taormina.html#service\",\n  \"name\": \"Wedding guest transfers in Taormina and East Sicily\",\n  \"serviceType\": \"Wedding guest transportation\",\n  \"description\": \"Airport arrivals, shuttle to the venue and late return for wedding guests, planned for wedding planners and agencies.\",\n  \"url\": \"https://cataniaairporttransfer.net/wedding-transfers-taormina.html\",\n  \"provider\": {\n    \"@id\": \"https://cataniaairporttransfer.net/#business\"\n  },\n  \"areaServed\": [\n    \"Taormina\",\n    \"Giardini Naxos\",\n    \"Catania\",\n    \"East Sicily\"\n  ]\n}</script>"
+}

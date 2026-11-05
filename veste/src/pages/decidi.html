@@ -1,0 +1,26 @@
+<div class="dark hero-band">
+  <section class="page-hero wrap" aria-labelledby="dc-title">
+    <p class="eyebrow on-dark">Catania Airport Transfer</p>
+    <h1 id="dc-title">Decisione sulla richiesta</h1>
+  </section>
+</div>
+
+<main id="content" class="section wrap dc-page">
+  <p id="caricamento" role="status">Carico la richiesta…</p>
+  <section id="scheda" class="form-card dc-card" hidden>
+    <dl id="dati" class="dc-list"></dl>
+    <p id="stato" class="dc-status" role="status"></p>
+    <div id="azioni" class="dc-actions" hidden>
+      <button id="accetta" class="solid-button" type="button">Accetta con SumUp</button>
+      <button id="accetta-stripe" class="quiet-button" type="button">Accetta con Stripe</button>
+      <p class="dc-note">Stripe solo se SumUp non funziona.</p>
+      <button id="rifiuta" class="quiet-button" type="button">Rifiuta e avvisa la cliente</button>
+    </div>
+    <div id="conferma" class="dc-actions" hidden>
+      <p id="domanda" class="dc-status"></p>
+      <button id="si" class="solid-button" type="button">Sì, conferma</button>
+      <button id="no" class="quiet-button" type="button">Annulla</button>
+    </div>
+    <p class="dc-note">Il servizio è già sul gestionale. Con «Rifiuta» il presidio lo annulla da solo. Con «Accetta con SumUp» la cliente riceve la mail col link di pagamento di NCCGEST, da usare fino a 24 ore prima del ritiro. Con «Accetta con Stripe» il link vale 24 ore.</p>
+  </section>
+</main>

@@ -18,6 +18,13 @@
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
+<div id="cookie-consent-banner" class="cookie-banner" role="dialog" tabindex="-1" aria-label="Cookie consent" aria-describedby="cookie-consent-text" hidden>
+  <p id="cookie-consent-text">We use cookies and similar technologies for analytics (Google Analytics) to improve our site. No tracking runs until you accept. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-actions">
+    <button type="button" id="cookie-consent-reject" class="outline-button">Reject non-essential</button>
+    <button type="button" id="cookie-consent-accept" class="solid-button">Accept</button>
+  </div>
+</div>
 <div class="dark header-band">
 <header class="site-header">
   <a class="logo" href="/" aria-label="Catania Airport Transfer, home"><img src="/assets/img/logo-dark-bg.webp" alt="Catania Airport Transfer" width="250" height="154"></a>
@@ -27,6 +34,7 @@
     <a href="/#fleet">Fleet</a>
     <a href="/#destinations">Destinations</a>
     <a href="/partners/">For business</a>
+    <a href="/events.html">Events</a>
     <a href="/contact-us/">Contact</a>
   </nav>
   <div class="header-actions">
@@ -170,7 +178,7 @@
         <img src="/assets/img/events-scale.webp" alt="A fleet of black cars outside a Sicilian villa" loading="lazy" width="900" height="502">
         <h3>Events and weddings</h3>
         <p>Fleets coordinated for conferences, shows and weddings across Sicily.</p>
-        <a class="more" href="https://cataniaairporttransfer.net/events.html">Details →</a>
+        <a class="more" href="/events.html">Details →</a>
       </article>
     </div>
   </section>
@@ -385,8 +393,8 @@
         <p id="flight-hint" class="hint wide-hint">Add it so we can follow your flight: free waiting time is then 60 minutes after landing. Without it, it is 15 minutes.</p>
         <label class="field wide"><span id="address-label">Address</span><input name="address" required maxlength="160" autocomplete="street-address"></label>
         <label class="field wide">Anything we should know? (optional)<textarea name="notes" rows="3" maxlength="300" placeholder="Child seat, a stop on the way"></textarea></label>
-        <label class="check"><input type="checkbox" name="terms" required><span>I have read and accept the <a href="https://cataniaairporttransfer.net/terms.html" target="_blank" rel="noopener">terms and conditions</a>.</span></label>
-        <label class="check"><input type="checkbox" name="consent" required><span>I agree that Catania Airport Transfer uses these details to answer my request and run the transfer. See the <a href="https://cataniaairporttransfer.net/privacy.html" target="_blank" rel="noopener">privacy policy</a>.</span></label>
+        <label class="check"><input type="checkbox" name="terms" required><span>I have read and accept the <a href="/terms.html" target="_blank" rel="noopener">terms and conditions</a>.</span></label>
+        <label class="check"><input type="checkbox" name="consent" required><span>I agree that Catania Airport Transfer uses these details to answer my request and run the transfer. See the <a href="/privacy.html" target="_blank" rel="noopener">privacy policy</a>.</span></label>
       </div>
       <label class="trap" aria-hidden="true">Leave this empty<input name="sito_web" tabindex="-1" autocomplete="off"></label>
       <p class="hint">You pay only after we reply. No payment is taken on this page.</p>
@@ -454,8 +462,9 @@
         <ul>
           <li><a href="/#book">Airport transfers</a></li>
           <li><a href="/?mode=hourly#book">Chauffeur by the hour</a></li>
-          <li><a href="https://cataniaairporttransfer.net/events.html">Events</a></li>
-          <li><a href="https://cataniaairporttransfer.net/wedding-transfers-taormina.html">Weddings in Taormina</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/wedding-transfers-taormina.html">Weddings in Taormina</a></li>
+          <li><a href="/event-transportation-sicily.html">Corporate events</a></li>
           <li><a href="/partners/?role=agency#apply">Agency rates</a></li>
           <li><a href="/partners/">Work with us</a></li>
         </ul>
@@ -464,8 +473,9 @@
         <h3>Company</h3>
         <ul>
           <li><a href="/contact-us/">Contact us</a></li>
-          <li><a href="https://cataniaairporttransfer.net/terms.html">Terms and conditions</a></li>
-          <li><a href="https://cataniaairporttransfer.net/privacy.html">Privacy policy</a></li>
+          <li><a href="/terms.html">Terms and conditions</a></li>
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><button type="button" id="cookie-consent-manage" class="cookie-link">Cookie preferences</button></li>
           <li><a href="https://www.linkedin.com/showcase/cataniaairporttransfer">LinkedIn</a></li>
           <li><a href="https://www.facebook.com/cataniaairporttransfers">Facebook</a></li>
         </ul>

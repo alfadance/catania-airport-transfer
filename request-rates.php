@@ -1,5 +1,5 @@
 <?php
-// Modulo "Request the 2027 agency rates" (sezione #agency-rates di index.html).
+// Modulo "Request the 2027 agency rates" (pagina /partners/, ruolo agenzia; l'esito torna su /partners/?rates=sent|error#apply).
 // Manda la richiesta a info@ con l'oggetto "2027 agency rates request": e' lo
 // stesso oggetto del vecchio link email, quindi il registro dei contatti B2B la
 // riconosce allo stesso modo. Non salva nulla sul server, a parte un contatore
@@ -25,7 +25,7 @@ $HOW = [
 ];
 
 function back($esito) {
-  header('Location: /?rates=' . $esito . '#agency-rates', true, 303);
+  header('Location: /partners/?rates=' . $esito . '#apply', true, 303);
   exit;
 }
 // Toglie a capo e caratteri di controllo: nessun campo puo' aggiungere intestazioni alla mail.

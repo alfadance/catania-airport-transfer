@@ -28,16 +28,40 @@ jobs:
       - name: Check PHP syntax
         run: for f in *.php; do php -l "$f" || exit 1; done
 
+      # Le pagine della nuova veste (veste/src) sono generate e i file generati stanno nel repository:
+      # se non corrispondono ai modelli, il deploy si ferma. git status vede anche i file nuovi non tracciati.
+      - name: Check that the generated pages are up to date
+        run: |
+          node veste/build.mjs
+          test -z "$(git status --porcelain)" || { git status --short; git diff --stat; echo "::error::Pagine generate non aggiornate: lancia node veste/build.mjs e fai commit"; exit 1; }
+
+      - name: Run veste tests
+        run: node --test veste/*.test.mjs
+
       # Il CSS ha un nome fisso: l'impronta del contenuto nell'indirizzo lo rende nuovo a ogni modifica,
-      # così browser e CDN possono tenerlo in cache a lungo senza servire una versione vecchia
+      # così browser e CDN possono tenerlo in cache a lungo (vedi .htaccess) senza servire una versione vecchia.
+      # Ogni pagina punta a tailwind.css (vecchia veste) o a styles.css (nuova veste), con o senza "/" iniziale.
       - name: Version the CSS URL
         run: |
-          v=$(sha256sum assets/tailwind.css | cut -c1-10)
-          for f in index.html privacy.html events.html wedding-transfers-taormina.html event-transportation-sicily.html book-a-transfer.html terms.html payment-status.html; do
-            grep -q 'href="assets/tailwind.css"' "$f" || { echo "::error::$f: riferimento al CSS non trovato"; exit 1; }
-            sed -i "s#href=\"assets/tailwind.css\"#href=\"assets/tailwind.css?v=$v\"#" "$f"
+          pages="index.html contact-us/index.html partners/index.html privacy.html events.html wedding-transfers-taormina.html event-transportation-sicily.html book-a-transfer.html terms.html payment-status.html catania-airport-to-catania.html catania-airport-to-giardini-naxos.html catania-airport-to-milazzo.html catania-airport-to-siracusa.html catania-airport-to-taormina.html"
+          # Pagine ancora senza un riferimento al CSS (in lavorazione): si saltano con un avviso invece di fermare il deploy
+          pending="decidi.html"
+          for f in $pages $pending; do
+            found=0
+            for css in tailwind styles; do
+              grep -Eq "href=\"/?assets/$css\.css\"" "$f" || continue
+              v=$(sha256sum "assets/$css.css" | cut -c1-10)
+              sed -i -E "s#href=\"(/?assets/$css\.css)\"#href=\"\1?v=$v\"#" "$f"
+              grep -Eq "href=\"/?assets/$css\.css\?v=$v\"" "$f" || { echo "::error::$f: impronta del CSS non scritta"; exit 1; }
+              found=1
+            done
+            if [ "$found" = 0 ]; then
+              case " $pending " in
+                *" $f "*) echo "::warning::$f: nessun riferimento al CSS, saltato" ;;
+                *) echo "::error::$f: riferimento al CSS non trovato"; exit 1 ;;
+              esac
+            fi
           done
-          grep -c "tailwind.css?v=$v" index.html privacy.html events.html wedding-transfers-taormina.html event-transportation-sicily.html book-a-transfer.html terms.html payment-status.html
 
       - name: Sync files to Bluehost
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4

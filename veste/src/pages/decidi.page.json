@@ -1,0 +1,9 @@
+{
+  "out": "decidi.html",
+  "path": "/decidi.html",
+  "title": "Decisione sulla richiesta | Catania Airport Transfer",
+  "description": "Pagina privata del titolare: accetta o rifiuta una richiesta arrivata dal sito.",
+  "body": "src/pages/decidi.html",
+  "script": "decidi.js",
+  "head": "<meta name=\"robots\" content=\"noindex, nofollow\">\n<meta name=\"referrer\" content=\"no-referrer\">"
+}

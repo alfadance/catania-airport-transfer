@@ -1,0 +1,35 @@
+/* Componenti dei moduli, riusabili da ogni pagina (si sommano a .form-card, .form-grid, .field, .check, .form-error, .form-result, .solid-button di styles.css).
+   .form-fieldset / .form-legend: gruppo di campi con titolo.  .choice-row + .choice: scelta con pallini (radio) a schede.
+   .form-note: riquadro di esito con icona (.is-error per l'errore, tabindex=-1 per portarci il focus).  .field-hint: nota sotto un campo.
+   .form-foot: riga con lucchetto sotto il bottone.  .form-submit: bottone di invio (.solid-button) con il cerchio che gira (.spin).
+   La classe .hidden (usata dagli script dei moduli) nasconde un elemento dentro .form-card. */
+.form-card .hidden, .form-card [hidden] { display: none !important; }
+.form-fieldset { display: grid; align-items: start; gap: 14px; grid-template-columns: 1fr 1fr; min-width: 0; margin: 0; padding: 0; border: 0; }
+.form-legend { grid-column: 1 / -1; padding: 0; margin-bottom: 2px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+.form-fieldset > .wide { grid-column: 1 / -1; }
+.form-fieldset > .field-hint { grid-column: 1 / -1; }
+.form-divider { height: 1px; margin: 26px 0; border: 0; background: var(--line); }
+.form-stack { display: grid; gap: 26px; }
+.choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.choice-row > legend { grid-column: 1 / -1; padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 500; }
+.choice { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 16px; border: 1px solid #12111040; border-radius: 10px; cursor: pointer; }
+.choice:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.choice input { flex: none; width: 18px; height: 18px; accent-color: var(--navy); }
+.field-hint { color: var(--ink-soft); font-size: 14px; font-weight: 400; line-height: 1.45; }
+.form-note { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; padding: 14px 16px; border: 1px solid var(--navy); border-radius: var(--radius-small); background: var(--surface); color: var(--navy); font-size: 16px; line-height: 1.5; }
+.form-note svg { flex: none; width: 22px; height: 22px; margin-top: 1px; }
+.form-note.is-error { border-color: #b42318; background: #fdecea; color: #8c1d18; }
+.form-foot { display: flex; align-items: center; gap: 10px; margin-top: 20px; color: var(--ink-soft); font-size: 14px; }
+.form-foot svg { flex: none; width: 18px; height: 18px; color: var(--navy); }
+.form-submit { gap: 10px; }
+.spin { width: 20px; height: 20px; animation: form-spin 1s linear infinite; }
+@keyframes form-spin { to { transform: rotate(360deg); } }
+.form-card .check { align-items: flex-start; }
+.form-card .check a { color: var(--navy); text-decoration: underline; }
+.form-card [aria-invalid="true"] { border-color: #b42318; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 760px) {
+  .form-fieldset, .choice-row { grid-template-columns: 1fr; }
+  .form-legend { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; } }

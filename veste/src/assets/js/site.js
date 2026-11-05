@@ -1,3 +1,6 @@
+// Old email links point to /#agency-rates: the agency rates form now lives on /partners/.
+if (location.pathname === '/' && location.hash === '#agency-rates') location.replace('/partners/?role=agency#apply');
+
 // The phone and tablet menu, on every page.
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.getElementById('site-nav');

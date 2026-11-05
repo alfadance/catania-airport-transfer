@@ -21,6 +21,10 @@ function formOf(html) {
   return found[0];
 }
 const headerOf = (html) => (html.match(/<header[\s\S]*?<\/header>/) || [''])[0];
+// Un collegamento a una pagina del sito, scritto relativo (events.html), dalla radice (/events.html) o assoluto.
+const escapeRe = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const linkTo = (file) => new RegExp(String.raw`href="(?:https://cataniaairporttransfer\.net)?/?` + escapeRe(file) + '"');
+const footerOf = (html) => (html.match(/<footer[\s\S]*?<\/footer>/) || [''])[0];
 
 for (const { file, page } of FORM_PAGES) {
   test(`${file}: stessi campi degli altri moduli`, () => {
@@ -41,10 +45,12 @@ for (const { file, page } of FORM_PAGES) {
     assert.deepEqual(values, ['', ...ETYPES]);
   });
 
-  test(`${file}: lo script salva etype e manda tipo_evento a GA4`, () => {
-    const html = read(file);
-    assert.match(html, /var FIELDS = \[[^\]]*'etype'[^\]]*\];/);
-    assert.match(html, /window\.gtag\('event', 'richiesta_evento', \{ tipo_evento: tipo \}\)/);
+  test(`${file}: lo script del modulo salva etype; l'evento GA4 lo manda consent.js`, () => {
+    // nella nuova veste lo script sta in assets/js (il consenso decide se GA4 parte)
+    const js = read('veste/src/assets/js/event-form.js');
+    assert.match(js, /const FIELDS = \[[^\]]*'etype'[^\]]*\];/);
+    assert.match(read(file), /data-storage-key="(events_form|event_form)"/);
+    assert.match(read('veste/src/assets/js/consent.js'), /richiesta_evento/);
   });
 }
 
@@ -55,21 +61,23 @@ test('la pagina matrimoni parte con Wedding scelto', () => {
 for (const file of ['index.html', 'privacy.html']) {
   test(`${file}: menu con una sola voce Events`, () => {
     const header = headerOf(read(file));
-    assert.match(header, /href="events\.html"/);
-    assert.doesNotMatch(header, /href="wedding-transfers-taormina\.html"/);
-    assert.doesNotMatch(header, /href="event-transportation-sicily\.html"/);
+    assert.ok(header.length > 0, 'testata trovata');
+    assert.match(header, linkTo('events.html'));
+    assert.doesNotMatch(header, linkTo('wedding-transfers-taormina.html'));
+    assert.doesNotMatch(header, linkTo('event-transportation-sicily.html'));
   });
   test(`${file}: il piede di pagina porta hub, matrimoni e eventi aziendali`, () => {
-    const html = read(file);
+    const footer = footerOf(read(file));
+    assert.ok(footer.length > 0, 'piede trovato');
     for (const href of ['events.html', 'wedding-transfers-taormina.html', 'event-transportation-sicily.html']) {
-      assert.ok(html.includes(`<a href="${href}" class="footer-link w-full">`), `footer: ${href}`);
+      assert.match(footer, linkTo(href), `footer: ${href}`);
     }
   });
 }
 
 for (const file of ['wedding-transfers-taormina.html', 'event-transportation-sicily.html']) {
   test(`${file}: la testata rimanda all'hub`, () => {
-    assert.match(headerOf(read(file)), /href="events\.html"/);
+    assert.match(headerOf(read(file)), linkTo('events.html'));
   });
 }
 
@@ -79,7 +87,7 @@ test('Tailwind conosce l\'hub', () => {
 
 test('l\'hub non si posiziona: noindex,follow, fuori dalla sitemap, scansionabile', () => {
   // decisione del titolare, 2026-10-04: una pagina per intento; l'hub serve solo a scegliere il tipo di evento
-  assert.match(read('events.html'), /<meta name="robots" content="noindex,follow" \/>/);
+  assert.match(read('events.html'), /<meta name="robots" content="noindex,follow"\s*\/?>/);
   assert.doesNotMatch(read('sitemap.xml'), /events\.html/);
   // un Disallow impedirebbe a Google di leggere il noindex
   assert.doesNotMatch(read('robots.txt'), /^\s*Disallow:\s*\/events/im);
@@ -92,7 +100,7 @@ test('hub: title proprio, canonical proprio, nessun FAQPage, nessun testo vietat
   for (const other of ['index.html', 'wedding-transfers-taormina.html', 'event-transportation-sicily.html']) {
     assert.notEqual(titleOf('events.html'), titleOf(other), `title diverso da ${other}`);
   }
-  assert.match(hub, /<link rel="canonical" href="https:\/\/cataniaairporttransfer\.net\/events\.html" \/>/);
+  assert.match(hub, /<link rel="canonical" href="https:\/\/cataniaairporttransfer\.net\/events\.html"\s*\/?>/);
   assert.equal((hub.match(/<h1[\s>]/g) || []).length, 1, 'un solo h1');
   assert.doesNotMatch(hub, /FAQPage/);
   assert.doesNotMatch(hub, /120\+|no hidden extras|partner network/i);
@@ -113,17 +121,21 @@ test('deploy.yml versiona il CSS di ogni pagina HTML che lo carica', () => {
   const yml = read('.github/workflows/deploy.yml');
   const step = yml.slice(yml.indexOf('Version the CSS URL'));
   assert.ok(step.length > 0, 'passo "Version the CSS URL" presente');
-  const pagine = fs.readdirSync(ROOT).filter((f) => f.endsWith('.html') && read(f).includes('href="assets/tailwind.css"'));
+  // pagine che caricano il CSS: vecchia veste (tailwind.css) o nuova (styles.css), con o senza "/" iniziale
+  const CSS = /href="\/?assets\/(?:tailwind|styles)\.css(?:\?v=\w+)?"/;
+  const dirs = ['', 'contact-us/', 'partners/'];
+  const pagine = dirs.flatMap((d) => (fs.existsSync(new URL(d || '.', ROOT)) ? fs.readdirSync(new URL(d || '.', ROOT)) : []).filter((f) => f.endsWith('.html')).map((f) => d + f))
+    .filter((f) => CSS.test(read(f)));
   assert.ok(pagine.length >= 5, 'trovate le pagine che caricano il CSS');
   for (const f of pagine) {
-    // una volta nel ciclo che riscrive l'indirizzo, una volta nel conteggio finale
-    assert.ok(step.split(f).length - 1 >= 2, `${f}: manca nel passo che versiona il CSS`);
+    // il file deve comparire nell'elenco del passo (pagine, o pagine in lavorazione)
+    assert.ok(new RegExp(String.raw`(^|[\s"])` + escapeRe(f) + String.raw`([\s"]|$)`, 'm').test(step), `${f}: manca nel passo che versiona il CSS`);
   }
 });
 
 test('hub: ogni scheda ha la sua immagine, con misure, testo alternativo e file presenti', () => {
   const hub = read('events.html');
-  const cards = (hub.match(/<section id="types"[\s\S]*?<\/section>/) || [''])[0].match(/<li\b[\s\S]*?<\/li>/g) || [];
+  const cards = (hub.match(/<section[^>]*id="types"[\s\S]*?<\/section>/) || [''])[0].match(/<li\b[\s\S]*?<\/li>/g) || [];
   assert.equal(cards.length, 3, 'tre schede');
   const srcs = new Set();
   for (const c of cards) {
@@ -137,7 +149,7 @@ test('hub: ogni scheda ha la sua immagine, con misure, testo alternativo e file 
     const set = (attr('srcset') || '').split(',').map((s) => s.trim().split(/\s+/));
     assert.deepEqual(set.map((s) => s[1]), ['800w', '1200w'], 'srcset a 800 e 1200');
     for (const f of [attr('src'), ...set.map((s) => s[0])]) {
-      assert.ok(fs.existsSync(new URL(f, ROOT)), `file mancante: ${f}`);
+      assert.ok(fs.existsSync(new URL(f.replace(/^\//, ''), ROOT)), `file mancante: ${f}`);
       srcs.add(f);
     }
   }

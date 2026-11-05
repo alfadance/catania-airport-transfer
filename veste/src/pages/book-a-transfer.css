@@ -1,0 +1,43 @@
+/* Pagina book-a-transfer: guida in due colonne, scheda del viaggio (mappa, mezzo, prezzo). Prefisso bk- per le classi della pagina. */
+.bk-layout { display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: start; }
+.bk-how { position: sticky; top: 24px; }
+.bk-how h2 { font-size: 40px; }
+.bk-steps { margin: 24px 0; padding: 0; list-style: none; counter-reset: bk; display: grid; gap: 22px; }
+.bk-steps li { position: relative; padding-left: 52px; counter-increment: bk; }
+.bk-steps li::before { content: counter(bk); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 36px; height: 36px; border: 2px solid var(--orange); border-radius: 50%; background: var(--night); color: #fff; font-weight: 600; }
+.bk-steps h3 { font-size: 20px; font-weight: 600; }
+.bk-steps p { margin-top: 6px; color: var(--ink-soft); }
+.bk-how > p { color: var(--ink-soft); max-width: 65ch; }
+.bk-how a, .bk-faq a { text-decoration: underline; }
+.bk-trip { grid-column: 1 / -1; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-small); background: var(--surface); }
+.bk-map { position: relative; height: 300px; background: var(--night); }
+.bk-map[hidden] { display: none; }
+.bk-vehicle { display: flex; align-items: center; gap: 20px; padding: 16px 20px; border-top: 1px solid var(--line); background: var(--page); }
+.bk-vehicle[hidden] { display: none; }
+.bk-vimg { flex: none; width: 46%; max-width: 260px; height: auto; }
+.bk-vname { font-size: 22px; font-weight: 600; color: var(--navy); }
+.bk-vsub { margin-top: 4px; color: var(--ink-soft); font-size: 15px; }
+.bk-info { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; padding: 18px 20px; }
+.bk-route { color: var(--ink-soft); line-height: 1.5; }
+.bk-route strong { color: var(--ink); }
+.bk-price { text-align: right; }
+.bk-eur { display: block; font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -.02em; color: var(--navy); }
+.bk-sub { display: block; margin-top: 4px; color: var(--ink-soft); font-size: 15px; }
+.bk-pick { color: var(--ink-soft); font-size: 15px; }
+.bk-pin { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 8px; font-size: 15px; font-weight: 700; color: #fff; background: var(--night); border: 2px solid #fff; border-radius: 999px; white-space: nowrap; }
+.bk-pin i { display: block; flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--orange); }
+.bk-pin.end { border-color: var(--orange); }
+.bk-pop { display: flex; align-items: center; gap: 8px; padding: 4px 16px 4px 4px; font-size: 20px; font-weight: 800; color: var(--night); background: var(--orange); border: 2px solid var(--night); border-radius: 999px; opacity: 0; transform: translateY(8px) scale(.9); }
+.bk-pop[hidden] { display: none; }
+.bk-pop.on { opacity: 1; transform: none; transition: transform .6s cubic-bezier(.34, 1.56, .64, 1), opacity .2s linear; }
+.bk-coin { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: var(--orange); background: var(--night); font-size: 17px; }
+.bk-car { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--orange); border: 2px solid var(--night); }
+.bk-car svg { width: 24px; height: 24px; }
+.bk-vimg.is-in { animation: bk-veh-in .7s ease both; }
+@keyframes bk-veh-in { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .bk-pop.on { transition: none; } .bk-vimg.is-in { animation: none; } }
+.bk-page .maplibregl-ctrl-group button { width: 44px; height: 44px; }
+.bk-page .maplibregl-ctrl-attrib { font-size: 12px; }
+#vehicle-note { font-weight: 400; color: var(--ink-soft); }
+@media (max-width: 1100px) { .bk-layout { grid-template-columns: 1fr; gap: 40px; } .bk-how { position: static; } }
+@media (max-width: 760px) { .bk-map { height: 240px; } .bk-how h2 { font-size: 30px; } .bk-vehicle { gap: 12px; padding: 12px 16px; } .bk-eur { font-size: 36px; } .bk-price { text-align: left; } }

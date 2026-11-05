@@ -1,0 +1,10 @@
+{
+  "out": "event-transportation-sicily.html",
+  "path": "/event-transportation-sicily.html",
+  "title": "Event Transportation in Sicily | Catania Airport Transfer",
+  "description": "Transportation for conferences, fashion shows, film premieres and corporate events in Sicily, planned around your programme. For organisers and agencies.",
+  "body": "src/pages/event-transportation-sicily.html",
+  "script": "event-form.js",
+  "current": "partners",
+  "head": "<meta name=\"theme-color\" content=\"#050608\">\n<meta property=\"og:site_name\" content=\"Catania Airport Transfer\">\n<meta property=\"og:image\" content=\"https://cataniaairporttransfer.net/assets/og-image.jpg\">\n<meta property=\"og:image:width\" content=\"1200\">\n<meta property=\"og:image:height\" content=\"630\">\n<meta property=\"og:image:alt\" content=\"Black chauffeur car at Catania Airport with Mount Etna in the background\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">\n<script type=\"application/ld+json\">{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"@id\": \"https://cataniaairporttransfer.net/event-transportation-sicily.html#service\",\n  \"name\": \"Event transportation in Sicily\",\n  \"serviceType\": \"Event transportation\",\n  \"description\": \"Transportation for conferences, fashion shows, film premieres and corporate events in Sicily, planned around the event programme for organisers and agencies.\",\n  \"url\": \"https://cataniaairporttransfer.net/event-transportation-sicily.html\",\n  \"provider\": {\n    \"@id\": \"https://cataniaairporttransfer.net/#business\"\n  },\n  \"areaServed\": [\n    \"Catania\",\n    \"Taormina\",\n    \"Siracusa\",\n    \"Palermo\",\n    \"Sicily\"\n  ]\n}</script>"
+}

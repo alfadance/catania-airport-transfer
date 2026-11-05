@@ -1,0 +1,45 @@
+/* Animated example on wedding-transfers-taormina.html (script: shuttle-demo.js) */
+.shuttle { margin-top: 48px; }
+.shuttle[hidden] { display: none; }
+.shuttle figcaption { font-size: 26px; font-weight: 600; line-height: 1.2; }
+.shuttle-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.shuttle-tabs button, .sd-play { min-height: 44px; padding: 0 20px; border: 1px solid #12111040; border-radius: var(--radius-small); background: var(--surface); font-weight: 600; }
+.shuttle-tabs button { min-width: 192px; }
+.shuttle-tabs button[aria-pressed="true"] { border-color: var(--navy); background: var(--navy); color: #fff; }
+.sd-play { flex: none; min-width: 104px; }
+.shuttle-stage { margin-top: 20px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--band); }
+.sd-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; }
+.sd-clock { color: var(--navy); font-size: 48px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.sd-count { color: var(--ink-soft); font-size: 17px; }
+.sd-count strong { color: var(--navy); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sd-track { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px 40px; margin-top: 24px; }
+.sd-place { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.sd-dots { display: grid; grid-template-columns: repeat(5, 10px); gap: 4px; }
+.sd-dot { width: 10px; height: 10px; border: 1px solid var(--navy); border-radius: 50%; background: transparent; }
+.sd-dot.is-on { background: var(--navy); }
+.sd-tag { display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border: 2px solid var(--navy); border-radius: 8px; background: #fff; color: var(--navy); font-size: 14px; font-weight: 600; }
+.sd-lanes { display: grid; gap: 16px; min-width: 0; }
+.sd-lane-label { margin-bottom: 4px; color: var(--ink-soft); font-size: 13px; }
+.sd-lane { position: relative; height: 40px; }
+.sd-lane::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--navy); transform: translateY(-50%); }
+.sd-bus { position: absolute; left: 0; top: 0; width: 40px; height: 40px; }
+.sd-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: var(--navy); color: var(--orange); }
+.sd-icon svg { width: 24px; height: 24px; }
+.sd-badge { position: absolute; right: -8px; bottom: -8px; min-width: 24px; padding: 0 4px; border: 2px solid var(--navy); border-radius: 999px; background: #fff; color: var(--navy); font-size: 14px; font-weight: 600; line-height: 20px; text-align: center; }
+.sd-badge[hidden] { display: none; }
+.sd-legend { margin-top: 16px; color: var(--ink-soft); font-size: 13px; }
+.sd-caption { min-height: 3.25rem; margin-top: 16px; max-width: 65ch; color: var(--ink-soft); font-size: 17px; }
+.sd-controls { display: flex; align-items: center; gap: 16px; margin-top: 24px; }
+.sd-time { flex: 1; min-width: 0; }
+.sd-time input { display: block; width: 100%; height: 44px; cursor: pointer; accent-color: var(--navy); }
+.sd-ends { display: flex; justify-content: space-between; color: var(--ink-soft); font-size: 13px; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: no-preference) { .sd-dot { transition: background-color .3s; } }
+@media (max-width: 760px) {
+  .shuttle { margin-top: 36px; }
+  .shuttle figcaption { font-size: 22px; }
+  .shuttle-tabs button { flex: 1 1 100%; min-width: 0; }
+  .shuttle-stage { padding: 16px; }
+  .sd-clock { font-size: 36px; }
+  .sd-track { gap: 12px; }
+  .sd-caption { font-size: 15px; }
+}

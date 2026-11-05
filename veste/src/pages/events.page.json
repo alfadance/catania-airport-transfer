@@ -1,0 +1,10 @@
+{
+  "out": "events.html",
+  "path": "/events.html",
+  "title": "Events | Catania Airport Transfer",
+  "description": "Weddings, conferences, fashion shows and film premieres in Sicily: tell us what kind of event it is and we plan the transport around it. For organisers and agencies.",
+  "body": "src/pages/events.html",
+  "script": "event-form.js",
+  "current": "partners",
+  "head": "<meta name=\"robots\" content=\"noindex,follow\">\n<meta name=\"theme-color\" content=\"#050608\">\n<meta property=\"og:site_name\" content=\"Catania Airport Transfer\">\n<meta property=\"og:image\" content=\"https://cataniaairporttransfer.net/assets/og-image.jpg\">\n<meta property=\"og:image:width\" content=\"1200\">\n<meta property=\"og:image:height\" content=\"630\">\n<meta property=\"og:image:alt\" content=\"Black chauffeur car at Catania Airport with Mount Etna in the background\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">\n<script type=\"application/ld+json\">{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"@id\": \"https://cataniaairporttransfer.net/events.html#service\",\n  \"name\": \"Event and group transfers in Sicily\",\n  \"serviceType\": \"Event and group transfers\",\n  \"description\": \"Weddings, conferences, fashion shows and film premieres in Sicily: tell us what kind of event it is and we plan the transport around it. For organisers and agencies.\",\n  \"url\": \"https://cataniaairporttransfer.net/events.html\",\n  \"provider\": {\n    \"@id\": \"https://cataniaairporttransfer.net/#business\"\n  },\n  \"areaServed\": [\n    \"Catania\",\n    \"Taormina\",\n    \"Siracusa\",\n    \"Palermo\",\n    \"Sicily\"\n  ]\n}</script>"
+}

@@ -112,6 +112,8 @@ function stylesheet() {
 
 export function build() {
   copyNew(join(veste, 'src/assets'), join(site, 'assets'));
+  // I nostri script stanno solo in assets/js (il sito vecchio non ha quella cartella): si riscrivono sempre, altrimenti una modifica non arriva.
+  cpSync(join(veste, 'src/assets/js'), join(site, 'assets/js'), { recursive: true });
   writeFileSync(join(site, 'assets/styles.css'), stylesheet());
   cpSync(join(veste, 'data/routes.json'), join(site, 'assets/routes.json'));
   for (const page of pages) {

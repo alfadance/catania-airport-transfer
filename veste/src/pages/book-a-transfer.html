@@ -1,0 +1,178 @@
+<div class="dark hero-band">
+  <section class="page-hero wrap" aria-labelledby="book-title">
+    <h1 id="book-title">Book a private transfer from Catania Airport</h1>
+    <p class="sub">Choose your trip and see the price. We check availability and reply by email with a payment link. Your booking is confirmed when you pay.</p>
+  </section>
+</div>
+
+<main id="content" class="bk-page">
+  <section id="book" class="section wrap">
+    <div class="bk-layout">
+      <div id="how" class="bk-how">
+        <h2>How booking works</h2>
+        <ol id="route" class="bk-steps">
+          <li>
+            <h3>You send the request</h3>
+            <p>Choose the route, the day, the time and the vehicle. The price shows at once.</p>
+          </li>
+          <li>
+            <h3>We reply by email</h3>
+            <p>If a vehicle is free, the email has a payment link. The link works for 24 hours.</p>
+          </li>
+          <li>
+            <h3>You pay, and we confirm</h3>
+            <p>The booking is confirmed only after payment. A second email confirms it.</p>
+          </li>
+        </ol>
+        <p>Book at least 24 hours before pickup. For less notice, message us on <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>
+      </div>
+
+      <div class="form-card">
+        <div id="book-sent" tabindex="-1" class="form-note hidden" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Thank you. Your request has reached us<span id="book-ref"></span>. Your price is <strong id="book-price"></strong>, VAT included. We check availability and reply by email with a payment link. Your booking is confirmed when you pay.</span>
+        </div>
+        <div id="book-error" tabindex="-1" class="form-note is-error hidden" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          <span id="book-error-text">Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.</span>
+        </div>
+        <form id="book-form" novalidate class="form-stack">
+          <fieldset class="form-fieldset">
+            <legend class="form-legend">Your trip</legend>
+            <fieldset class="choice-row wide">
+              <legend>Direction</legend>
+              <label class="choice"><input type="radio" name="direzione" value="da_aeroporto" checked><span>From Catania Airport</span></label>
+              <label class="choice"><input type="radio" name="direzione" value="verso_aeroporto"><span>To Catania Airport</span></label>
+            </fieldset>
+            <label class="field">
+              <span>Town</span>
+              <select name="tratta" required>
+                <option value="">Please choose</option>
+                <option value="taormina">Taormina</option>
+                <option value="giardini-naxos">Giardini Naxos</option>
+                <option value="siracusa">Siracusa</option>
+                <option value="catania">Catania</option>
+                <option value="milazzo">Milazzo</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Vehicle</span>
+              <select name="mezzo" required>
+                <option value="">Please choose</option>
+                <option value="business_sedan">Business Sedan (up to 3)</option>
+                <option value="business_minivan">Business Minivan (up to 7)</option>
+              </select>
+              <span id="vehicle-note" class="hidden" role="status"></span>
+            </label>
+            <label class="field">
+              <span>Date</span>
+              <input name="data" type="date" required>
+            </label>
+            <label class="field">
+              <span>Pickup time (your choice, Italian time)</span>
+              <input name="ora" type="time" required>
+            </label>
+            <div id="trip-card" class="bk-trip hidden" role="group" aria-label="Your trip: map and price">
+              <div id="trip-map" class="bk-map" role="img" aria-label="Map of the route"></div>
+              <div id="trip-vehicle" class="bk-vehicle" hidden>
+                <img id="trip-vimg" class="bk-vimg" src="" alt="" width="720" height="337" decoding="async">
+                <div>
+                  <p id="trip-vname" class="bk-vname"></p>
+                  <p id="trip-vsub" class="bk-vsub"></p>
+                </div>
+              </div>
+              <div class="bk-info">
+                <p class="bk-route"><strong id="trip-from">Catania Airport</strong> to <strong id="trip-to"></strong><br><span id="trip-km"></span></p>
+                <p class="bk-price" aria-live="polite"><span id="trip-eur" class="bk-eur"></span><span id="trip-sub" class="bk-sub"></span></p>
+                <p id="trip-pick" class="bk-pick hidden"></p>
+              </div>
+            </div>
+            <label class="field">
+              <span>Passengers</span>
+              <input name="pax" type="number" inputmode="numeric" min="1" max="7" value="1" required>
+            </label>
+            <label class="field">
+              <span>Checked suitcases</span>
+              <input name="bagagli_imbarcati" type="number" inputmode="numeric" min="0" max="8" value="0" required aria-describedby="luggage-hint">
+            </label>
+            <label class="field">
+              <span>Carry-on bags</span>
+              <input name="bagagli_mano" type="number" inputmode="numeric" min="0" max="4" value="0" required aria-describedby="luggage-hint">
+            </label>
+            <p id="luggage-hint" class="field-hint">Two carry-on bags count as one checked suitcase. A Sedan takes 2 checked suitcases. From the third, you need a Minivan.</p>
+            <label class="field">
+              <span>Flight number <span class="field-hint">(optional)</span></span>
+              <input name="volo" maxlength="10" autocomplete="off" aria-describedby="flight-hint">
+              <span id="flight-hint" class="field-hint">Add it so we can follow your flight: free waiting time is then 60 minutes after landing. Without it, it is 15 minutes.</span>
+            </label>
+            <label class="field">
+              <span id="address-label">Drop-off address</span>
+              <input name="indirizzo" required maxlength="160" autocomplete="street-address">
+            </label>
+          </fieldset>
+          <hr class="form-divider">
+          <fieldset class="form-fieldset">
+            <legend class="form-legend">About you</legend>
+            <label class="field">
+              <span>First and last name</span>
+              <input name="nome" required maxlength="80" autocomplete="name">
+            </label>
+            <label class="field">
+              <span>Phone, with country code</span>
+              <input name="telefono" type="tel" required maxlength="24" autocomplete="tel" placeholder="+44 20 7946 0000">
+            </label>
+            <label class="field wide">
+              <span>Email</span>
+              <input name="email" type="email" required maxlength="120" autocomplete="email">
+            </label>
+            <label class="field wide">
+              <span>Anything we should know? <span class="field-hint">(optional)</span></span>
+              <textarea name="note" rows="3" maxlength="300" placeholder="Child seat, a stop on the way"></textarea>
+            </label>
+          </fieldset>
+          <div class="trap" aria-hidden="true">
+            <label>Leave this empty <input name="sito_web" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <div class="form-stack">
+            <label class="check">
+              <input type="checkbox" name="termini" required>
+              <span>I have read and accept the <a href="/terms.html" target="_blank" rel="noopener">terms and conditions<span class="sr-only"> (opens in a new tab)</span></a>.</span>
+            </label>
+            <label class="check">
+              <input type="checkbox" name="consenso" required>
+              <span>I agree that Catania Airport Transfer uses these details to answer my request and to run the transfer. See the <a href="/privacy.html">privacy policy</a>.</span>
+            </label>
+          </div>
+          <div>
+            <button type="submit" class="solid-button form-submit">Send my request</button>
+            <p id="book-live" class="sr-only" aria-live="polite"></p>
+            <p class="form-foot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>You pay only after we reply. No payment is taken on this page.</span>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section wrap bk-faq faq">
+    <h2>Questions from travellers</h2>
+    <details>
+      <summary>When is my booking confirmed?</summary>
+      <p>When you have paid. Until then it is only a request. We send a second email when the booking is confirmed.</p>
+    </details>
+    <details>
+      <summary>How long does the payment link work?</summary>
+      <p>For 24 hours. If you do not pay in that time, the request is closed. You can send a new one.</p>
+    </details>
+    <details>
+      <summary>My route is not in the list.</summary>
+      <p>Write to us on <a href="https://wa.me/393200528300?text=Hello%2C%20I%27d%20like%20to%20book%20a%20private%20transfer." target="_blank" rel="noopener noreferrer">WhatsApp</a> or by email at <a href="mailto:info@cataniaairporttransfer.net">info@cataniaairporttransfer.net</a>. We work across the whole of Sicily.</p>
+    </details>
+    <details>
+      <summary>What if my flight is late?</summary>
+      <p>Give us your flight number. We monitor flight status in real time, and your chauffeur adjusts the pick-up time accordingly.</p>
+    </details>
+  </section>
+</main>

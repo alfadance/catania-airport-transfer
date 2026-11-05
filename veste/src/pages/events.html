@@ -1,0 +1,110 @@
+<div class="dark hero-band">
+  <section class="page-hero wrap" aria-labelledby="events-title">
+    <h1 id="events-title">Transport for events and groups in Sicily</h1>
+    <p class="sub">Guests and delegates land on different flights and leave at different hours. Tell us about the event, and we plan the movements around its programme.</p>
+    <div class="hero-actions">
+      <a class="solid-button" href="#event-request">Request an event plan</a>
+      <a class="outline-button" href="https://wa.me/393200528300?text=Hello%2C%20I%27m%20organising%20an%20event%20in%20Sicily%20and%20need%20transportation.%20Type%3A%20%20Dates%3A%20%20People%3A%20" target="_blank" rel="noopener noreferrer">Prefer WhatsApp? Message us</a>
+    </div>
+  </section>
+</div>
+
+<main id="content">
+  <section class="section wrap" id="types" aria-labelledby="types-title">
+    <div class="event-intro"><h2 id="types-title">Choose your kind of event</h2></div>
+    <ul class="event-grid">
+      <li class="event-card">
+        <img src="/assets/hub-wedding-800.webp" srcset="/assets/hub-wedding-800.webp 800w, /assets/hub-wedding-1200.webp 1200w" sizes="(min-width: 1100px) 379px, (min-width: 761px) 45vw, 90vw" width="800" height="533" loading="lazy" decoding="async" alt="Wedding guests in formal clothes walking from a villa gate toward a black minibus">
+        <h3>Weddings</h3>
+        <p>Guests landing on different flights, one venue, a return after dinner. See how we plan the trips, with a worked example.</p>
+        <p class="more"><a href="wedding-transfers-taormina.html">Wedding transfers in Taormina</a></p>
+      </li>
+      <li class="event-card">
+        <img src="/assets/hub-eventi-800.webp" srcset="/assets/hub-eventi-800.webp 800w, /assets/hub-eventi-1200.webp 1200w" sizes="(min-width: 1100px) 379px, (min-width: 761px) 45vw, 90vw" width="800" height="533" loading="lazy" decoding="async" alt="Black minibuses and a van waiting at the lit entrance of a theatre in the evening while guests go in">
+        <h3>Conferences, fashion shows and film premieres</h3>
+        <p>Hotels to venue on a clock: arrival waves from the airport, shuttles between sessions, drop-offs in sequence at a premiere, and returns in waves after the evening.</p>
+        <p class="more"><a href="event-transportation-sicily.html">Event transportation in Sicily</a></p>
+      </li>
+      <li class="event-card">
+        <img src="/assets/hub-altro-800.webp" srcset="/assets/hub-altro-800.webp 800w, /assets/hub-altro-1200.webp 1200w" sizes="(min-width: 1100px) 379px, (min-width: 761px) 45vw, 90vw" width="800" height="533" loading="lazy" decoding="async" alt="Black minibus on a coastal road in eastern Sicily with the sea and Mount Etna behind">
+        <h3>Something else?</h3>
+        <p>If your event fits neither, choose Other in the form below and describe it in a few lines.</p>
+        <p class="more"><a href="#event-request">Go to the form</a></p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="dark event-request" id="event-request" aria-labelledby="request-title">
+    <div class="wrap event-request-grid">
+      <div>
+        <h2 id="request-title">Request an event plan</h2>
+        <p class="lead">Tell us about the event. We reply by email, using the assumptions you give us. Office hours are Monday to Friday, 9:00 to 18:00 Italian time.</p>
+        <p class="small">Prefer email? Write to <a href="mailto:info@cataniaairporttransfer.net?subject=Event%20transport%20plan%20request">info@cataniaairporttransfer.net</a>.</p>
+      </div>
+      <div class="form-card">
+        <div id="event-sent" class="form-note" tabindex="-1" role="status" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Thank you. Your request has reached us, and we will reply by email.</span>
+        </div>
+        <div id="event-error" class="form-note is-error" tabindex="-1" role="alert" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          <span>Something went wrong and the request was not sent. Please check the fields, or email us at info@cataniaairporttransfer.net.</span>
+        </div>
+        <form action="request-event.php" method="post" data-storage-key="events_form">
+          <input type="hidden" name="page" value="hub">
+          <div class="form-stack">
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">About you</legend>
+              <label class="field"><span>Your name</span><input name="name" required maxlength="100" autocomplete="name"></label>
+              <label class="field"><span>Company</span><input name="agency" required maxlength="150" autocomplete="organization"></label>
+              <label class="field"><span>Country</span><input name="country" required maxlength="80" autocomplete="country-name"></label>
+              <label class="field"><span>Work email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+            </fieldset>
+            <fieldset class="form-fieldset">
+              <legend class="form-legend">The event</legend>
+              <label class="field">
+                <span>Type of event</span>
+                <select name="etype" required>
+                  <option value="">Please choose</option>
+                  <option value="wedding">Wedding</option>
+                  <option value="conference">Conference or convention</option>
+                  <option value="show">Fashion show or presentation</option>
+                  <option value="film">Film premiere or festival</option>
+                  <option value="corporate">Corporate event or incentive</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <label class="field"><span>Dates</span><input name="date" required maxlength="60"></label>
+              <label class="field"><span>City or venue</span><input name="venue" required maxlength="150"></label>
+              <label class="field"><span>People to move</span><input name="guests" required maxlength="40" inputmode="numeric"></label>
+              <label class="field wide">
+                <span>People arrive from</span>
+                <select name="arrival" required>
+                  <option value="">Please choose</option>
+                  <option value="catania">Catania Airport</option>
+                  <option value="palermo">Palermo Airport</option>
+                  <option value="comiso">Comiso Airport</option>
+                  <option value="several">Several places</option>
+                  <option value="unknown">Not known yet</option>
+                </select>
+              </label>
+              <label class="field wide">
+                <span>Anything we should know? <span class="field-hint">(optional)</span></span>
+                <textarea name="message" rows="3" maxlength="2000" placeholder="Programme, hotels, special needs"></textarea>
+              </label>
+            </fieldset>
+            <label class="trap" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+            <div>
+              <button type="submit" class="solid-button form-submit">Send my request</button>
+              <p id="event-live" class="sr-only" aria-live="polite"></p>
+              <p class="form-foot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>We use these details only to reply to you. See our <a class="inline-link" href="/privacy.html">privacy policy</a>.</span>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,10 @@
+/* Pagina payment-status: tre blocchi (paid, cancelled, unknown), se ne mostra uno. Classi ps-. */
+.ps-card { max-width: 720px; }
+.ps-steps { margin: 0; padding: 0; list-style: none; counter-reset: ps; display: grid; gap: 22px; }
+.ps-steps li { position: relative; padding-left: 52px; counter-increment: ps; }
+.ps-steps li::before { content: counter(ps); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 36px; height: 36px; border: 2px solid var(--orange); border-radius: 50%; background: var(--night); color: #fff; font-weight: 600; }
+.ps-steps h2 { font-size: 22px; line-height: 1.2; }
+.ps-steps p { margin-top: 6px; color: var(--ink-soft); }
+.ps-help { margin-top: 28px; color: var(--ink-soft); }
+.ps-help a { color: var(--navy); text-decoration: underline; }
+.ps-main { padding-bottom: 24px; }
