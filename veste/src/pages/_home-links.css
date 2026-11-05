@@ -1,0 +1,11 @@
+/* Card e righe delle destinazioni nella home: il titolo porta alla pagina della destinazione (link per il SEO),
+   il resto della card continua a precompilare il motore di prenotazione. Un solo link esteso sopra la card, il titolo sopra di lui. */
+.place-card, .place-row { position: relative; }
+.card-book { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.card-book:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.card-title { position: relative; z-index: 2; color: inherit; pointer-events: auto; }
+.card-title:hover { text-decoration: underline; text-underline-offset: 4px; }
+.card-title:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+/* il testo della card non intercetta il clic: passa al link esteso sotto, tranne il titolo */
+.place-card strong, .place-card span, .place-card .card-price, .place-row span, .place-row .row-price, .place-row strong { pointer-events: none; }
+.place-card strong .card-title, .place-row strong .card-title { pointer-events: auto; }
