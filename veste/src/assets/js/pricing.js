@@ -30,7 +30,7 @@ export const PLACES = [AIRPORT, PALERMO_AIRPORT, ...TOWNS, AGRIGENTO];
 
 export const VEHICLES = {
   sedan: { apiName: 'business_sedan', name: 'Business Sedan', model: 'Mercedes-Benz E-Class', pax: 3, bags: 2, bagLimit: 2, img: '/assets/img/sedan-e-class.webp' },
-  minivan: { apiName: 'business_minivan', name: 'Business Minivan', model: 'Mercedes-Benz Vito Tourer', pax: 7, bags: 8, bagLimit: 10, img: '/assets/img/minivan-vito.webp' },
+  minivan: { apiName: 'business_minivan', name: 'Business Minivan', model: 'Mercedes-Benz V-Class or equivalent', pax: 7, bags: 8, bagLimit: 10, img: '/assets/img/minivan-vito.webp' },
 };
 
 export const MIN_NOTICE_HOURS = 24;

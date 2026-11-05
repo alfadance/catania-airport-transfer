@@ -55,8 +55,8 @@
     }
     // ---- Prezzo e mappa ------------------------------------------------------------------------------------------------------
     var VEHICLES = {
-      business_sedan: { src: '/assets/veicoli/sedan-e-class.webp', w: 720, h: 337, alt: 'Black Mercedes-Benz E-Class saloon', name: 'Business Sedan', sub: 'Mercedes-Benz E-Class · up to 3 passengers' },
-      business_minivan: { src: '/assets/veicoli/minivan-vito.webp', w: 720, h: 399, alt: 'Black Mercedes-Benz Vito Tourer van', name: 'Business Minivan', sub: 'Mercedes-Benz Vito Tourer · up to 7 passengers' }
+      business_sedan: { src: '/assets/veicoli/sedan-e-class.webp', w: 720, h: 337, alt: 'Black Mercedes-Benz E-Class saloon', name: 'Business Sedan', sub: 'Mercedes-Benz E-Class', cap: 'Up to 3 passengers' },
+      business_minivan: { src: '/assets/veicoli/minivan-vito.webp', w: 720, h: 399, alt: 'Black Mercedes-Benz minivan', name: 'Business Minivan', sub: 'Mercedes-Benz V-Class or equivalent', cap: 'Up to 7 passengers' }
     };
     var DATA = null, MAP = null, CAR = null, ANIM = null, MAPLIB = null, MAP_BROKEN = false, POP = null, POP_TEXT = '';
     function setPop(text) {
@@ -205,7 +205,7 @@
           if (vimg.getAttribute('src') !== veh.src) { vimg.src = veh.src; vimg.width = veh.w; vimg.height = veh.h; vimg.classList.remove('is-in'); void vimg.offsetWidth; vimg.classList.add('is-in'); }
           vimg.alt = veh.alt;
           document.getElementById('trip-vname').textContent = veh.name;
-          document.getElementById('trip-vsub').textContent = veh.sub;
+          var vsub = document.getElementById('trip-vsub'); vsub.textContent = veh.sub + ' '; var capEl = document.createElement('span'); capEl.className = 'cap'; capEl.innerHTML = '<span class="ico ico-pax" aria-hidden="true"></span>'; capEl.appendChild(document.createTextNode(veh.cap)); vsub.appendChild(capEl);
           vbox.hidden = false;
         } else { vbox.hidden = true; }       // il simbolo € sta gia' nella moneta del fumetto
         sub.textContent = p ? 'VAT included, whole vehicle' + (p.night ? ', night rate (22:00 to 06:00) included' : '') : '';

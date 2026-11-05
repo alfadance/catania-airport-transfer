@@ -293,6 +293,13 @@ h1 { font-size: 57.6px; line-height: 1.02; color: var(--on-dark); max-width: 892
 .car .car-price { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--ink); font-size: 24px; font-weight: 600; line-height: 1.2; }
 .car-price small, .row-price small, .card-price small { color: var(--ink-soft); font-size: 13px; font-weight: 400; }
 
+/* Icone di capienza (passeggeri, bagagli): maschera SVG colorata come il testo; usate su schede, tabelle e modulo di prenotazione. */
+.ico { display: inline-block; flex: none; width: 16px; height: 16px; margin-right: 6px; vertical-align: -3px; background: currentColor; -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
+.ico-pax { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E"); }
+.ico-bag { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='14' rx='2'/%3E%3Cpath d='M9 6V3.5A1.5 1.5 0 0 1 10.5 2h3A1.5 1.5 0 0 1 15 3.5V6M9 20v1.5M15 20v1.5'/%3E%3C/svg%3E"); }
+.cap { display: inline-flex; align-items: center; margin-left: 10px; }
+.cap .ico { margin-right: 6px; }
+
 /* Reviews */
 .reviews { display: grid; grid-template-columns: 1fr 2.05fr; gap: 40px; }
 .score { margin-top: 56px; font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -.03em; }

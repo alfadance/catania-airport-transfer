@@ -130,7 +130,7 @@ function renderVehicles() {
       <input type="radio" name="vehicle" value="${key}" ${key === vehicle ? 'checked' : ''} ${usableNow ? '' : 'disabled'}>
       <img src="${item.img}" alt="" width="104" height="52">
       <span class="vehicle-name"><strong>${item.name}</strong><small>${item.model}</small>
-      <small>Up to ${item.pax} passengers, ${item.bags} suitcases</small>
+      <small class="cap"><span class="ico ico-pax" aria-hidden="true"></span>Up to ${item.pax} passengers <span class="ico ico-bag" aria-hidden="true"></span>${item.bags} suitcases</small>
       ${trip.mode === 'hourly' ? `<small class="vehicle-terms">${hourlyTerms(trip.hours, key)}</small>` : ''}</span>
       <span class="vehicle-price">${usableNow ? (total === null ? 'On request' : money(total)) : 'Too small'}</span>
     </label>`;

@@ -4,8 +4,8 @@
 .hero-band h1 .accent { color: var(--orange); }
 
 /* Schede dei mezzi: icone accanto a passeggeri e bagagli, prezzo in grassetto. */
-.car .car-specs li { display: inline-flex; align-items: center; gap: 7px; }
-.car .car-specs svg { flex: none; color: var(--navy); }
+.car .car-specs li { display: inline-flex; align-items: center; }
+.car .car-specs .ico { color: var(--navy); }
 .car .car-price strong { font-weight: 700; }
 
 /* Banda scura dopo l'elenco delle destinazioni: spezza il ritmo, un solo bottone. */

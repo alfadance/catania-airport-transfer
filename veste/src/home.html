@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="cell cell-pax">
-        <span class="cell-label">Passengers</span>
+        <span class="cell-label"><span class="ico ico-pax" aria-hidden="true"></span>Passengers</span>
         <div class="stepper">
           <button type="button" id="pax-less" aria-label="Fewer passengers">−</button>
           <output id="pax" aria-live="polite">2</output>
@@ -148,14 +148,14 @@
           <img src="/assets/img/sedan-e-class.webp" alt="Black Mercedes-Benz E-Class" loading="lazy" width="720" height="337">
           <h3>Business Sedan</h3>
           <p>Mercedes-Benz E-Class</p>
-          <ul class="car-specs"><li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Up to 3 passengers</li><li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="14" rx="2"/><path d="M9 6V3.5A1.5 1.5 0 0 1 10.5 2h3A1.5 1.5 0 0 1 15 3.5V6M9 20v1.5M15 20v1.5"/></svg>2 suitcases</li></ul>
+          <ul class="car-specs"><li><span class="ico ico-pax" aria-hidden="true"></span>Up to 3 passengers</li><li><span class="ico ico-bag" aria-hidden="true"></span>2 suitcases</li></ul>
           <p class="car-price"><small>From</small> <strong>€60</strong></p>
         </article>
         <article class="car">
-          <img src="/assets/img/minivan-vito.webp" alt="Black Mercedes-Benz Vito Tourer" loading="lazy" width="720" height="399">
+          <img src="/assets/img/minivan-vito.webp" alt="Black Mercedes-Benz minivan" loading="lazy" width="720" height="399">
           <h3>Business Minivan</h3>
-          <p>Mercedes-Benz Vito Tourer</p>
-          <ul class="car-specs"><li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Up to 7 passengers</li><li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="14" rx="2"/><path d="M9 6V3.5A1.5 1.5 0 0 1 10.5 2h3A1.5 1.5 0 0 1 15 3.5V6M9 20v1.5M15 20v1.5"/></svg>8 suitcases</li></ul>
+          <p>Mercedes-Benz V-Class or equivalent</p>
+          <ul class="car-specs"><li><span class="ico ico-pax" aria-hidden="true"></span>Up to 7 passengers</li><li><span class="ico ico-bag" aria-hidden="true"></span>8 suitcases</li></ul>
           <p class="car-price"><small>From</small> <strong>€70</strong></p>
         </article>
         <article class="car">
@@ -286,7 +286,7 @@
     <div id="trip-map" class="map-box trip-map" role="img" aria-label="Map of the route" hidden></div>
     <div class="bags">
       <div>
-        <span>Checked suitcases</span>
+        <span><span class="ico ico-bag" aria-hidden="true"></span>Checked suitcases</span>
         <div class="stepper">
           <button type="button" data-bag="checked" data-change="-1" aria-label="Fewer checked suitcases">−</button>
           <output id="checked-value">0</output>
@@ -295,7 +295,7 @@
         <input type="hidden" id="checked" value="0" max="8">
       </div>
       <div>
-        <span>Carry-on bags</span>
+        <span><span class="ico ico-bag" aria-hidden="true"></span>Carry-on bags</span>
         <div class="stepper">
           <button type="button" data-bag="carry" data-change="-1" aria-label="Fewer carry-on bags">−</button>
           <output id="carry-value">0</output>
