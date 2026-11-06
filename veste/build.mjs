@@ -54,6 +54,24 @@ function render({ body, title, description, path, current, script, head = '', la
   return fillHourlyValues(html.replace(/ data-nav="\w+"/g, ''));
 }
 
+// Scheda dell'azienda per i motori di ricerca e le AI. Solo dati gia' pubblici nel piede del sito.
+// Le pagine eventi e matrimoni la richiamano con "@id": ".../#business".
+const BUSINESS_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE}/#business`,
+  name: 'Catania Airport Transfer',
+  url: `${SITE}/`,
+  description: 'Fixed-price private airport transfers across Sicily from Catania Fontanarossa Airport, with flight tracking and licensed drivers.',
+  telephone: '+39 320 052 8300',
+  email: 'info@cataniaairporttransfer.net',
+  image: `${SITE}/assets/og-image.jpg`,
+  vatID: 'IT05924950875',
+  address: { '@type': 'PostalAddress', streetAddress: 'Via Badia 3', postalCode: '95123', addressLocality: 'Catania', addressRegion: 'CT', addressCountry: 'IT' },
+  areaServed: { '@type': 'AdministrativeArea', name: 'Sicily' },
+  sameAs: ['https://www.facebook.com/cataniaairporttransfers'],
+};
+
 const corePages = [
   {
     out: 'index.html',
@@ -61,6 +79,7 @@ const corePages = [
     body: 'src/home.html',
     current: 'home',
     script: 'booking.js',
+    head: `<script type="application/ld+json">${JSON.stringify(BUSINESS_SCHEMA)}</script>`,
     title: 'Catania Airport Transfer | Private Transfers in Sicily',
     description: 'Fixed-price private airport transfers across Sicily from Catania Airport. Flights tracked, licensed drivers, and a chauffeur by the hour.',
   },
