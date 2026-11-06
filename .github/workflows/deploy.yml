@@ -43,7 +43,7 @@ jobs:
       # Ogni pagina punta a tailwind.css (vecchia veste) o a styles.css (nuova veste), con o senza "/" iniziale.
       - name: Version the CSS URL
         run: |
-          pages="index.html contact-us/index.html partners/index.html privacy.html events.html wedding-transfers-taormina.html event-transportation-sicily.html book-a-transfer.html terms.html payment-status.html catania-airport-to-catania.html catania-airport-to-giardini-naxos.html catania-airport-to-milazzo.html catania-airport-to-siracusa.html catania-airport-to-taormina.html"
+          pages="index.html contact-us/index.html partners/index.html privacy.html events.html wedding-transfers-taormina.html event-transportation-sicily.html book-a-transfer.html prices.html terms.html payment-status.html catania-airport-to-catania.html catania-airport-to-giardini-naxos.html catania-airport-to-milazzo.html catania-airport-to-siracusa.html catania-airport-to-taormina.html"
           # Pagine ancora senza un riferimento al CSS (in lavorazione): si saltano con un avviso invece di fermare il deploy
           pending="decidi.html"
           for f in $pages $pending; do

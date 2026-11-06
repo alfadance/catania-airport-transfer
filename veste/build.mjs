@@ -9,7 +9,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { HOURLY_EXTRAS, KM_INCLUDED_PER_HOUR } from './src/assets/js/pricing.js';
+import { AIRPORT, DIRECT_ROUTES, FARES, HOURLY_EXTRAS, KM_INCLUDED_PER_HOUR, RETURN_DISCOUNT } from './src/assets/js/pricing.js';
 
 const veste = dirname(fileURLToPath(import.meta.url));
 const site = join(veste, '..');
@@ -26,6 +26,20 @@ const HOURLY_VALUES = {
   '{{minivan-extra-km}}': `€${HOURLY_EXTRAS.minivan.km.toFixed(2)}`,
 };
 const fillHourlyValues = (text) => Object.entries(HOURLY_VALUES).reduce((out, [key, value]) => out.replaceAll(key, value), text);
+// Righe della tabella di prices.html: gli stessi prezzi del modulo di prenotazione (FARES e DIRECT_ROUTES), cosi' non possono discordare.
+const euro = (n) => `€${n}`;
+const priceCells = ({ sedan, minivan }) => [...sedan, ...minivan].map((n) => `<td>${euro(n)}</td>`).join('');
+function priceRows() {
+  const fares = Object.entries(FARES).map(([town, prices]) => {
+    const slug = `catania-airport-to-${town.toLowerCase().replaceAll(' ', '-')}.html`;
+    return `          <tr><th scope="row"><a href="/${slug}">Catania Airport to ${town}</a></th>${priceCells(prices)}</tr>`;
+  });
+  const direct = DIRECT_ROUTES.map(({ between: [a, b], mapName, sedan, minivan }) => {
+    const query = a === AIRPORT ? `to=${encodeURIComponent(b)}` : `from=${encodeURIComponent(a)}&amp;to=${encodeURIComponent(b)}`;
+    return `          <tr><th scope="row"><a href="/?${query}#book">${mapName}</a></th>${priceCells({ sedan, minivan })}</tr>`;
+  });
+  return [...fares, ...direct].join('\n');
+}
 const footer = read('src/footer.html');
 const header = read('src/header.html');
 
@@ -49,7 +63,9 @@ function render({ body, title, description, path, current, script, head = '', la
     .replace('{{scripts}}', scripts)
     .replaceAll('{{title}}', title)
     .replaceAll('{{description}}', description)
-    .replaceAll('{{url}}', SITE + path);
+    .replaceAll('{{url}}', SITE + path)
+    .replace('{{price-rows}}', priceRows())
+    .replaceAll('{{return-discount}}', String(Math.round(RETURN_DISCOUNT * 100)));
   if (current) html = html.replace(`data-nav="${current}"`, 'aria-current="page"');
   return fillHourlyValues(html.replace(/ data-nav="\w+"/g, ''));
 }

@@ -1,0 +1,11 @@
+.prices-section > * { max-width: 920px; }
+.prices-section .price-scroll { max-width: 100%; overflow-x: auto; }
+.price-table td { font-size: 18px; }
+.price-table tbody th a { color: inherit; }
+.prices-list { margin: 12px 0 0 20px; padding: 0; }
+.prices-list li { margin-top: 8px; }
+@media (max-width: 640px) {
+  .price-table td { font-size: 16px; }
+  .price-table th, .price-table td { padding: 10px 6px; }
+}
+.price-scroll + p { margin-top: 14px; }

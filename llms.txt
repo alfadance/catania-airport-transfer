@@ -18,6 +18,7 @@ Facts that apply to every transfer (prices and drive times are on each route pag
 - [Catania Airport to Milazzo](https://cataniaairporttransfer.net/catania-airport-to-milazzo.html): price, drive time and FAQ
 
 ## Other pages
+- [Prices for all routes](https://cataniaairporttransfer.net/prices.html): one table with day and night prices for every route
 - [Book a transfer](https://cataniaairporttransfer.net/book-a-transfer.html): the form shows the exact price for your day and time
 - [Weddings in Taormina](https://cataniaairporttransfer.net/wedding-transfers-taormina.html): guest transfers for wedding planners and agencies
 - [Event transportation](https://cataniaairporttransfer.net/event-transportation-sicily.html): conferences, shows and corporate events
