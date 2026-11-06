@@ -43,14 +43,14 @@ function faq(t, p, kmDest) {
     [`How long is the drive from Catania Airport to ${t.nome}?`,
       `About ${t.min} minutes by car (${kmDest} km). The time is calculated for a typical weekday with usual traffic in the morning and in the afternoon, and we keep the longer one.`],
     [`How much does the transfer to ${t.nome} cost?`,
-      `The price is for the whole vehicle, VAT included. Business Sedan (Mercedes-Benz E-Class, up to 3 passengers): ${eur(p.business_sedan.giorno)} by day, ${eur(p.business_sedan.notte)} at night. Business Minivan (Mercedes-Benz Vito Tourer, up to 7 passengers): ${eur(p.business_minivan.giorno)} by day, ${eur(p.business_minivan.notte)} at night. Night is from 22:00 to 06:00. The booking form shows the exact price for your day and time.`,
+      `The price is for the whole vehicle, VAT included. Business Sedan (Mercedes-Benz E-Class, up to 3 passengers): ${eur(p.business_sedan.giorno)} by day, ${eur(p.business_sedan.notte)} at night. Business Minivan (Mercedes-Benz V-Class or equivalent, up to 7 passengers): ${eur(p.business_minivan.giorno)} by day, ${eur(p.business_minivan.notte)} at night. Night is from 22:00 to 06:00. The booking form shows the exact price for your day and time.`,
       `<p class="mb-3">One price for the whole vehicle, VAT included, however many passengers travel.</p>
                   <table class="price-table">
                     <caption class="sr-only">Prices from Catania Airport to ${esc(t.nome)}, VAT included</caption>
                     <thead><tr><th scope="col">Vehicle</th><th scope="col">Day</th><th scope="col">Night</th></tr></thead>
                     <tbody>
                       <tr><th scope="row">Business Sedan<small>Mercedes-Benz E-Class, up to 3 passengers</small></th><td>${eur(p.business_sedan.giorno)}</td><td>${eur(p.business_sedan.notte)}</td></tr>
-                      <tr><th scope="row">Business Minivan<small>Mercedes-Benz Vito Tourer, up to 7 passengers</small></th><td>${eur(p.business_minivan.giorno)}</td><td>${eur(p.business_minivan.notte)}</td></tr>
+                      <tr><th scope="row">Business Minivan<small>Mercedes-Benz V-Class or equivalent, up to 7 passengers</small></th><td>${eur(p.business_minivan.giorno)}</td><td>${eur(p.business_minivan.notte)}</td></tr>
                     </tbody>
                   </table>
                   <p class="mt-3">Night rate applies from 22:00 to 06:00. The booking form shows the exact price for your day and time.</p>`],
