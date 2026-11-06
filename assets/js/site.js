@@ -1,3 +1,6 @@
+// Every WhatsApp link on the page gets the route and the source of the visit.
+import './whatsapp-context.js';
+
 // Old email links point to /#agency-rates: the agency rates form now lives on /partners/.
 if (location.pathname === '/' && location.hash === '#agency-rates') location.replace('/partners/?role=agency#apply');
 

@@ -6,6 +6,7 @@ import {
   bookingMessage, bookingRequest, directRoute, fits, isListedRoute, usesBookingSystem, hourlyTerms, hasFullName, isInternationalPhone, isNightTrip, isReturnTrip, italyNow, quote, returnLegs, tripProblem,
 } from './pricing.js';
 import { createRouteMap, loadRoutes, whenNearView } from './routemap.js';
+import { currentSource, withRef } from './whatsapp-context.js';
 
 const BOOKING_ENDPOINT = 'https://lsekwlvnlumjxliyysuy.supabase.co/functions/v1/richiesta-privati';
 const REQUEST_TIMEOUT_MS = 20000;
@@ -235,7 +236,7 @@ function readDetails() {
 }
 
 function showSend() {
-  const text = bookingMessage(trip, vehicle, readDetails());
+  const text = withRef(bookingMessage(trip, vehicle, readDetails()), currentSource());
   const total = quote(trip, vehicle);
   $('#send-total').textContent = total === null ? 'Price on request' : money(total);
   $('#send-summary').textContent = text;
