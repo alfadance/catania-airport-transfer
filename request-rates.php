@@ -33,6 +33,16 @@ function clean($s, $max) {
   $s = trim(preg_replace('/[\x00-\x1F\x7F]+/u', ' ', (string)$s));
   return mb_substr($s, 0, $max);
 }
+// Spam di vendita (SEO, chiamate automatiche, lead generation) che passa il campo trappola e il limite orario.
+// Una richiesta di tariffe vera non usa queste parole. Se scatta, la risposta e' identica a quella di un invio
+// riuscito (chi spamma non impara nulla) e non parte nessuna mail. Il 2026-11-07 erano 2 richieste su 2 dal 07/10.
+function sembra_spam($agency, $message) {
+  if (preg_match('/^(n\/?a|none|-+|\.+|test)$/i', trim($agency))) return true;
+  return (bool)preg_match(
+    '/\b(seo|aeo|backlinks?|link building|web ?design|lead ?gen|contact form|your website|service proposal|guest post|opt out|unsubscribe|free for \d+ days)\b/i',
+    $message
+  );
+}
 function invia($to, $subject, $body, $headers) {
   // Mittente di busta sul dominio: SPF (che autorizza l'IP del server) passa allineato al From, quindi anche DMARC.
   return mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers, '-fnoreply@cataniaairporttransfer.net');
@@ -67,6 +77,8 @@ $message = mb_substr(trim(str_replace("\r", '', (string)($_POST['message'] ?? ''
 if ($name === '' || $agency === '' || $country === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || !isset($HOW[$how])) {
   back('error');
 }
+
+if (sembra_spam($agency, $message)) back('sent');
 
 $subject = '2027 agency rates request - ' . $agency;
 $body = "New request from the website form (cataniaairporttransfer.net)\n\n"
