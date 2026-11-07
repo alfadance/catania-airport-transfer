@@ -12,15 +12,24 @@ if (box) {
       map.resume();
       return;
     }
-    loadRoutes().then((all) => {
-      const route = all.find((item) => item.nome.toLowerCase().replaceAll(' ', '-') === box.dataset.route);
+    // data-route-file: percorso in un file a parte (Etna, parte da Catania centro e non dall'aeroporto): non entra in routes.json,
+    // altrimenti comparirebbe anche nella mappa di tutte le tratte in home.
+    const caricamento = box.dataset.routeFile
+      ? fetch(box.dataset.routeFile).then((response) => {
+        if (!response.ok) throw new Error('route-file');
+        return response.json();
+      }).then((route) => [route])
+      : loadRoutes();
+    caricamento.then((all) => {
+      const route = box.dataset.routeFile ? all[0] : all.find((item) => item.nome.toLowerCase().replaceAll(' ', '-') === box.dataset.route);
       if (!route) throw new Error('route');
       map.showRoute({
         points: route.coordinate,
-        fromName: 'Catania Airport',
+        fromName: route.da || 'Catania Airport',
         toName: route.nome,
         price: `€${box.dataset.price}`,
-        padding: { top: 48, right: 56, bottom: 96, left: 56 },
+        // Etna (percorso verso nord, parte da Catania centro): piu' spazio in alto, altrimenti il cartellino del prezzo esce dal riquadro.
+        padding: { top: route.da ? 84 : 48, right: 56, bottom: 96, left: 56 },
       });
     }).catch(hideCard);
   }, () => map.stop());

@@ -36,3 +36,37 @@
   .route-actions .solid-button, .route-main .solid-button { width: 100%; }
   .route-table td { font-size: 19px; }
 }
+/* Pagine con foto in intestazione (Agrigento, Palermo, Etna): la foto prende il posto di quella comune; il velo scuro resta a sinistra, dove sta il testo. */
+.hero-band.hero-foto {
+  background:
+    linear-gradient(90deg, #050608f0 0%, #050608c4 42%, #05060840 100%),
+    linear-gradient(#05060899 0, #05060800 180px),
+    var(--foto) var(--foto-pos, center) / cover no-repeat var(--night);
+}
+@media (max-width: 760px) {
+  .hero-band.hero-foto {
+    background:
+      linear-gradient(#050608cc, #050608b3),
+      var(--foto-sm) var(--foto-pos, center) / cover no-repeat var(--night);
+  }
+}
+/* route-facts-tre: tempo e due prezzi sempre su una riga (tre colonne uguali), sul telefono uno sotto l'altro: mai due piu' uno. */
+.route-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 680px) { .route-facts { grid-template-columns: 1fr; } }
+/* Other destinations: schede uguali, barra arancione in alto (forma, non testo); l'escursione a ore e' scura. Nessuna ombra (DESIGN.md). */
+.dest-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.dest-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 2px; min-height: 164px; padding: 24px 20px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s; }
+.dest-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--orange); }
+.dest-card:hover, .dest-card:focus-visible { text-decoration: none; }
+.dest-card small { color: var(--ink-soft); font-size: 13px; }
+.dest-card strong { font-size: 20px; font-weight: 600; line-height: 1.2; }
+.dest-card span { margin-bottom: auto; color: var(--ink-soft); font-size: 14px; }
+.dest-card b { margin-top: 16px; font-size: 22px; font-weight: 600; }
+.dest-card b i { color: var(--ink-soft); font-size: 15px; font-style: normal; font-weight: 400; }
+.dest-card:hover, .dest-card:focus-visible { border-color: var(--orange); }
+.dest-card--excursion { border-color: var(--night); background: var(--night); color: #fff; }
+.dest-card--excursion small { color: var(--orange); font-weight: 600; }
+.dest-card--excursion span, .dest-card--excursion b i { color: #ffffffb8; }
+@media (max-width: 1000px) { .dest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .dest-grid { grid-template-columns: 1fr; } .dest-card { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .dest-card { transition: none; } }
