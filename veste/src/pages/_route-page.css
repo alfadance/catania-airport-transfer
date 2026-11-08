@@ -58,6 +58,9 @@
 .dest-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 2px; min-height: 164px; padding: 24px 20px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s; }
 .dest-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--orange); }
 .dest-card:hover, .dest-card:focus-visible { text-decoration: none; }
+/* Immagine in cima alla scheda: a tutta larghezza, sopra il testo (che resta su fondo pieno). La barra arancione sta sopra l'immagine. */
+.dest-card .dest-img { display: block; width: calc(100% + 40px); max-width: none; aspect-ratio: 16 / 7; height: auto; margin: -24px -20px 16px; object-fit: cover; }
+.dest-card::before { z-index: 1; }
 .dest-card small { color: var(--ink-soft); font-size: 13px; }
 .dest-card strong { font-size: 20px; font-weight: 600; line-height: 1.2; }
 .dest-card span { margin-bottom: auto; color: var(--ink-soft); font-size: 14px; }
