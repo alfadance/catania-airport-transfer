@@ -1,6 +1,7 @@
 // Pagine catania-airport-to-<tratta>.html: la mappa animata del percorso. La tratta e il prezzo stanno nell'elemento #trip-map
 // (data-route = id della tratta, data-price = prezzo Sedan di giorno). Se la mappa non parte, il riquadro sparisce e la pagina resta intera.
 import { createRouteMap, loadRoutes, whenNearView } from './routemap.js';
+import { townId } from './pricing.js';
 
 const box = document.getElementById('trip-map');
 
@@ -21,7 +22,7 @@ if (box) {
       }).then((route) => [route])
       : loadRoutes();
     caricamento.then((all) => {
-      const route = box.dataset.routeFile ? all[0] : all.find((item) => item.nome.toLowerCase().replaceAll(' ', '-') === box.dataset.route);
+      const route = box.dataset.routeFile ? all[0] : all.find((item) => townId(item.nome) === box.dataset.route);
       if (!route) throw new Error('route');
       map.showRoute({
         points: route.coordinate,

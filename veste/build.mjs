@@ -9,7 +9,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AIRPORT, DIRECT_ROUTES, FARES, HOURLY_EXTRAS, KM_INCLUDED_PER_HOUR, RETURN_DISCOUNT } from './src/assets/js/pricing.js';
+import { AIRPORT, DIRECT_ROUTES, FARES, HOURLY_EXTRAS, KM_INCLUDED_PER_HOUR, RETURN_DISCOUNT, townId } from './src/assets/js/pricing.js';
 
 const veste = dirname(fileURLToPath(import.meta.url));
 const site = join(veste, '..');
@@ -31,7 +31,7 @@ const euro = (n) => `€${n}`;
 const priceCells = ({ sedan, minivan }) => [...sedan, ...minivan].map((n) => `<td>${euro(n)}</td>`).join('');
 function priceRows() {
   const fares = Object.entries(FARES).map(([town, prices]) => {
-    const slug = `catania-airport-to-${town.toLowerCase().replaceAll(' ', '-')}.html`;
+    const slug = `catania-airport-to-${townId(town)}.html`;
     return `          <tr><th scope="row"><a href="/${slug}">Catania Airport to ${town}</a></th>${priceCells(prices)}</tr>`;
   });
   const direct = DIRECT_ROUTES.map(({ between: [a, b], mapName, sedan, minivan }) => {

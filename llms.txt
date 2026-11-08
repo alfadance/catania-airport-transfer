@@ -1,6 +1,6 @@
 # Catania Airport Transfer
 
-> Private transfers with a chauffeur from Catania Fontanarossa Airport to Taormina, Giardini Naxos, Siracusa, Milazzo, Agrigento and the rest of Sicily. Fixed price for the whole vehicle, tolls and VAT included. Chauffeur by the hour also available.
+> Private transfers with a chauffeur from Catania Fontanarossa Airport to Taormina, Giardini Naxos, Siracusa, Milazzo, Cefalù, Agrigento and the rest of Sicily. Fixed price for the whole vehicle, tolls and VAT included. Chauffeur by the hour also available.
 
 Facts that apply to every transfer (prices and drive times are on each route page):
 - The price is for the whole vehicle, not per person.
@@ -17,6 +17,7 @@ Facts that apply to every transfer (prices and drive times are on each route pag
 - [Catania Airport to Siracusa](https://cataniaairporttransfer.net/catania-airport-to-siracusa.html): price, drive time and FAQ
 - [Catania Airport to Catania](https://cataniaairporttransfer.net/catania-airport-to-catania.html): price, drive time and FAQ
 - [Catania Airport to Milazzo](https://cataniaairporttransfer.net/catania-airport-to-milazzo.html): price, drive time and FAQ
+- [Catania Airport to Cefalù](https://cataniaairporttransfer.net/catania-airport-to-cefalu.html): price, drive time and FAQ
 
 ## Other pages
 - [Prices for all routes](https://cataniaairporttransfer.net/prices.html): one table with day and night prices for every route

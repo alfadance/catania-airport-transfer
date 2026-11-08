@@ -73,6 +73,20 @@
           "notte": 500
         }
       }
+    },
+    {
+      "id": "cefalu",
+      "luogo": "Cefalù",
+      "prezzi": {
+        "business_sedan": {
+          "giorno": 430,
+          "notte": 560
+        },
+        "business_minivan": {
+          "giorno": 490,
+          "notte": 640
+        }
+      }
     }
   ]
 }

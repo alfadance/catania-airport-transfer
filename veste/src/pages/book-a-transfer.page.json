@@ -2,7 +2,7 @@
   "out": "book-a-transfer.html",
   "path": "/book-a-transfer.html",
   "title": "Book a Private Transfer from Catania Airport | Catania Airport Transfer",
-  "description": "Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania or Milazzo. You see the price on the form. We check availability and reply by email with a payment link.",
+  "description": "Request a private transfer between Catania Airport and Taormina, Giardini Naxos, Siracusa, Catania, Milazzo or Cefalù. You see the price on the form. We check availability and reply by email with a payment link.",
   "body": "src/pages/book-a-transfer.html",
   "script": "book-a-transfer.js",
   "head": "<meta property=\"og:site_name\" content=\"Catania Airport Transfer\">\n<meta property=\"og:image\" content=\"https://cataniaairporttransfer.net/assets/og-image.jpg\">\n<meta property=\"og:image:width\" content=\"1200\">\n<meta property=\"og:image:height\" content=\"630\">\n<meta property=\"og:image:alt\" content=\"Black chauffeur car at Catania Airport with Mount Etna in the background\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">"

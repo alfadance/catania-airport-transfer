@@ -5,11 +5,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { FARES, RETURN_DISCOUNT, VEHICLES, isNight } from './src/assets/js/pricing.js';
+import { FARES, RETURN_DISCOUNT, VEHICLES, isNight, townId } from './src/assets/js/pricing.js';
 
 const server = JSON.parse(readFileSync(new URL('../assets/prezzi-sito.json', import.meta.url), 'utf8'));
-const idOf = (town) => town.toLowerCase().replaceAll(' ', '-');
-const CONTROLLI_MINIMI = 14;      // 1 (tratte) + 10 (5 tratte x 2 mezzi) + 1 (fascia notturna) + 1 (mezzi)
+const idOf = townId;
+const CONTROLLI_MINIMI = 16;      // 1 (tratte) + 12 (6 tratte x 2 mezzi) + 1 (fascia notturna) + 1 (mezzi)
 let controlli = 0;
 const uguali = (a, b, msg) => { controlli += 1; assert.deepEqual(a, b, msg); };
 

@@ -2,6 +2,9 @@
 
 export const AIRPORT = 'Catania Airport (CTA)';
 
+// Identifier of a town in the booking system and in the route data: no accents, lower case, hyphens ("Cefalù" -> "cefalu").
+export const townId = (town) => town.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replaceAll(' ', '-');
+
 // Whole-vehicle prices in euro from Catania Airport, VAT included: [day, night].
 export const FARES = {
   Taormina: { sedan: [140, 185], minivan: [185, 245] },
@@ -9,6 +12,7 @@ export const FARES = {
   Siracusa: { sedan: [140, 185], minivan: [185, 245] },
   Catania: { sedan: [60, 80], minivan: [70, 95] },
   Milazzo: { sedan: [330, 430], minivan: [380, 500] },
+  'Cefalù': { sedan: [430, 560], minivan: [490, 640] },
 };
 
 export const PALERMO_AIRPORT = 'Palermo Airport (PMO)';
@@ -206,7 +210,7 @@ export const isInternationalPhone = (phone) => /^\+[0-9 ()./-]{7,22}$/.test(phon
 export function bookingRequest(trip, vehicle, details) {
   const town = trip.from === AIRPORT ? trip.to : trip.from;
   return {
-    tratta: town.toLowerCase().replaceAll(' ', '-'),
+    tratta: townId(town),
     direzione: trip.from === AIRPORT ? 'da_aeroporto' : 'verso_aeroporto',
     mezzo: VEHICLES[vehicle].apiName,
     pax: trip.pax,
