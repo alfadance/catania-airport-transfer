@@ -1145,6 +1145,21 @@ main > .event-request:last-child { margin-bottom: -64px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .dd-section .route-main { max-width: 46rem; }
 .dd-section .route-main h2:not(:first-child) { margin-top: 1rem; }
+/* Mappa illustrata del percorso d'esempio (colori del sito: notte, arancio, superficie). */
+.dd-map-figure { margin: 1.25rem 0 1rem; }
+.dd-map { display: block; width: 100%; height: auto; max-width: 640px; border-radius: 6px; background: var(--night, #050608); }
+.dd-map-land { fill: #1d3a52; stroke: #2f5671; stroke-width: 1; }
+.dd-map-route { fill: none; stroke: var(--orange, #ee8211); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.dd-map-stop { fill: var(--night, #050608); stroke: #fff; stroke-width: 2; }
+.dd-map-num { fill: #fff; font: 700 13px/1 system-ui, sans-serif; }
+.dd-map-name { fill: #fff; font: 600 14px/1 system-ui, sans-serif; paint-order: stroke; stroke: #050608; stroke-width: 3px; stroke-linejoin: round; }
+.dd-map-figure figcaption { margin-top: .5rem; font-size: .85rem; opacity: .75; }
+@media (max-width: 560px) {
+  .dd-map-name { font-size: 24px; stroke-width: 5px; }
+  .dd-map-num { font-size: 19px; }
+  .dd-map-stop { r: 16px; }
+  .dd-map-route { stroke-width: 5px; }
+}
 
 
 /* pages/shuttle.css */
