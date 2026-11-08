@@ -15,6 +15,17 @@ test('la fonte nasce da utm_source e utm_medium', () => {
   is(sourceFromSearch('?utm_medium=gbp'), '', 'senza utm_source non c\'e\' fonte');
 });
 
+test('?da=<pagina> dice da quale pagina del sito arriva la richiesta', () => {
+  is(sourceFromSearch('?mode=hourly&da=taormina-day-trip'), 'pagina-taormina-day-trip');
+  is(sourceFromSearch('?da=Taormina%20Day%3Cscript%3E'), 'pagina-taorminadayscript', 'testo ostile ripulito');
+  is(sourceFromSearch('?da='), '', 'da vuoto: nessuna fonte');
+  is(sourceFromSearch('?utm_source=google&utm_medium=gbp&da=taormina-day-trip'), 'google-gbp', 'una UTM vince su da');
+  is(sourceFromSearch('?da=' + 'a'.repeat(100)), 'pagina-' + 'a'.repeat(30), 'da lungo: 30 caratteri');
+  const s = memory();
+  is(rememberSource(s, '?da=taormina-day-trip'), 'pagina-taormina-day-trip');
+  is(rememberSource(s, ''), 'pagina-taormina-day-trip', 'una pagina senza parametri tiene la fonte');
+});
+
 test('la fonte e\' pulita: niente testo ostile nel messaggio', () => {
   is(sourceFromSearch('?utm_source=Goo%20gle%3Cscript%3E&utm_medium=g%26bp'), 'googlescript-gbp');
   is(sourceFromSearch('?utm_source=' + 'a'.repeat(100)).length, 30);

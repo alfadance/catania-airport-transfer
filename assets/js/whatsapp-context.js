@@ -9,7 +9,11 @@ const clean = (value) => value.toLowerCase().replace(/[^a-z0-9-]+/g, '').slice(0
 export function sourceFromSearch(search) {
   const params = new URLSearchParams(search);
   const source = clean(params.get('utm_source') || '');
-  if (!source) return '';
+  if (!source) {
+    // ?da=<pagina>: il link di una pagina del sito verso il modulo dice da quale pagina arriva la richiesta (senza UTM, che sporcherebbero Analytics).
+    const page = clean(params.get('da') || '');
+    return page ? `pagina-${page}` : '';
+  }
   const medium = clean(params.get('utm_medium') || '');
   return medium ? `${source}-${medium}` : source;
 }
