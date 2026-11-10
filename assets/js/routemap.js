@@ -266,13 +266,33 @@ export function createRouteMap(box) {
   };
 }
 
-// Starts a page map only when it scrolls near view, and pauses its car when it leaves.
-export function whenNearView(box, onEnter, onLeave) {
+// The first thing a visitor does. With `afterGesture` the page shows a still picture of the map until then:
+// MapLibre (800 KB) and its tiles are not downloaded, so a visit with no gesture (a speed test) never pays for them.
+const FIRST_GESTURES = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+
+// Starts a page map when it scrolls near view (and, with `afterGesture`, the visitor has done something),
+// and pauses its car when it leaves.
+export function whenNearView(box, onEnter, onLeave, { afterGesture = false } = {}) {
   let started = false;
+  let near = false;
+  let gestured = !afterGesture;
+  const enter = () => {
+    onEnter(started);
+    started = true;
+  };
+  if (afterGesture) {
+    // One wait only, so coming near twice before the gesture cannot start the map twice. It starts only if still near.
+    new Promise((resolve) => {
+      for (const name of FIRST_GESTURES) addEventListener(name, resolve, { once: true, passive: true });
+    }).then(() => {
+      gestured = true;
+      if (near) enter();
+    });
+  }
   new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      onEnter(started);
-      started = true;
+    near = entry.isIntersecting;
+    if (near) {
+      if (gestured) enter();
     } else if (started) {
       onLeave();
     }

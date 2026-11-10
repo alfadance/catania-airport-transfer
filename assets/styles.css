@@ -265,6 +265,9 @@ h1 { font-size: 57.6px; line-height: 1.02; color: var(--on-dark); max-width: 892
 /* Route maps */
 .map-box { background: var(--night); }
 .map-box[hidden] { display: none; }
+/* The two maps on the home page show a still picture until the visitor does something (AFTER_GESTURE in booking.js); the live map covers it. */
+#sample-map { background: var(--night) url(/assets/img/map-taormina.webp) center / cover no-repeat; }
+#all-routes-map { background: var(--night) url(/assets/img/map-routes.webp) center / cover no-repeat; }
 .trip-map { height: 260px; margin-top: 14px; overflow: hidden; border-radius: var(--radius-small); }
 .map-pin { display: flex; align-items: center; gap: 6px; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .map-pin i { flex: none; width: 12px; height: 12px; border: 2px solid #fff; border-radius: 50%; background: var(--night); }

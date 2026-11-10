@@ -387,6 +387,9 @@ dialog.addEventListener('click', (event) => {
 
 /* ---------- Maps on the page ---------- */
 
+// Both page maps show a still picture (see .map-box in styles.css) until the visitor does something.
+const AFTER_GESTURE = { afterGesture: true };
+
 const sampleBox = $('#sample-map');
 const sampleMap = createRouteMap(sampleBox);
 whenNearView(sampleBox, (resuming) => {
@@ -398,14 +401,14 @@ whenNearView(sampleBox, (resuming) => {
     const route = all.find((item) => item.nome === 'Taormina');
     sampleMap.showRoute({ points: route.coordinate, fromName: 'Catania Airport', toName: 'Taormina', padding: { top: 48, right: 56, bottom: 130, left: 56 } });
   }).catch(() => { sampleBox.hidden = true; });
-}, () => sampleMap.stop());
+}, () => sampleMap.stop(), AFTER_GESTURE);
 
 const allBox = $('#all-routes-map');
 const allMap = createRouteMap(allBox);
 whenNearView(allBox, (resuming) => {
   if (resuming) return;
   loadRoutes().then((all) => allMap.showAll(all.map((item) => item.coordinate))).catch(() => { allBox.hidden = true; });
-}, () => {});
+}, () => {}, AFTER_GESTURE);
 
 // Links from other pages arrive as /?to=Taormina#book.
 const query = new URLSearchParams(location.search);
