@@ -33,5 +33,6 @@ if (box) {
         padding: { top: route.da ? 84 : 48, right: 56, bottom: 96, left: 56 },
       });
     }).catch(hideCard);
-  }, () => map.stop());
+  // Fino al primo gesto del visitatore resta l'immagine ferma della tratta (_route-page.css): MapLibre (800 KB) non si scarica.
+  }, () => map.stop(), { afterGesture: true });
 }

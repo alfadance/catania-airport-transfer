@@ -882,6 +882,22 @@ dialog::backdrop { background: #0c0c0eb3; }
 .route-side h2 { font-size: 40px; }
 .route-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .route-map { height: 300px; }
+/* Immagine ferma della tratta (scripts/cattura-mappe-ferme.js) finche' il visitatore non fa un gesto (route-page.js); la mappa vera la copre.
+   Il percorso sta nel centro dell'immagine: con cover resta intero a 390, 768 e 1440 px. Nessun prezzo nell'immagine.
+   Solo .route-map: anche la home e book-a-transfer hanno un #trip-map, senza immagine ferma. */
+.route-map { position: relative; background-position: center; background-size: cover; background-repeat: no-repeat; }
+/* Le tessere vengono da OpenStreetMap: sull'immagine ferma la fonte si scrive (il pulsante dell'attribuzione resta tagliato fuori a 390 e 1440 px).
+   Sparisce quando parte la mappa vera, che porta la sua attribuzione (MapLibre aggiunge .maplibregl-map al riquadro). */
+.route-map:not(.maplibregl-map)::after { content: "\00A9  OpenStreetMap"; position: absolute; right: 8px; bottom: 8px; padding: 2px 7px; border-radius: 10px; background: var(--surface); color: var(--ink); font-size: 11px; line-height: 1.4; opacity: .85; }
+.route-map[data-route="taormina"] { background-image: url(/assets/img/map-trip-taormina.webp); }
+.route-map[data-route="giardini-naxos"] { background-image: url(/assets/img/map-trip-giardini-naxos.webp); }
+.route-map[data-route="siracusa"] { background-image: url(/assets/img/map-trip-siracusa.webp); }
+.route-map[data-route="catania"] { background-image: url(/assets/img/map-trip-catania.webp); }
+.route-map[data-route="milazzo"] { background-image: url(/assets/img/map-trip-milazzo.webp); }
+.route-map[data-route="cefalu"] { background-image: url(/assets/img/map-trip-cefalu.webp); }
+.route-map[data-route="catania-airport-to-agrigento"] { background-image: url(/assets/img/map-trip-catania-airport-to-agrigento.webp); }
+.route-map[data-route="catania-airport-to-palermo-airport"] { background-image: url(/assets/img/map-trip-catania-airport-to-palermo-airport.webp); }
+.route-map[data-route="etna"] { background-image: url(/assets/img/map-trip-etna.webp); }
 .route-trip { padding: 16px 20px; color: var(--ink-soft); font-size: 15px; }
 .route-trip strong { color: var(--ink); font-weight: 600; }
 .route-main { display: grid; gap: 22px; max-width: 700px; }

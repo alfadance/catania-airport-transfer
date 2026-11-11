@@ -1,10 +1,11 @@
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { whenNearView } from './src/assets/js/routemap.js';
 
 // The page map must not start (and download MapLibre) until the visitor does something.
 // These tests fake the two browser globals that whenNearView uses.
-const EXPECTED_CHECKS = 14;
+const EXPECTED_CHECKS = 34; // 14 for whenNearView, 1 for route-page.js, 1 + 2 per route page (9 pages)
 const originals = { addEventListener: globalThis.addEventListener, IntersectionObserver: globalThis.IntersectionObserver };
 after(() => { Object.assign(globalThis, originals); });
 let checks = 0;
@@ -123,6 +124,26 @@ test('without the option the map starts at once, as before', () => {
   is(browser.listening().length, 0, 'no gesture listener');
   browser.near();
   is(JSON.stringify(calls), '[["enter",false]]', 'no wait, no microtask');
+});
+
+// Route pages (catania-airport-to-<route>.html): the same wait, and a still picture of each route until the map starts.
+const VESTE = new URL('./', import.meta.url);
+const read = (path) => readFileSync(new URL(path, VESTE), 'utf8');
+const ROUTE_PAGES = readdirSync(new URL('src/pages/', VESTE)).filter((name) => /^route-.+\.html$/.test(name));
+
+test('the route page map waits for a gesture', () => {
+  is(/whenNearView\([\s\S]*\{ afterGesture: true \}\);/.test(read('src/assets/js/route-page.js')), true, 'route-page.js passes afterGesture');
+});
+
+test('every route page has its still picture, declared in the CSS and present on disk', () => {
+  const css = read('src/pages/_route-page.css');
+  is(ROUTE_PAGES.length >= 9, true, `only ${ROUTE_PAGES.length} route pages found`);
+  for (const page of ROUTE_PAGES) {
+    const route = read(`src/pages/${page}`).match(/id="trip-map"[^>]*data-route="([^"]+)"/)?.[1];
+    const image = `/assets/img/map-trip-${route}.webp`;
+    is(css.includes(`.route-map[data-route="${route}"] { background-image: url(${image}); }`), true, `${page}: no CSS rule for ${image}`);
+    is(existsSync(new URL(`src${image}`, VESTE)), true, `${page}: ${image} missing in veste/src`);
+  }
 });
 
 test('the checks above really ran', () => {
