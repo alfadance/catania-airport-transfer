@@ -256,7 +256,8 @@ async function sendRequest() {
     const response = await fetch(BOOKING_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bookingRequest(trip, vehicle, readDetails())),
+      // origine: la pagina o la campagna che ha portato la visita (whatsapp-context.js), salvata in richieste_sito.origine.
+      body: JSON.stringify({ ...bookingRequest(trip, vehicle, readDetails()), origine: currentSource() }),
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     const body = await response.json().catch(() => ({}));

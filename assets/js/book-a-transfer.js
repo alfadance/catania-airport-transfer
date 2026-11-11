@@ -298,8 +298,13 @@
         data: el.data.value, ora: el.ora.value, volo: el.volo.value.trim(),
         indirizzo: el.indirizzo.value.trim(), nome: el.nome.value.trim(),
         telefono: el.telefono.value.trim(), email: el.email.value.trim(),
-        note: el.note.value.trim(), consenso: el.consenso.checked, termini: el.termini.checked, sito_web: el.sito_web.value
+        note: el.note.value.trim(), consenso: el.consenso.checked, termini: el.termini.checked, sito_web: el.sito_web.value,
+        origine: origine()
       };
+    }
+    // La pagina o la campagna che ha portato la visita: la salva whatsapp-context.js (caricato da site.js) in sessionStorage.
+    function origine() {
+      try { return sessionStorage.getItem('cat-source') || ''; } catch (e) { return ''; }
     }
 
     form.addEventListener('submit', function(e) {

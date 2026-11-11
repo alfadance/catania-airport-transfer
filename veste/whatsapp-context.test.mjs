@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { sourceFromSearch, rememberSource, routeFromPath, defaultText, withRef, enhanceHref } from './src/assets/js/whatsapp-context.js';
+import { sourceFromSearch, sourceFromPath, rememberSource, routeFromPath, defaultText, withRef, enhanceHref } from './src/assets/js/whatsapp-context.js';
 
 const BASE = 'https://wa.me/393200528300';
 const textOf = (href) => new URL(href).searchParams.get('text');
@@ -64,6 +64,36 @@ test('il link WhatsApp porta tratta e fonte, uno qualunque no', () => {
   is(enhanceHref('mailto:info@cataniaairporttransfer.net', ctx), 'mailto:info@cataniaairporttransfer.net');
 });
 
-test('almeno 20 controlli sono stati eseguiti', () => {
-  assert.ok(checks >= 20, `eseguiti ${checks}`);
+// Origine della richiesta (titolare, 11/11/2026): senza UTM ne' ?da=, conta la prima pagina della visita.
+test('senza parametri l\'origine e\' la pagina d\'arrivo', () => {
+  is(sourceFromPath('/catania-airport-to-agrigento.html'), 'pagina-catania-airport-to-agrigento');
+  is(sourceFromPath('/catania-airport-to-palermo-airport.html'), 'pagina-catania-airport-to-palermo-airport', 'nome lungo intero (34 caratteri)');
+  is(sourceFromPath('/contact-us/'), 'pagina-contact-us');
+  is(sourceFromPath('/'), 'diretto', 'home senza parametri');
+  is(sourceFromPath('/index.html'), 'diretto');
+  is(sourceFromPath(''), 'diretto');
+  is(sourceFromPath('/Pagina%20<script>.html'), 'pagina-pagina20script', 'testo ostile ripulito');
+  is(sourceFromPath('/' + 'a'.repeat(100) + '.html').length, 'pagina-'.length + 50, 'al massimo 50 caratteri dopo pagina-');
+});
+
+test('la pagina d\'arrivo vale per tutta la visita, ma una UTM o ?da= vince', () => {
+  const s = memory();
+  is(rememberSource(s, '', '/catania-airport-to-etna.html'), 'pagina-catania-airport-to-etna');
+  is(rememberSource(s, '', '/'), 'pagina-catania-airport-to-etna', 'il modulo in home tiene la pagina d\'arrivo');
+  const g = memory();
+  is(rememberSource(g, '?utm_source=google&utm_medium=gbp', '/'), 'google-gbp');
+  is(rememberSource(g, '', '/catania-airport-to-etna.html'), 'google-gbp', 'la prima origine resta');
+  const d = memory();
+  is(rememberSource(d, '?da=taormina-day-trip', '/'), 'pagina-taormina-day-trip', '?da= vince sulla pagina');
+  is(rememberSource(memory(), '', '/'), 'diretto', 'home senza parametri: diretto');
+  is(rememberSource({ getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); } }, '', '/catania-airport-to-etna.html'), 'pagina-catania-airport-to-etna', 'storage bloccato: usa la pagina');
+});
+
+test('"diretto" non finisce nel messaggio WhatsApp', () => {
+  is(withRef('Hello', 'diretto'), 'Hello');
+  is(withRef('Hello', 'pagina-catania-airport-to-etna'), 'Hello [ref: pagina-catania-airport-to-etna]');
+});
+
+test('almeno 37 controlli sono stati eseguiti', () => {
+  assert.ok(checks >= 37, `eseguiti ${checks}`);
 });

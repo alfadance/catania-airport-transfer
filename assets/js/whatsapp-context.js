@@ -18,14 +18,32 @@ export function sourceFromSearch(search) {
   return medium ? `${source}-${medium}` : source;
 }
 
+// Senza UTM ne' ?da=, l'origine e' la prima pagina della visita (titolare, 2026-11-11): cosi' una richiesta dice quale pagina
+// del sito l'ha portata, anche se il visitatore arriva da Google su una pagina di tratta e poi apre il modulo in home.
+// "/" e "/index.html" -> "diretto"; "/catania-airport-to-agrigento.html" -> "pagina-catania-airport-to-agrigento".
+export function sourceFromPath(pathname) {
+  const slug = (pathname || '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '').replace(/\//g, '-')
+    .toLowerCase().replace(/[^a-z0-9-]+/g, '').slice(0, 50);
+  return !slug || slug === 'index' ? 'diretto' : `pagina-${slug}`;
+}
+
 // The first source wins for the whole visit: a later page without parameters keeps it.
-export function rememberSource(storage, search) {
+// With `pathname`, a visit with no source yet takes its landing page as source.
+export function rememberSource(storage, search, pathname) {
   const fresh = sourceFromSearch(search);
+  const landing = () => (pathname === undefined ? '' : sourceFromPath(pathname));
   try {
-    if (fresh) storage.setItem(STORE_KEY, fresh);
-    return fresh || storage.getItem(STORE_KEY) || '';
+    if (fresh) {
+      storage.setItem(STORE_KEY, fresh);
+      return fresh;
+    }
+    const kept = storage.getItem(STORE_KEY);
+    if (kept) return kept;
+    const first = landing();
+    if (first) storage.setItem(STORE_KEY, first);
+    return first;
   } catch {
-    return fresh;
+    return fresh || landing();
   }
 }
 
@@ -43,7 +61,7 @@ export function defaultText(route) {
 }
 
 export function withRef(text, source) {
-  if (!source || text.includes('[ref:')) return text;
+  if (!source || source === 'diretto' || text.includes('[ref:')) return text;
   return `${text} [ref: ${source}]`;
 }
 
@@ -60,7 +78,7 @@ export function enhanceHref(href, { route = '', source = '' } = {}) {
 }
 
 export function currentSource() {
-  return rememberSource(window.sessionStorage, window.location.search);
+  return rememberSource(window.sessionStorage, window.location.search, window.location.pathname);
 }
 
 function enhancePage() {
